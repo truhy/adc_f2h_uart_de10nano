@@ -20,7 +20,7 @@ Note, Terasic does have an ADC demo (on the DE10-Nano CD), but it does so using 
 3. Start a serial console program such as PuTTY and set it to serial mode, 115200 baud, 8 data bits, 1 stop bit, no parity, no control flow
 4. Insert the micro SD card into the DE10-Nano and turn on the 5V power supply
 5. Wait for U-Boot to boot up.  You should see a bunch of U-Boot messages and then stop with a console prompt
-6. The 12-bit sample reads are displayed as a hex value
+6. The 12-bit sample reads are displayed in hex format
 
 Note, I've configured U-Boot to boot only to the console prompt.
 
