@@ -6,7 +6,7 @@ A FPGA design (in Verilog) for the DE10-Nano that reads 12-bit samples from the 
 
 In summary, it does the following all within in the FPGA fabric:
 1. Repeatedly reads Channel 0 ADC sample data from the builtin ADC LTC2308 chip using SPI serial communication
-2. Sends a read to the existing HPS UART0 (UART-USB) which is wired to the HPS side
+2. A loop sends a read (when ready) to the existing HPS UART0 (UART-USB) which is wired to the HPS side
 
 Note, Terasic does have an ADC demo (on the DE10-Nano CD), but it does so using the NIOS II softcore processor with source file and the ADC IP is a custom Platform Designer IP.
 
