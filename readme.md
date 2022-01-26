@@ -2,7 +2,7 @@
 
 ## Overview
 
-A FPGA design (in Verilog) for the DE10-Nano that read 12-bit samples from the built-in ADC and sends them to UART0 (built-in UART-USB).
+A FPGA design (in Verilog) for the DE10-Nano that reads 12-bit samples from the built-in ADC and sends them to UART0 (built-in UART-USB).
 
 In summary, it does the following all within in the FPGA fabric:
 1. Repeatedly reads Channel 0 ADC sample data from the builtin ADC LTC2308 chip using SPI serial communication
