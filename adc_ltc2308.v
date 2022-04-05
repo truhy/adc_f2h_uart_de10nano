@@ -28,11 +28,20 @@
 	Target   : For the DE-10 Nano Development Kit board (SoC FPGA Cyclone V)
 	Version  : 1.0
 	
-	Desctiption:
-		A module for the ADC LTC2308 that is connected to the FPGA fabric on the DE-10 Nano.  Although for the
-		DE series, there is an Altera ADC IP under the University Program, it is using memory map and so
-		intended for the NIOS II softcore or SoC (ARM) use, and the data sample is not available to your FPGA
-		design.
+	Description:
+		A module for the ADC LTC2308 that is connected to the FPGA fabric on the DE-10 Nano.  For the
+		DE series development boards there is an Altera ADC IP listed under the University Program but it has
+		some limitations:
+			1.	first, it is implemented using memory map which consists of a completely made up set of
+				registers.  In my opinion is really only suited for the NIOS II softcore or an application
+				on the SoC (ARM) side
+			2.	data is stored and streamed using a custom FIFO & a ADC to FIFO IP that was created in
+				Platform Designer as a custom IP
+			3.	because the ADC to FIFO IP streams (writes) to the memory map registers the data samples
+				is not readily accessible on the FPGA side
+			4.	it appears there is a bug in their IP where the most significant bit is not readout
+		In contrast my module is more basic and easier to understand for the beginner.  It simply outputs the data
+		samples using an output register, and then you can do whatever you want with it.
 	
 	Timings:
 		The timing values is set to the maximum so an input SPI clock of 40MHz and sampling rate of 500kHz
