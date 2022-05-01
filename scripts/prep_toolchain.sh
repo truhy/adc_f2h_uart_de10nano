@@ -19,7 +19,7 @@ cd ~
 #   AArch64 Linux = Linux on 64bit Arm processor
 #   Windows (mingw-w64-i686) = 64bits Windows on Intel processor and mingw-w64-i686 C/C++ compiler
 #   Hard float = This refers to the target Arm processor which includes a hardware floating unit (ALU) and this option will make use of it. For Linux target the std C/C++ (e.g. glibc) library needs be precompiled so enabling hard float is not selectable using just a switch.  For baremetal a switch can enable the hard float
-#   Baremetal = to build a elf or binary where there is no OS
+#   Baremetal = to build an elf or binary where there is no OS
 
 # Common GCC Arm toolchain binary builds...
 
