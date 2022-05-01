@@ -10,7 +10,7 @@ cd ~
 # Notes:
 #   Toolchain = C & C++ compiler, linker, tools, etc
 #   Host = which OS will be used to compile on. E.g. if you are going to use your Intel PC running 32bits Linux to compile with then the host is x86 Linux
-#   Target = which system the elf or binary will be running on. E.g. if the development kit is running linux then target is linux, or if no OS then target is baremetal
+#   Target = which system the elf or binary will be running on. E.g. if the development kit proessor is Arm Cortex A9 then it is AArch32 (32bit)
 #   x86 Linux = 32bits Linux on Intel processor
 #   x64 Linux = 64bits Linux on Intel processor
 #   AArch32 = 32bit Arm processor
@@ -19,6 +19,7 @@ cd ~
 #   AArch64 Linux = Linux on 64bit Arm processor
 #   Windows (mingw-w64-i686) = 64bits Windows on Intel processor and mingw-w64-i686 C/C++ compiler
 #   Hard float = This refers to the target Arm processor which includes a hardware floating unit (ALU) and this option will make use of it. For Linux target the std C/C++ (e.g. glibc) library needs be precompiled so enabling hard float is not selectable using just a switch.  For baremetal a switch can enable the hard float
+#   Baremetal = to build a elf or binary where there is no OS
 
 # Common GCC Arm toolchain binary builds...
 
