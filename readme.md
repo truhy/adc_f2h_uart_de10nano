@@ -2,13 +2,13 @@
 
 ## Overview
 
-A FPGA design (in Verilog) for the DE10-Nano that reads 12-bit samples from the built-in ADC and sends them to UART0 (built-in UART-USB).
+A FPGA design (in Verilog) for the DE10-Nano that reads 12-bit samples from the ADC on the board and sends them to UART0 (the mini USB socket for the UART-USB).
 
 In summary, it does the following all within in the FPGA fabric:
-1. Repeatedly reads Channel 0 ADC sample data from the builtin ADC LTC2308 chip using SPI serial communication
+1. Repeatedly reads Channel 0 ADC sample data from the ADC LTC2308 chip using SPI serial communication
 2. A loop sends a read (when ready) to the existing HPS UART0 (UART-USB) which is wired to the HPS side
 
-Note, there is an ADC demo on the the DE10-Nano CD, but it uses the NIOS II softcore processor and the ADC IP is a custom Platform Designer IP.  My version is more plain and perhaps more useful for a beginner.
+Note, there is an ADC demo on the Terasic DE10-Nano CD zip file, but it uses the NIOS II FPGA softcore processor (instead of the hardware ARM) and also a custom Platform Designer ADC IP.  My version is more plain and perhaps more useful for a beginner.
 
 ## Running instructions
 
