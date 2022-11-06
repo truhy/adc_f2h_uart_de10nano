@@ -1,0 +1,91 @@
+m255
+K4
+z2
+Z0 !s99 nomlopt
+!s11f MIXED_VERSIONS
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+d/home/truong/intelFPGA_lite/21.1/questa_fse/bin
+T_opt
+!s110 1650065671
+VfUW<49nlhi6SA[L4=aziC3
+04 14 4 work tb_adc_ltc2308 fast 0
+=1-000ae431a4f1-625a0106-f1779-19264
+!s124 OEM10U2 
+o-quiet -auto_acc_if_foreign -work work +acc
+Z1 tCvgOpt 0
+n@_opt
+OL;O;2021.2;73
+vadc_ltc2308
+Z2 !s110 1642804431
+!i10b 1
+!s100 kjZj5D`W<@Z<L8jEa@NVi2
+Z3 !s11b Dg1SIo80bB@j0V0VzS_@n1
+IYi2;[GdRCWN9nhHCn4fQS0
+Z4 VDg1SIo80bB@j0V0VzS_@n1
+Z5 d/home/truong/TruongsHDL/adc_f2h_uart_tb
+w1642804414
+8/home/truong/TruongsHDL/adc_f2h_uart_tb/adc_ltc2308.v
+F/home/truong/TruongsHDL/adc_f2h_uart_tb/adc_ltc2308.v
+!i122 111
+L0 3 112
+Z6 OV;L;2020.1;71
+r1
+!s85 0
+31
+Z7 !s108 1642804431.000000
+!s107 /home/truong/TruongsHDL/adc_f2h_uart_tb/adc_ltc2308.v|
+!s90 -reportprogress|300|-work|work|-stats=none|/home/truong/TruongsHDL/adc_f2h_uart_tb/adc_ltc2308.v|
+!i113 1
+Z8 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R1
+vtb_adc_ltc2308
+R2
+!i10b 1
+!s100 W>6X<E>9S55_?cGmG16LC2
+R3
+IdAj6F>P4^hAPG;R7:JVba1
+R4
+R5
+w1642804256
+8/home/truong/TruongsHDL/adc_f2h_uart_tb/tb_adc_ltc2308.v
+F/home/truong/TruongsHDL/adc_f2h_uart_tb/tb_adc_ltc2308.v
+!i122 112
+L0 3 51
+R6
+r1
+!s85 0
+31
+R7
+!s107 /home/truong/TruongsHDL/adc_f2h_uart_tb/tb_adc_ltc2308.v|
+!s90 -reportprogress|300|-work|work|-stats=none|/home/truong/TruongsHDL/adc_f2h_uart_tb/tb_adc_ltc2308.v|
+!i113 1
+R8
+R1

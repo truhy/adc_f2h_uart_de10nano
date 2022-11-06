@@ -1,0 +1,15 @@
+/home/truong/TruongsHDL/adc_f2h_uart_tb/tb_adc_ltc2308.v {1 {vlog -work work -stats=none /home/truong/TruongsHDL/adc_f2h_uart_tb/tb_adc_ltc2308.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module tb_adc_ltc2308
+
+Top level modules:
+	tb_adc_ltc2308
+
+} {} {}} /home/truong/TruongsHDL/adc_f2h_uart_tb/adc_ltc2308.v {1 {vlog -work work -stats=none /home/truong/TruongsHDL/adc_f2h_uart_tb/adc_ltc2308.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module adc_ltc2308
+
+Top level modules:
+	adc_ltc2308
+
+} {} {}}
