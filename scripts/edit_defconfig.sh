@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Generate & merge handoff into U-Boot source code and compile..
+# Starts a GUI to edit defconfig file
 
 chmod +x ./parameters.sh
 source ./parameters.sh

@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# Generate & merge handoff into U-Boot source code and compile..
-
 chmod +x ./parameters.sh
 source ./parameters.sh
 

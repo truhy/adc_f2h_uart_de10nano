@@ -23,10 +23,10 @@
 
 
 
-	Developer: Truong Hy
-	HDL	   : Verilog
-	Target   : For the DE-10 Nano Development Kit board (SoC FPGA Cyclone V)
-	Version  : 1.0
+	Developer	: Truong Hy
+	HDL		: Verilog
+	Target		: For the DE-10 Nano Development Kit board (SoC FPGA Cyclone V)
+	Version		: 1.0
 	
 	Description:
 		A module for the ADC LTC2308 that is connected to the FPGA fabric on the DE-10 Nano.  For the

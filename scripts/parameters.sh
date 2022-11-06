@@ -9,8 +9,8 @@ export SOFTWARE_ROOT=software
 export BOOTLOADER_ROOT=bootloader
 export SDCARD_IMAGE_ROOT=sdcard_image
 export UBOOT_SRC_ROOT=u-boot-socfpga
-export UBOOT_SRC_ZIP=u-boot-2022.01.zip
-export UBOOT_MODIFY=other/u-boot-2022-01-modify
+export UBOOT_SRC_ZIP=u-boot-2022.10.zip
+export UBOOT_MODIFY=other/u-boot-2022-10-modify
 
 # DE10-Nano
 export UBOOT_DEFCONFIG=socfpga_de10_nano_defconfig

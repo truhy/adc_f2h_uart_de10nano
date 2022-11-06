@@ -56,24 +56,24 @@ cd ..
 # Create SD card image (Making FAT partition in second row and marked as 1 enable Windows to see it as a FAT partition)
 #sudo python3 ./$MAKE_SDIMAGE_PY_FILE -f \
 #-P ../$SOFTWARE_ROOT/$BOOTLOADER_ROOT/$UBOOT_SRC_ROOT/u-boot-with-spl.sfp,num=3,format=raw,size=10M,type=A2  \
-#-P fat/*,num=1,format=fat32,size=32M \
-#-P rootfs/*,num=2,format=ext3,size=22M \
+#-P fat/*,num=1,format=vfat,size=32M \
+#-P rootfs/*,num=2,format=ext3,size=20M \
 #-s 64M \
 #-n sdcard_de10nano.img
 
 # Create SD card image without Linux Rootfs files but empty ext partition..
 #sudo python3 ./$MAKE_SDIMAGE_PY_FILE -f \
 #-P ../$SOFTWARE_ROOT/$BOOTLOADER_ROOT/$UBOOT_SRC_ROOT/u-boot-with-spl.sfp,num=3,format=raw,size=10M,type=A2  \
-#-P fat/*,num=1,format=fat32,size=32M \
-#-P num=2,format=ext3,size=22M \
+#-P fat/*,num=1,format=vfat,size=32M \
+#-P num=2,format=ext3,size=20M \
 #-s 64M \
 #-n sdcard_de10nano.img
 
-# Create SD card image with FAT32..
+# Create SD card image with FAT..
 sudo python3 ./$MAKE_SDIMAGE_PY_FILE -f \
 -P ../$SOFTWARE_ROOT/$BOOTLOADER_ROOT/$UBOOT_SRC_ROOT/u-boot-with-spl.sfp,num=2,format=raw,size=10M,type=A2  \
--P fat/*,num=1,format=fat32,size=32M \
--s 42M \
+-P fat/*,num=1,format=vfat,size=4M \
+-s 16M \
 -n sdcard_de10nano.img
 
 # Clean up..

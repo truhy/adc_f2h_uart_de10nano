@@ -2,7 +2,7 @@
 
 ## Overview
 
-A FPGA design (in Verilog) for the DE10-Nano that reads 12-bit samples from the ADC on the board and sends them to UART0 (the mini USB socket for the UART-USB).
+A FPGA design (in Verilog) for the DE10-Nano that reads 12-bit samples from the on-board ADC and sends them to UART0 (the mini USB socket for the UART-USB).
 
 In summary, it does the following all within in the FPGA fabric:
 1. Repeatedly reads Channel 0 ADC sample data from the ADC LTC2308 chip using SPI serial communication
@@ -33,7 +33,7 @@ A Quartus Prime Lite Verilog HDL project:
 | sdcard_image/sdcard_de10nano.img | A prebuilt SD card image                            |
 | adc_f2h_uart.qpf                 | Quartus Prime Lite project file                     |
 | adc_f2h_uart.qsf                 | Quartus Prime Lite settings file                    |
-| adc_f2h_uart.v                   | Top level Verilog file                              |
+| top.v                            | Top level Verilog file                              |
 | adc_ltc2308.v                    | ADC LTC2308 module                                  |
 | uart_dev.v                       | HPS UART module                                     |
 | rd_axi.v                         | Basic read axi helper module                        |
@@ -41,7 +41,7 @@ A Quartus Prime Lite Verilog HDL project:
 
 ## The SD card image is built using the following software versions
 
-- Ubuntu 20.04.1 LTS 64bit
+- Ubuntu 22.04.1 LTS 64bit
 - [Quartus Prime 21.1 Lite Edition for Linux](https://www.intel.co.uk/content/www/uk/en/software/programmable/quartus-prime/download.html)
 - [Quartus SoC EDS 20.1 for Linux](https://fpgasoftware.intel.com/soceds)
 - [U-Boot source v2022.01](https://github.com/u-boot/u-boot/tree/v2022.01)

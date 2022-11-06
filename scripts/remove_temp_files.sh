@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# Extracts u-boot source code..
-
 chmod +x ./parameters.sh
 source ./parameters.sh
 
