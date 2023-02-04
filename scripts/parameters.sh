@@ -1,10 +1,9 @@
 #!/bin/bash
 
 # Quartus paths
-export QUARTUS_ROOTDIR=~/intelFPGA_lite/21.1/quartus
-export SOC_EDS=~/intelFPGA/20.1
+export QUARTUS_BIN=$QSYS_ROOTDIR/../../bin
 
-# Work paths
+# Various paths
 export SOFTWARE_ROOT=software
 export BOOTLOADER_ROOT=bootloader
 export SDCARD_IMAGE_ROOT=sdcard_image
@@ -14,12 +13,12 @@ export UBOOT_MODIFY=other/u-boot-2022-10-modify
 
 # DE10-Nano
 export UBOOT_DEFCONFIG=socfpga_de10_nano_defconfig
-export UBOOT_QTSFILTER_OUTPUT=board/terasic/de10-nano/qts/
+export UBOOT_QTSFILTER_OUTPUT=board/terasic/de10-nano/qts
 export UBOOT_QTSFILTER_SOC_TYPE=cyclone5
 
 # Cyclone 5 (generic)
 #export UBOOT_DEFCONFIG=socfpga_cyclone5_defconfig
-#export UBOOT_QTSFILTER_OUTPUT=board/altera/cyclone5-socdk/qts/
+#export UBOOT_QTSFILTER_OUTPUT=board/altera/cyclone5-socdk/qts
 #export UBOOT_QTSFILTER_SOC_TYPE=cyclone5
 
 # ARM tool chain (i.e. Compiler)

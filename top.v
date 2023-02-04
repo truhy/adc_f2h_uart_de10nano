@@ -24,7 +24,7 @@
 	Developer: Truong Hy
 	HDL      : Verilog
 	Target   : For the DE10-Nano development kit board (SoC FPGA Cyclone V)
-	Version  : 20220405
+	Version  : 20221217
 
 	A hardware design showing the FPGA portion reading the ADC LTC2308 and directly sending the sample value
 	as a serial message to the HPS UART controller (DE10-Nano's UART-USB).
@@ -141,53 +141,60 @@ module top(
 	inout HPS_I2C1_SCLK,
 	inout HPS_I2C1_SDAT
 );
+	// AXI parameters
+	localparam F2H_AXI_BRIDGE_SLAVE_BUS_WIDTH = 32;  // Should match the HPS AXI bridge FPGA-to-HPS interface width in Platform Designer
+
+	// ================
+	// HPS (SoC) module
+	// ================
+
 	// Wires for the PLL clock and reset
 	wire pll0_clock0;
 	wire pll0_clock1;
 	wire pll0_locked;
 	wire hps_reset_n;
-	wire master_reset = ~hps_reset_n;
-	//wire master_reset = ~hps_reset_n | ~pll0_locked;  // Stay in reset if pll is not locked
+	wire master_reset_n = hps_reset_n;
+	//wire master_reset_n = hps_reset_n | pll0_locked;  // Stay in reset if pll is not locked
 
 	// Wires for the AXI interface to the FPGA-to-HPS Bridge (provides FPGA access to the HPS 4GB address map)
-	wire [7:0]   f2h_axi_slave_awid;
-	wire [31:0]  f2h_axi_slave_awaddr;
-	wire [3:0]   f2h_axi_slave_awlen;
-	wire [2:0]   f2h_axi_slave_awsize;
-	wire [1:0]   f2h_axi_slave_awburst;
-	wire [1:0]   f2h_axi_slave_awlock;
-	wire [3:0]   f2h_axi_slave_awcache;
-	wire [2:0]   f2h_axi_slave_awprot;
-	wire         f2h_axi_slave_awvalid;
-	wire         f2h_axi_slave_awready;
-	wire [4:0]   f2h_axi_slave_awuser;
-	wire [7:0]   f2h_axi_slave_wid;
-	wire [31:0]  f2h_axi_slave_wdata;
-	wire [3:0]   f2h_axi_slave_wstrb;
-	wire         f2h_axi_slave_wlast;
-	wire         f2h_axi_slave_wvalid;
-	wire         f2h_axi_slave_wready;
-	wire [7:0]   f2h_axi_slave_bid;
-	wire [1:0]   f2h_axi_slave_bresp;
-	wire         f2h_axi_slave_bvalid;
-	wire         f2h_axi_slave_bready;
-	wire [7:0]   f2h_axi_slave_arid;
-	wire [31:0]  f2h_axi_slave_araddr;
-	wire [3:0]   f2h_axi_slave_arlen;
-	wire [2:0]   f2h_axi_slave_arsize;
-	wire [1:0]   f2h_axi_slave_arburst;
-	wire [1:0]   f2h_axi_slave_arlock;
-	wire [3:0]   f2h_axi_slave_arcache;
-	wire [2:0]   f2h_axi_slave_arprot;
-	wire         f2h_axi_slave_arvalid;
-	wire         f2h_axi_slave_arready;
-	wire [4:0]   f2h_axi_slave_aruser;
-	wire [7:0]   f2h_axi_slave_rid;
-	wire [31:0]  f2h_axi_slave_rdata;
-	wire [1:0]   f2h_axi_slave_rresp;
-	wire         f2h_axi_slave_rlast;
-	wire         f2h_axi_slave_rvalid;
-	wire         f2h_axi_slave_rready;
+	wire [7:0]  f2h_axi_slave_awid;
+	wire [31:0] f2h_axi_slave_awaddr;
+	wire [3:0]  f2h_axi_slave_awlen;
+	wire [2:0]  f2h_axi_slave_awsize;
+	wire [1:0]  f2h_axi_slave_awburst;
+	wire [1:0]  f2h_axi_slave_awlock;
+	wire [3:0]  f2h_axi_slave_awcache;
+	wire [2:0]  f2h_axi_slave_awprot;
+	wire        f2h_axi_slave_awvalid;
+	wire        f2h_axi_slave_awready;
+	wire [4:0]  f2h_axi_slave_awuser;
+	wire [7:0]  f2h_axi_slave_wid;
+	wire [F2H_AXI_BRIDGE_SLAVE_BUS_WIDTH-1:0] f2h_axi_slave_wdata;
+	wire [3:0]  f2h_axi_slave_wstrb;
+	wire        f2h_axi_slave_wlast;
+	wire        f2h_axi_slave_wvalid;
+	wire        f2h_axi_slave_wready;
+	wire [7:0]  f2h_axi_slave_bid;
+	wire [1:0]  f2h_axi_slave_bresp;
+	wire        f2h_axi_slave_bvalid;
+	wire        f2h_axi_slave_bready;
+	wire [7:0]  f2h_axi_slave_arid;
+	wire [31:0] f2h_axi_slave_araddr;
+	wire [3:0]  f2h_axi_slave_arlen;
+	wire [2:0]  f2h_axi_slave_arsize;
+	wire [1:0]  f2h_axi_slave_arburst;
+	wire [1:0]  f2h_axi_slave_arlock;
+	wire [3:0]  f2h_axi_slave_arcache;
+	wire [2:0]  f2h_axi_slave_arprot;
+	wire        f2h_axi_slave_arvalid;
+	wire        f2h_axi_slave_arready;
+	wire [4:0]  f2h_axi_slave_aruser;
+	wire [7:0]  f2h_axi_slave_rid;
+	wire [F2H_AXI_BRIDGE_SLAVE_BUS_WIDTH-1:0] f2h_axi_slave_rdata;
+	wire [1:0]  f2h_axi_slave_rresp;
+	wire        f2h_axi_slave_rlast;
+	wire        f2h_axi_slave_rvalid;
+	wire        f2h_axi_slave_rready;
 
 	// HPS (SoC) instance
 	soc_system u0(
@@ -317,41 +324,51 @@ module top(
 		.reset_reset_n(hps_reset_n)
 	);
 	
-	// For my AXI reader and writer modules
-	localparam RD_AXI_ADDR_WIDTH = 32;
-	localparam RD_AXI_BUS_WIDTH = 32;  // Should match the HPS AXI bridge FPGA-to-HPS interface width in Platform Designer
-	localparam RD_AXI_MAX_BURST_LEN = 1;
-	localparam WR_AXI_ADDR_WIDTH = 32;
-	localparam WR_AXI_BUS_WIDTH = 32;  // Should match the HPS AXI bridge FPGA-to-HPS interface width in Platform Designer
-	localparam WR_AXI_MAX_BURST_LEN = 1;
+	// ==========
+	// AXI helper
+	// ==========
 	
-	// =================================
-	// AXI reader helper module instance
-	// =================================
+	// Helper AXI reader and writer parameters
+	localparam AXI_RD_ID_WIDTH = 8;
+	localparam AXI_RD_ADDR_WIDTH = 32;
+	localparam AXI_RD_BUS_WIDTH = F2H_AXI_BRIDGE_SLAVE_BUS_WIDTH;
+	localparam AXI_RD_MAX_BURST_LEN = 1;
+	localparam AXI_WR_ID_WIDTH = 8;
+	localparam AXI_WR_ADDR_WIDTH = 32;
+	localparam AXI_WR_BUS_WIDTH = F2H_AXI_BRIDGE_SLAVE_BUS_WIDTH;
+	localparam AXI_WR_MAX_BURST_LEN = 1;
 	
-	reg rd_axi_enable;
-	reg [RD_AXI_ADDR_WIDTH-1:0] rd_axi_addr;
-	wire [RD_AXI_BUS_WIDTH*RD_AXI_MAX_BURST_LEN-1:0] rd_axi_data;
-	reg [3:0] rd_axi_burst_len;
-	reg [2:0] rd_axi_burst_size;
-	wire [1:0] rd_axi_status;	
-	rd_axi
+	// ==========================
+	// AXI helper reader instance
+	// ==========================
+	
+	wire axi_rd_enable;
+	reg [AXI_RD_ID_WIDTH-1:0] axi_rd_id;
+	wire [AXI_RD_ADDR_WIDTH-1:0] axi_rd_addr;
+	wire [AXI_RD_BUS_WIDTH*AXI_RD_MAX_BURST_LEN-1:0] axi_rd_data;
+	wire [3:0] axi_rd_burst_len;
+	wire [2:0] axi_rd_burst_size;
+	wire [1:0] axi_rd_status;
+	axi_rd
 	#(
-		.RD_AXI_ADDR_WIDTH(RD_AXI_ADDR_WIDTH),
-		.RD_AXI_BUS_WIDTH(RD_AXI_BUS_WIDTH),
-		.RD_AXI_MAX_BURST_LEN(RD_AXI_MAX_BURST_LEN)
+		.AXI_RD_ID_WIDTH(AXI_RD_ID_WIDTH),
+		.AXI_RD_ADDR_WIDTH(AXI_RD_ADDR_WIDTH),
+		.AXI_RD_BUS_WIDTH(AXI_RD_BUS_WIDTH),
+		.AXI_RD_MAX_BURST_LEN(AXI_RD_MAX_BURST_LEN)
 	)
-	rd_axi_inst(
+	axi_rd_0(
 		.clock(pll0_clock0),
-		.reset(master_reset),
+		.reset_n(master_reset_n),
 		
-		.enable(rd_axi_enable),
-		.addr(rd_axi_addr),
-		.data(rd_axi_data),
-		.burst_len(rd_axi_burst_len),
-		.burst_size(rd_axi_burst_size),
-		.status(rd_axi_status),
+		.enable(axi_rd_enable),
+		.id(axi_rd_id),
+		.addr(axi_rd_addr),
+		.data(axi_rd_data),
+		.burst_len(axi_rd_burst_len),
+		.burst_size(axi_rd_burst_size),
+		.status(axi_rd_status),
 
+		.ar_id(f2h_axi_slave_arid),
 		.ar_addr(f2h_axi_slave_araddr),
 		.ar_len(f2h_axi_slave_arlen),
 		.ar_size(f2h_axi_slave_arsize),
@@ -359,6 +376,7 @@ module top(
 		.ar_prot(f2h_axi_slave_arprot),
 		.ar_valid(f2h_axi_slave_arvalid),
 		.ar_ready(f2h_axi_slave_arready),
+		.r_id(f2h_axi_slave_rid),
 		.r_data(f2h_axi_slave_rdata),
 		.r_last(f2h_axi_slave_rlast),
 		.r_resp(f2h_axi_slave_rresp),
@@ -366,35 +384,39 @@ module top(
 		.r_ready(f2h_axi_slave_rready)
 	);
 
-	// =================================
-	// AXI writer helper module instance
-	// =================================
-	
-	reg wr_axi_enable;
-	reg [WR_AXI_ADDR_WIDTH-1:0] wr_axi_addr;
-	reg [WR_AXI_BUS_WIDTH*WR_AXI_MAX_BURST_LEN-1:0] wr_axi_data;
-	reg [3:0] wr_axi_burst_len;
-	reg [2:0] wr_axi_burst_size;
-	reg [3:0] wr_axi_burst_mask;
-	wire [1:0] wr_axi_status;
-	wr_axi
+	// ==========================
+	// AXI helper writer instance
+	// ==========================
+
+	wire axi_wr_enable;
+	reg [AXI_WR_ID_WIDTH-1:0] axi_wr_id;
+	wire [AXI_WR_ADDR_WIDTH-1:0] axi_wr_addr;
+	wire [AXI_WR_BUS_WIDTH*AXI_WR_MAX_BURST_LEN-1:0] axi_wr_data;
+	wire [3:0] axi_wr_burst_len;
+	wire [2:0] axi_wr_burst_size;
+	wire [AXI_WR_BUS_WIDTH/8-1:0] axi_wr_strb;
+	wire [1:0] axi_wr_status;
+	axi_wr
 	#(
-		.WR_AXI_ADDR_WIDTH(WR_AXI_ADDR_WIDTH),
-		.WR_AXI_BUS_WIDTH(WR_AXI_BUS_WIDTH),
-		.WR_AXI_MAX_BURST_LEN(WR_AXI_MAX_BURST_LEN)
+		.AXI_WR_ID_WIDTH(AXI_WR_ID_WIDTH),
+		.AXI_WR_ADDR_WIDTH(AXI_WR_ADDR_WIDTH),
+		.AXI_WR_BUS_WIDTH(AXI_WR_BUS_WIDTH),
+		.AXI_WR_MAX_BURST_LEN(AXI_WR_MAX_BURST_LEN)
 	)
-	wr_axi_inst(
+	axi_wr_0(
 		.clock(pll0_clock0),
-		.reset(master_reset),
+		.reset_n(master_reset_n),
 		
-		.enable(wr_axi_enable),
-		.addr(wr_axi_addr),
-		.data(wr_axi_data),
-		.burst_len(wr_axi_burst_len),
-		.burst_size(wr_axi_burst_size),
-		.burst_mask(wr_axi_burst_mask),
-		.status(wr_axi_status),
+		.enable(axi_wr_enable),
+		.id(axi_wr_id),
+		.addr(axi_wr_addr),
+		.data(axi_wr_data),
+		.burst_len(axi_wr_burst_len),
+		.burst_size(axi_wr_burst_size),
+		.strb(axi_wr_strb),
+		.status(axi_wr_status),
 		
+		.aw_id(f2h_axi_slave_awid),
 		.aw_addr(f2h_axi_slave_awaddr),
 		.aw_len(f2h_axi_slave_awlen),
 		.aw_size(f2h_axi_slave_awsize),
@@ -402,49 +424,51 @@ module top(
 		.aw_prot(f2h_axi_slave_awprot),
 		.aw_valid(f2h_axi_slave_awvalid),
 		.aw_ready(f2h_axi_slave_awready),
+		.w_id(f2h_axi_slave_wid),
 		.w_data(f2h_axi_slave_wdata),
 		.w_strb(f2h_axi_slave_wstrb),
 		.w_last(f2h_axi_slave_wlast),
 		.w_valid(f2h_axi_slave_wvalid),
 		.w_ready(f2h_axi_slave_wready),
+		.b_id(f2h_axi_slave_bid),
 		.b_resp(f2h_axi_slave_bresp),
 		.b_valid(f2h_axi_slave_bvalid),
 		.b_ready(f2h_axi_slave_bready)
 	);
 	
-	// AXI reader wires for passing to uart dev module
-	wire rd_axi_enable_uart;
-	wire [RD_AXI_ADDR_WIDTH-1:0] rd_axi_addr_uart;
-	wire [RD_AXI_BUS_WIDTH*RD_AXI_MAX_BURST_LEN-1:0] rd_axi_data_uart;
-	wire [3:0] rd_axi_burst_len_uart;
-	wire [2:0] rd_axi_burst_size_uart;
-	wire [1:0] rd_axi_status_uart;
-	assign rd_axi_enable_uart = rd_axi_enable;
-	assign rd_axi_addr_uart = rd_axi_addr;
-	assign rd_axi_data_uart = rd_axi_data;
-	assign rd_axi_burst_len_uart = rd_axi_burst_len;
-	assign rd_axi_burst_size_uart = rd_axi_burst_size;
-	assign rd_axi_status_uart = rd_axi_status;
+	// AXI helper reader wires for passing to uart dev module
+	wire axi_rd_enable_uart;
+	wire [AXI_RD_ADDR_WIDTH-1:0] axi_rd_addr_uart;
+	wire [AXI_RD_BUS_WIDTH*AXI_RD_MAX_BURST_LEN-1:0] axi_rd_data_uart;
+	wire [3:0] axi_rd_burst_len_uart;
+	wire [2:0] axi_rd_burst_size_uart;
+	wire [1:0] axi_rd_status_uart;
+	assign axi_rd_enable_uart = axi_rd_enable;
+	assign axi_rd_addr_uart = axi_rd_addr;
+	assign axi_rd_data_uart = axi_rd_data;
+	assign axi_rd_burst_len_uart = axi_rd_burst_len;
+	assign axi_rd_burst_size_uart = axi_rd_burst_size;
+	assign axi_rd_status_uart = axi_rd_status;
 	
-	// AXI writer wires for passing to uart dev module
-	wire wr_axi_enable_uart;
-	wire [WR_AXI_ADDR_WIDTH-1:0] wr_axi_addr_uart;
-	wire [WR_AXI_BUS_WIDTH*WR_AXI_MAX_BURST_LEN-1:0] wr_axi_data_uart;
-	wire [3:0] wr_axi_burst_len_uart;
-	wire [2:0] wr_axi_burst_size_uart;
-	wire [3:0] wr_axi_burst_mask_uart;
-	wire [1:0] wr_axi_status_uart;
-	assign wr_axi_enable_uart = wr_axi_enable;
-	assign wr_axi_addr_uart = wr_axi_addr;
-	assign wr_axi_data_uart = wr_axi_data;
-	assign wr_axi_burst_len_uart = wr_axi_burst_len;
-	assign wr_axi_burst_size_uart = wr_axi_burst_size;
-	assign wr_axi_burst_mask_uart = wr_axi_burst_mask;
-	assign wr_axi_status_uart = wr_axi_status;
+	// AXI helper writer wires for passing to uart dev module
+	wire axi_wr_enable_uart;
+	wire [AXI_WR_ADDR_WIDTH-1:0] axi_wr_addr_uart;
+	wire [AXI_WR_BUS_WIDTH*AXI_WR_MAX_BURST_LEN-1:0] axi_wr_data_uart;
+	wire [3:0] axi_wr_burst_len_uart;
+	wire [2:0] axi_wr_burst_size_uart;
+	wire [AXI_WR_BUS_WIDTH/8-1:0] axi_wr_strb_uart;
+	wire [1:0] axi_wr_status_uart;
+	assign axi_wr_enable_uart = axi_wr_enable;
+	assign axi_wr_addr_uart = axi_wr_addr;
+	assign axi_wr_data_uart = axi_wr_data;
+	assign axi_wr_burst_len_uart = axi_wr_burst_len;
+	assign axi_wr_burst_size_uart = axi_wr_burst_size;
+	assign axi_wr_strb_uart = axi_wr_strb;
+	assign axi_wr_status_uart = axi_wr_status;
 
-	// ===============================
-	// HPS UART device module instance
-	// ===============================
+	// ===================================
+	// HPS UART controller module instance
+	// ===================================
 	
 	reg uart_enable;
 	wire [1:0] uart_status;
@@ -459,15 +483,15 @@ module top(
 		.UART_BASE_ADDR(32'hFFC02000),
 		.UART_TX_DATA_BUF_LEN(1),
 		.UART_THRE_FIFO_MODE(0),
-		.RD_AXI_ADDR_WIDTH(RD_AXI_ADDR_WIDTH),
-		.RD_AXI_BUS_WIDTH(RD_AXI_BUS_WIDTH),
-		.RD_AXI_MAX_BURST_LEN(RD_AXI_MAX_BURST_LEN),
-		.WR_AXI_ADDR_WIDTH(WR_AXI_ADDR_WIDTH),
-		.WR_AXI_BUS_WIDTH(WR_AXI_BUS_WIDTH),
-		.WR_AXI_MAX_BURST_LEN(WR_AXI_MAX_BURST_LEN)
-	) uart_dev_inst(
+		.AXI_RD_ADDR_WIDTH(AXI_RD_ADDR_WIDTH),
+		.AXI_RD_BUS_WIDTH(AXI_RD_BUS_WIDTH),
+		.AXI_RD_MAX_BURST_LEN(AXI_RD_MAX_BURST_LEN),
+		.AXI_WR_ADDR_WIDTH(AXI_WR_ADDR_WIDTH),
+		.AXI_WR_BUS_WIDTH(AXI_WR_BUS_WIDTH),
+		.AXI_WR_MAX_BURST_LEN(AXI_WR_MAX_BURST_LEN)
+	) uart_dev_0(
 		.clock(pll0_clock0),
-		.reset(master_reset),
+		.reset_n(master_reset_n),
 		
 		.enable(uart_enable),
 		.status(uart_status),
@@ -479,19 +503,19 @@ module top(
 		.tx_hex_start(uart_hex_start),
 		.tx_new_line(uart_new_line),
 		
-		.rd_axi_enable(rd_axi_enable_uart),
-		.rd_axi_addr(rd_axi_addr_uart),
-		.rd_axi_data(rd_axi_data_uart),
-		.rd_axi_burst_len(rd_axi_burst_len_uart),
-		.rd_axi_burst_size(rd_axi_burst_size_uart),
-		.rd_axi_status(rd_axi_status_uart),
-		.wr_axi_enable(wr_axi_enable_uart),
-		.wr_axi_addr(wr_axi_addr_uart),
-		.wr_axi_data(wr_axi_data_uart),
-		.wr_axi_burst_len(wr_axi_burst_len_uart),
-		.wr_axi_burst_size(wr_axi_burst_size_uart),
-		.wr_axi_burst_mask(wr_axi_burst_mask_uart),
-		.wr_axi_status(wr_axi_status_uart)
+		.axi_rd_enable(axi_rd_enable_uart),
+		.axi_rd_addr(axi_rd_addr_uart),
+		.axi_rd_data(axi_rd_data_uart),
+		.axi_rd_burst_len(axi_rd_burst_len_uart),
+		.axi_rd_burst_size(axi_rd_burst_size_uart),
+		.axi_rd_status(axi_rd_status_uart),
+		.axi_wr_enable(axi_wr_enable_uart),
+		.axi_wr_addr(axi_wr_addr_uart),
+		.axi_wr_data(axi_wr_data_uart),
+		.axi_wr_burst_len(axi_wr_burst_len_uart),
+		.axi_wr_burst_size(axi_wr_burst_size_uart),
+		.axi_wr_strb(axi_wr_strb_uart),
+		.axi_wr_status(axi_wr_status_uart)
 	);
 	
 	// ==========================
@@ -500,10 +524,11 @@ module top(
 	
 	wire adc_ready;
 	wire [11:0] adc_data;
-	adc_ltc2308 adc0(
+	adc_ltc2308 adc_0(
 		.clock(pll0_clock1),
-		.reset(master_reset),
+		.reset_n(master_reset_n),
 		.start(1'b1),
+		.sleep(1'b0),
 		.channel(0),
 		.ready(adc_ready),
 		.data(adc_data),
@@ -526,12 +551,14 @@ module top(
 	
 	reg [3:0] state;
 	reg [24:0] counter;
-	always @ (posedge pll0_clock0 or posedge master_reset) begin
+	always @ (posedge pll0_clock0 or negedge master_reset_n) begin
 		// STATE: Reset?
-		if(master_reset) begin
+		if(!master_reset_n) begin
 			uart_enable <= 0;
 			state <= 0;
 			counter <= 0;
+			axi_rd_id <= 0;
+			axi_wr_id <= 0;
 		end else begin
 
 			case(state)

@@ -2,6 +2,8 @@ m255
 K4
 z2
 Z0 !s99 nomlopt
+R0
+R0
 !s11f MIXED_VERSIONS
 R0
 R0
@@ -34,10 +36,10 @@ R0
 cModel Technology
 d/home/truong/intelFPGA_lite/21.1/questa_fse/bin
 T_opt
-!s110 1650065671
-VfUW<49nlhi6SA[L4=aziC3
+!s110 1670784277
+VM?]P0f;`:`jIgN1OM^H0_1
 04 14 4 work tb_adc_ltc2308 fast 0
-=1-000ae431a4f1-625a0106-f1779-19264
+=1-000ae431a4f1-63962514-de306-f26
 !s124 OEM10U2 
 o-quiet -auto_acc_if_foreign -work work +acc
 Z1 tCvgOpt 0

@@ -1,12 +1,72 @@
-Info: Starting: Create block symbol file (.bsf)
-Info: qsys-generate /home/truong/TruongsHDL/adc_uart/soc_system.qsys --block-symbol-file --output-directory=/home/truong/TruongsHDL/adc_uart/soc_system --family="Cyclone V" --part=5CSEBA6U23I7
-Progress: Loading adc_uart/soc_system.qsys
+Info: Starting: Create simulation model
+Info: qsys-generate /home/truong/Truongs_HDL_Verilog/adc_f2h_uart_20221217/soc_system.qsys --simulation=VERILOG --allow-mixed-language-simulation --output-directory=/home/truong/Truongs_HDL_Verilog/adc_f2h_uart_20221217/soc_system/simulation --family="Cyclone V" --part=5CSEBA6U23I7
+Progress: Loading adc_f2h_uart_20221217/soc_system.qsys
 Progress: Reading input file
-Progress: Adding clk_0 [clock_source 21.1]
+Progress: Adding clk_0 [clock_source 22.1]
 Progress: Parameterizing module clk_0
-Progress: Adding hps_0 [altera_hps 21.1]
+Progress: Adding hps_0 [altera_hps 22.1]
 Progress: Parameterizing module hps_0
-Progress: Adding pll_0 [altera_pll 21.1]
+Progress: Adding pll_0 [altera_pll 22.1]
+Progress: Parameterizing module pll_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: soc_system.hps_0: HPS Main PLL counter settings: n = 0  m = 63
+Info: soc_system.hps_0: HPS peripherial PLL counter settings: n = 0  m = 39
+Info: soc_system.pll_0: The legal reference clock frequency is 5.0 MHz..700.0 MHz
+Info: soc_system.pll_0: Able to implement PLL with user settings
+Info: soc_system: Generating soc_system "soc_system" for SIM_VERILOG
+Info: hps_0: "Running  for module: hps_0"
+Info: hps_0: HPS Main PLL counter settings: n = 0  m = 63
+Info: hps_0: HPS peripherial PLL counter settings: n = 0  m = 39
+Info: hps_0: "soc_system" instantiated altera_hps "hps_0"
+Info: pll_0: Generating simgen model
+Info: pll_0: Info: ******************************************************************* Info: Running Quartus Prime Shell     Info: Version 22.1std.0 Build 915 10/25/2022 SC Lite Edition     Info: Copyright (C) 2022  Intel Corporation. All rights reserved.     Info: Your use of Intel Corporation's design tools, logic functions      Info: and other software and tools, and any partner logic      Info: functions, and any output files from any of the foregoing      Info: (including device programming or simulation files), and any      Info: associated documentation or information are expressly subject      Info: to the terms and conditions of the Intel Program License      Info: Subscription Agreement, the Intel Quartus Prime License Agreement,     Info: the Intel FPGA IP License Agreement, or other applicable license     Info: agreement, including, without limitation, that your use is for     Info: the sole purpose of programming logic devices manufactured by     Info: Intel and sold by Intel or its authorized distributors.  Please     Info: refer to the applicable agreement for further details, at     Info: https://fpgasoftware.intel.com/eula.     Info: Processing started: Sun Dec 18 21:57:46 2022 Info: Command: quartus_sh -t run_simgen_cmd.tcl Info: ******************************************************************* Info: Running Quartus Prime Analysis & Synthesis     Info: Version 22.1std.0 Build 915 10/25/2022 SC Lite Edition     Info: Copyright (C) 2022  Intel Corporation. All rights reserved.     Info: Your use of Intel Corporation's design tools, logic functions      Info: and other software and tools, and any partner logic      Info: functions, and any output files from any of the foregoing      Info: (including device programming or simulation files), and any      Info: associated documentation or information are expressly subject      Info: to the terms and conditions of the Intel Program License      Info: Subscription Agreement, the Intel Quartus Prime License Agreement,     Info: the Intel FPGA IP License Agreement, or other applicable license     Info: agreement, including, without limitation, that your use is for     Info: the sole purpose of programming logic devices manufactured by     Info: Intel and sold by Intel or its authorized distributors.  Please     Info: refer to the applicable agreement for further details, at     Info: https://fpgasoftware.intel.com/eula.     Info: Processing started: Sun Dec 18 21:57:47 2022 Info: Command: quartus_map soc_system_pll_0.qpf --simgen --ini=disable_check_quartus_compatibility_qsys_only=on --simgen_parameter=CBX_HDL_LANGUAGE=VERILOG Info (20034): Auto device selection is not supported for Cyclone V device family. The default device, 5CGXFC7C7F23C8, is set. Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance. Info (20029): Only one processor detected - disabling parallel compilation Info (12021): Found 1 design units, including 1 entities, in source file soc_system_pll_0.v     Info (12023): Found entity 1: soc_system_pll_0 File: /tmp/alt9344_4186404745329695926.dir/0002_pll_0_gen/soc_system_pll_0.v Line: 2 Info (12127): Elaborating entity "soc_system_pll_0" for the top level hierarchy Info (12128): Elaborating entity "altera_pll" for hierarchy "altera_pll:altera_pll_i" File: /tmp/alt9344_4186404745329695926.dir/0002_pll_0_gen/soc_system_pll_0.v Line: 88 Info (10008): Verilog HDL or VHDL information: EDA Netlist Writer cannot regroup multidimensional array "wire_to_nowhere_64" into its bus Info (12130): Elaborated megafunction instantiation "altera_pll:altera_pll_i" File: /tmp/alt9344_4186404745329695926.dir/0002_pll_0_gen/soc_system_pll_0.v Line: 88 Info (12133): Instantiated megafunction "altera_pll:altera_pll_i" with the following parameter: File: /tmp/alt9344_4186404745329695926.dir/0002_pll_0_gen/soc_system_pll_0.v Line: 88     Info (12134): Parameter "fractional_vco_multiplier" = "false"     Info (12134): Parameter "reference_clock_frequency" = "50.0 MHz"     Info (12134): Parameter "operation_mode" = "direct"     Info (12134): Parameter "number_of_clocks" = "2"     Info (12134): Parameter "output_clock_frequency0" = "80.000000 MHz"     Info (12134): Parameter "phase_shift0" = "0 ps"     Info (12134): Parameter "duty_cycle0" = "50"     Info (12134): Parameter "output_clock_frequency1" = "40.000000 MHz"     Info (12134): Parameter "phase_shift1" = "0 ps"     Info (12134): Parameter "duty_cycle1" = "50"     Info (12134): Parameter "output_clock_frequency2" = "0 MHz"     Info (12134): Parameter "phase_shift2" = "0 ps"     Info (12134): Parameter "duty_cycle2" = "50"     Info (12134): Parameter "output_clock_frequency3" = "0 MHz"     Info (12134): Parameter "phase_shift3" = "0 ps"     Info (12134): Parameter "duty_cycle3" = "50"     Info (12134): Parameter "output_clock_frequency4" = "0 MHz"     Info (12134): Parameter "phase_shift4" = "0 ps"     Info (12134): Parameter "duty_cycle4" = "50"     Info (12134): Parameter "output_clock_frequency5" = "0 MHz"     Info (12134): Parameter "phase_shift5" = "0 ps"     Info (12134): Parameter "duty_cycle5" = "50"     Info (12134): Parameter "output_clock_frequency6" = "0 MHz"     Info (12134): Parameter "phase_shift6" = "0 ps"     Info (12134): Parameter "duty_cycle6" = "50"     Info (12134): Parameter "output_clock_frequency7" = "0 MHz"     Info (12134): Parameter "phase_shift7" = "0 ps"     Info (12134): Parameter "duty_cycle7" = "50"     Info (12134): Parameter "output_clock_frequency8" = "0 MHz"     Info (12134): Parameter "phase_shift8" = "0 ps"     Info (12134): Parameter "duty_cycle8" = "50"     Info (12134): Parameter "output_clock_frequency9" = "0 MHz"     Info (12134): Parameter "phase_shift9" = "0 ps"     Info (12134): Parameter "duty_cycle9" = "50"     Info (12134): Parameter "output_clock_frequency10" = "0 MHz"     Info (12134): Parameter "phase_shift10" = "0 ps"     Info (12134): Parameter "duty_cycle10" = "50"     Info (12134): Parameter "output_clock_frequency11" = "0 MHz"     Info (12134): Parameter "phase_shift11" = "0 ps"     Info (12134): Parameter "duty_cycle11" = "50"     Info (12134): Parameter "output_clock_frequency12" = "0 MHz"     Info (12134): Parameter "phase_shift12" = "0 ps"     Info (12134): Parameter "duty_cycle12" = "50"     Info (12134): Parameter "output_clock_frequency13" = "0 MHz"     Info (12134): Parameter "phase_shift13" = "0 ps"     Info (12134): Parameter "duty_cycle13" = "50"     Info (12134): Parameter "output_clock_frequency14" = "0 MHz"     Info (12134): Parameter "phase_shift14" = "0 ps"     Info (12134): Parameter "duty_cycle14" = "50"     Info (12134): Parameter "output_clock_frequency15" = "0 MHz"     Info (12134): Parameter "phase_shift15" = "0 ps"     Info (12134): Parameter "duty_cycle15" = "50"     Info (12134): Parameter "output_clock_frequency16" = "0 MHz"     Info (12134): Parameter "phase_shift16" = "0 ps"     Info (12134): Parameter "duty_cycle16" = "50"     Info (12134): Parameter "output_clock_frequency17" = "0 MHz"     Info (12134): Parameter "phase_shift17" = "0 ps"     Info (12134): Parameter "duty_cycle17" = "50"     Info (12134): Parameter "pll_type" = "General"     Info (12134): Parameter "pll_subtype" = "General" Info (281010): Generating sgate simulator netlist using Simgen SIMGEN_PROGRESS Start of Model generation -- 0% complete SIMGEN_PROGRESS Phase 1 : Internal Objects created -- 25% complete SIMGEN_PROGRESS Phase 2 : Connections between internal objects made -- 60% complete SIMGEN_PROGRESS Phase 3 : Netlist generated -- 100% complete Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 1 warning     Info: Peak virtual memory: 407 megabytes     Info: Processing ended: Sun Dec 18 21:58:04 2022     Info: Elapsed time: 00:00:17     Info: Total CPU time (on all processors): 00:00:10 Info (23030): Evaluation of Tcl script run_simgen_cmd.tcl was successful Info: Quartus Prime Shell was successful. 0 errors, 0 warnings     Info: Peak virtual memory: 456 megabytes     Info: Processing ended: Sun Dec 18 21:58:04 2022     Info: Elapsed time: 00:00:18     Info: Total CPU time (on all processors): 00:00:11
+Info: pll_0: Simgen was successful
+Info: pll_0: "soc_system" instantiated altera_pll "pll_0"
+Info: fpga_interfaces: "hps_0" instantiated altera_interface_generator "fpga_interfaces"
+Info: hps_io: "hps_0" instantiated altera_hps_io "hps_io"
+Info: border: "hps_io" instantiated altera_interface_generator "border"
+Info: Reusing file /home/truong/Truongs_HDL_Verilog/adc_f2h_uart_20221217/soc_system/simulation/submodules/verbosity_pkg.sv
+Info: Reusing file /home/truong/Truongs_HDL_Verilog/adc_f2h_uart_20221217/soc_system/simulation/submodules/avalon_utilities_pkg.sv
+Info: Reusing file /home/truong/Truongs_HDL_Verilog/adc_f2h_uart_20221217/soc_system/simulation/submodules/avalon_mm_pkg.sv
+Info: Reusing file /home/truong/Truongs_HDL_Verilog/adc_f2h_uart_20221217/soc_system/simulation/submodules/altera_avalon_mm_slave_bfm.sv
+Info: Reusing file /home/truong/Truongs_HDL_Verilog/adc_f2h_uart_20221217/soc_system/simulation/submodules/altera_avalon_interrupt_sink.sv
+Info: Reusing file /home/truong/Truongs_HDL_Verilog/adc_f2h_uart_20221217/soc_system/simulation/submodules/altera_avalon_clock_source.sv
+Info: Reusing file /home/truong/Truongs_HDL_Verilog/adc_f2h_uart_20221217/soc_system/simulation/submodules/altera_avalon_reset_source.sv
+Info: soc_system: Done "soc_system" with 6 modules, 19 files
+Info: qsys-generate succeeded.
+Info: Finished: Create simulation model
+Info: Starting: Create Modelsim Project.
+Info: sim-script-gen --spd=/home/truong/Truongs_HDL_Verilog/adc_f2h_uart_20221217/soc_system/soc_system.spd --output-directory=/home/truong/Truongs_HDL_Verilog/adc_f2h_uart_20221217/soc_system/simulation/ --use-relative-paths=true
+Info: Doing: ip-make-simscript --spd=/home/truong/Truongs_HDL_Verilog/adc_f2h_uart_20221217/soc_system/soc_system.spd --output-directory=/home/truong/Truongs_HDL_Verilog/adc_f2h_uart_20221217/soc_system/simulation/ --use-relative-paths=true
+Info: Generating the following file(s) for XCELIUM simulator in /home/truong/Truongs_HDL_Verilog/adc_f2h_uart_20221217/soc_system/simulation/ directory:
+Info: 	xcelium/cds.lib
+Info: 	xcelium/hdl.var
+Info: 	xcelium/xcelium_setup.sh
+Info: 	6 .cds.lib files in xcelium/cds_libs/ directory
+Info: Generating the following file(s) for MODELSIM simulator in /home/truong/Truongs_HDL_Verilog/adc_f2h_uart_20221217/soc_system/simulation/ directory:
+Info: 	mentor/msim_setup.tcl
+Info: Generating the following file(s) for VCS simulator in /home/truong/Truongs_HDL_Verilog/adc_f2h_uart_20221217/soc_system/simulation/ directory:
+Info: 	synopsys/vcs/vcs_setup.sh
+Info: Generating the following file(s) for RIVIERA simulator in /home/truong/Truongs_HDL_Verilog/adc_f2h_uart_20221217/soc_system/simulation/ directory:
+Info: 	aldec/rivierapro_setup.tcl
+Info: Generating the following file(s) for VCSMX simulator in /home/truong/Truongs_HDL_Verilog/adc_f2h_uart_20221217/soc_system/simulation/ directory:
+Info: 	synopsys/vcsmx/synopsys_sim.setup
+Info: 	synopsys/vcsmx/vcsmx_setup.sh
+Info: For information on how to simulate your IP, see the explanatory comments in the simulator-specific subdirectories under /home/truong/Truongs_HDL_Verilog/adc_f2h_uart_20221217/soc_system/simulation/.
+Info: Regenerate these scripts whenever you make any change to any Quartus-generated IP in your project.
+Info: Finished: Create Modelsim Project.
+Info: Starting: Create block symbol file (.bsf)
+Info: qsys-generate /home/truong/Truongs_HDL_Verilog/adc_f2h_uart_20221217/soc_system.qsys --block-symbol-file --output-directory=/home/truong/Truongs_HDL_Verilog/adc_f2h_uart_20221217/soc_system --family="Cyclone V" --part=5CSEBA6U23I7
+Progress: Loading adc_f2h_uart_20221217/soc_system.qsys
+Progress: Reading input file
+Progress: Adding clk_0 [clock_source 22.1]
+Progress: Parameterizing module clk_0
+Progress: Adding hps_0 [altera_hps 22.1]
+Progress: Parameterizing module hps_0
+Progress: Adding pll_0 [altera_pll 22.1]
 Progress: Parameterizing module pll_0
 Progress: Building connections
 Progress: Parameterizing connections
@@ -20,14 +80,14 @@ Info: qsys-generate succeeded.
 Info: Finished: Create block symbol file (.bsf)
 Info: 
 Info: Starting: Create HDL design files for synthesis
-Info: qsys-generate /home/truong/TruongsHDL/adc_uart/soc_system.qsys --synthesis=VERILOG --output-directory=/home/truong/TruongsHDL/adc_uart/soc_system/synthesis --family="Cyclone V" --part=5CSEBA6U23I7
-Progress: Loading adc_uart/soc_system.qsys
+Info: qsys-generate /home/truong/Truongs_HDL_Verilog/adc_f2h_uart_20221217/soc_system.qsys --synthesis=VERILOG --output-directory=/home/truong/Truongs_HDL_Verilog/adc_f2h_uart_20221217/soc_system/synthesis --family="Cyclone V" --part=5CSEBA6U23I7
+Progress: Loading adc_f2h_uart_20221217/soc_system.qsys
 Progress: Reading input file
-Progress: Adding clk_0 [clock_source 21.1]
+Progress: Adding clk_0 [clock_source 22.1]
 Progress: Parameterizing module clk_0
-Progress: Adding hps_0 [altera_hps 21.1]
+Progress: Adding hps_0 [altera_hps 22.1]
 Progress: Parameterizing module hps_0
-Progress: Adding pll_0 [altera_pll 21.1]
+Progress: Adding pll_0 [altera_pll 22.1]
 Progress: Parameterizing module pll_0
 Progress: Building connections
 Progress: Parameterizing connections

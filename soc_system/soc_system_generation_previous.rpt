@@ -1,6 +1,6 @@
 Info: Starting: Create block symbol file (.bsf)
-Info: qsys-generate /home/truong/TruongsHDL/f2h_uart_tx_no_axi_mux_v1/soc_system.qsys --block-symbol-file --output-directory=/home/truong/TruongsHDL/f2h_uart_tx_no_axi_mux_v1/soc_system --family="Cyclone V" --part=5CSEBA6U23I7
-Progress: Loading f2h_uart_tx_no_axi_mux_v1/soc_system.qsys
+Info: qsys-generate /home/truong/TruongsHDL/adc_uart/soc_system.qsys --block-symbol-file --output-directory=/home/truong/TruongsHDL/adc_uart/soc_system --family="Cyclone V" --part=5CSEBA6U23I7
+Progress: Loading adc_uart/soc_system.qsys
 Progress: Reading input file
 Progress: Adding clk_0 [clock_source 21.1]
 Progress: Parameterizing module clk_0
@@ -20,8 +20,8 @@ Info: qsys-generate succeeded.
 Info: Finished: Create block symbol file (.bsf)
 Info: 
 Info: Starting: Create HDL design files for synthesis
-Info: qsys-generate /home/truong/TruongsHDL/f2h_uart_tx_no_axi_mux_v1/soc_system.qsys --synthesis=VERILOG --output-directory=/home/truong/TruongsHDL/f2h_uart_tx_no_axi_mux_v1/soc_system/synthesis --family="Cyclone V" --part=5CSEBA6U23I7
-Progress: Loading f2h_uart_tx_no_axi_mux_v1/soc_system.qsys
+Info: qsys-generate /home/truong/TruongsHDL/adc_uart/soc_system.qsys --synthesis=VERILOG --output-directory=/home/truong/TruongsHDL/adc_uart/soc_system/synthesis --family="Cyclone V" --part=5CSEBA6U23I7
+Progress: Loading adc_uart/soc_system.qsys
 Progress: Reading input file
 Progress: Adding clk_0 [clock_source 21.1]
 Progress: Parameterizing module clk_0

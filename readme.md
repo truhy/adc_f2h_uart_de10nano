@@ -42,7 +42,6 @@ A Quartus Prime Lite Verilog HDL project:
 ## The SD card image is built using the following software versions
 
 - Ubuntu 22.04.1 LTS 64bit
-- [Quartus Prime 21.1 Lite Edition for Linux](https://www.intel.co.uk/content/www/uk/en/software/programmable/quartus-prime/download.html)
-- [Quartus SoC EDS 20.1 for Linux](https://fpgasoftware.intel.com/soceds)
+- [Quartus Prime 22.1 Lite Edition for Linux](https://www.intel.co.uk/content/www/uk/en/software/programmable/quartus-prime/download.html)
 - [U-Boot source v2022.10](https://github.com/u-boot/u-boot/tree/v2022.10)
 - [GNU Arm Embedded Toolchain 10.3-2021.07 for Linux x86 64](https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-a/downloads)

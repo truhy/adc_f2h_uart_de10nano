@@ -4,7 +4,7 @@
 // Test bench
 module tb_adc_ltc2308;
 	reg clk;
-	reg reset;
+	reg reset_n;
 	reg start;
 	reg [2:0] channel;
 	wire ready;
@@ -17,7 +17,7 @@ module tb_adc_ltc2308;
 	// Create ADC module instance as DUT (Device Under Test)
 	adc_ltc2308 adc0(
 		.clock(clk),
-		.reset(reset),
+		.reset_n(reset_n),
 		.start(start),
 		.channel(channel),
 		.ready(ready),
@@ -41,13 +41,14 @@ module tb_adc_ltc2308;
 	initial begin
 		// Set values at start of tick (tick = 0)
 		clk <= 1'b0;
-		reset <= 1'b1;  // Hold reset
+		reset_n <= 1'b0;  // Hold reset (active low)
 		channel <= 1'b0;
 		SDO <= 1'b0;
 		start <= 1'b0;
 		
 		// At tick = 1, set some values to test the reset and start
-		#1 reset <= 1'b0;  // Release reset
+		#1
+		reset_n <= 1'b1;  // Release reset
 		start <= 1'b1;     // Set start ADC capture
 
 		// Toggle port to simulate effect in monitor and waveform

@@ -18,10 +18,12 @@ cd $SOFTWARE_ROOT/$BOOTLOADER_ROOT
 # Alternative you can use Altera's u-boot fork
 #git clone https://github.com/altera-opensource/u-boot-socfpga
 
-# Below is alternative to git clone, i.e. if you have already downloaded u-boot source into your home directory
+# Assume u-boot source zip is already downloaded into your home directory
 unzip ~/$UBOOT_SRC_ZIP
 UBOOT_SRC_FOLDER="${UBOOT_SRC_ZIP%.*}"
 mv $UBOOT_SRC_FOLDER $UBOOT_SRC_ROOT
 
-cp "$THIS_SCRIPT_PATH"/$UBOOT_MODIFY/$UBOOT_DEFCONFIG $UBOOT_SRC_ROOT/configs
+cd "$THIS_SCRIPT_PATH"
+chmod +x ./patch_uboot.sh
+./patch_uboot.sh
 
