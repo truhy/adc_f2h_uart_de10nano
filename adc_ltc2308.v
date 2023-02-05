@@ -94,7 +94,7 @@
 		-	Only continuous mode is implemented, i.e. 12-bit samples is readout repeatedly, perhaps in the
 			next version can add in a one-shot mode.
 		-	On the DE10-Nano the LT2308 ADC COM pin (pin 6) is wired to ground so we can only use the unipolar mode,
-			i.e. 0 to 4.096V (Vref) range. Bipolar mode is (+-0/5 * Vref), e.g. -2.048V to 2.048V and cannot be used,
+			i.e. 0 to 4.096V (Vref) range. Bipolar mode is (+-0.5 * Vref), e.g. -2.048V to 2.048V and cannot be used,
 			unless you physically modify the pin.
 			
 	References:
