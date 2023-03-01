@@ -7,7 +7,7 @@ module tb_adc_ltc2308;
 	reg reset_n;
 	reg start;
 	reg sleep;
-	reg [2:0] channel;
+	reg [3:0] channel;
 	wire ready;
 	wire [11:0] data;
 	wire CONVST;

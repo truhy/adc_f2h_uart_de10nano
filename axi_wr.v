@@ -132,9 +132,9 @@ module axi_wr #(
 		end
 		else begin
 
-			// =================================================================================================================
-			// Address read transaction: When enabled, setup the write details and set address write valid so AXI will read them
-			// =================================================================================================================
+			// ==================================================================================================================
+			// Address write transaction: When enabled, setup the write details and set address write valid so AXI will read them
+			// ==================================================================================================================
 
 			if(enable && !status) begin
 				burst_count <= 0;
@@ -142,9 +142,9 @@ module axi_wr #(
 				aw_valid <= 1;  // Set ar_valid high so the receiver transfers the read details
 			end
 
-			// =================================================================================================================================
-			// Address read transaction: Wait for AXI to signal it got the write details, then set write valid to start a write data transaction
-			// =================================================================================================================================
+			// ==================================================================================================================================
+			// Address write transaction: Wait for AXI to signal it got the write details, then set write valid to start a write data transaction
+			// ==================================================================================================================================
 
 			if(aw_ready && aw_valid) begin
 				aw_valid <= 0;
