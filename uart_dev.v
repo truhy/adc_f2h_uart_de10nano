@@ -25,7 +25,7 @@
 	Start date: 07/10/2020
 	HDL       : Verilog
 	Target    : For the DE-10 Nano Development Kit board (SoC FPGA Cyclone V)
-	Version   : 20221217
+	Version   : 20230319
 	
 	Description:
 		Transmit and receive data using the HPS UART controller from the FPGA side - yes that's right from the FPGA side!
@@ -58,18 +58,36 @@
 		rx_data = register containing byte received
 		status = 0 = none, 1 = busy, 2 = done transmit or received data, 3 = done but no received data
 		
-	HPS UART0 controller registers used (see Cyclone V Hard Processor System Technical Reference Manual):
-		UART0 base address: 0xFFC02000  
-		rbr_thr_dll: 0xFFC02000
-			bit 0 to 7 = data byte received or transmit (depends on LCR bits)
-		ier_dlh: 0xFFC02004
-		fcr: 0xFFC02008
-		lsr: 0xFFC02014
-			if bit 0 = 1 (Data Ready) then there is received data in the buffer,
-			if ier_dlh[7] == 1 and fcr[0] == 1 then
-				bit 5 == 0 means transmit is empty
+	Minimal HPS UART0 controller registers (see Cyclone V Hard Processor System Technical Reference Manual):
+		base address: 0xFFC02000  
+		rbr_thr_dll : 0xFFC02000
+		fcr         : 0xFFC02008
+		lsr         : 0xFFC02014
+		sfe         : 0xFFC02098
+		stet        : 0xFFC020A0
+		
+	Register description:
+		Where to read or write data
+			Data is received and transmitted using the rbr_thr_dll register, where bits 0 to 7
+			containing the data byte that is received or to transmit, depending on the lsr bits
+		
+		Knowing when a character is received
+			if lsr bit 0 == 1 (Data Ready) then there is received data in the buffer
+			
+		Knowing when a character can be pushed for transmission
+			if sfe bit 0 == 1 (FIFO enabled) and stet bits 1 & 2 != 0 (threshold enabled) then
+				lsr bit 5: 0 = transmit buffer is free, 1 = transmit buffer is full (FIFO has space vs full)
 			else
-				bit 6 == 1 means transmit is empty
+				lsr bit 5: 1 = transmit buffer is free, 0 = transmit buffer is full (transmit holding register is free vs full)
+			They are masochists - using the same bit but with the opposite logic depending on the mode set!
+
+		Knowing when everything has been transmitted
+			lsr bit 6: 1 = transmit shift register is completely empty, 0 = there is still data waiting to transmit
+			
+	TO DO:
+		Get rid of parameter UART_THRE_FIFO_MODE and read it directly.  This can be done by reading sfe and stet registers
+		and storing a flag in a register.  Note fcr contains the same bits, but it cannot be used because it is write only
+		and reading it does not give you the mode set.
 			
 	References:
 		-	Cyclone V Hard Processor System Technical Reference Manual
@@ -78,7 +96,7 @@
 module uart_dev #(
 	parameter UART_BASE_ADDR = 32'hFFC02000,
 	parameter UART_TX_DATA_BUF_LEN = 1,	// For sizing the UART transmit data buffer register
-	parameter UART_THRE_FIFO_MODE = 0,	// Is UART in THREshold trigger level and FIFO mode?  If register bits ier_dlh[7] == 1 and fcr[0] == 1 then set this parameter to 1, else set to 0
+	parameter UART_THRE_FIFO_MODE = 0,	// Is UART in FIFO and THREshold trigger level mode?  If register bits sfe[0] == 1 and stet[1:0] != 0 then set this parameter to 1, else set to 0
 	parameter AXI_RD_ADDR_WIDTH = 32,
 	parameter AXI_RD_BUS_WIDTH = 32,
 	parameter AXI_RD_MAX_BURST_LEN = 1,
@@ -144,7 +162,7 @@ module uart_dev #(
 	localparam STATE_DONE                     = 23;
 	localparam STATE_END                      = 24;
 
-	wire tx_is_empty = (UART_THRE_FIFO_MODE) ? ~last_axi_rd_data[5] : last_axi_rd_data[6];  // If THRE and FIFO mode is enabled (i.e. register bits ier_dlh[7] == 1 and fcr[0] == 1) then bit5 == 0 means tx is empty, else bit6 == 1 means tx is empty
+	wire tx_is_empty = (UART_THRE_FIFO_MODE) ? ~last_axi_rd_data[5] : last_axi_rd_data[5];
 	reg [31:0] mem_data;
 	reg [31:0] nxt_addr;
 	reg [7:0] digit;
