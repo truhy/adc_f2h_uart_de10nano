@@ -105,10 +105,11 @@ module axi_rd #(
 	`define RD_RESP_SLVERR 2'b10
 	`define RD_RESP_DECERR 2'b11
 
+	// Assign AXI master signals to slave signals
 	assign ar_id = id;                      // Read transaction ID tag
 	assign ar_addr = addr;                  // Starting read address
-	assign ar_len = burst_len;              // Number of transfer beats = ar_len + 1 (aka burst length)
-	assign ar_size = burst_size;            // Per transfer size = 2^burst_size (in bytes)
+	assign ar_len = burst_len;              // Number of transfers: ar_len = number_of_transfers - 1
+	assign ar_size = burst_size;            // Transfer size: transfer_size = 2^ar_size (in bytes)
 	assign ar_burst = `RD_BURST_TYPE_INCR;  // Auto incrementing burst type
 	assign ar_prot = 0;
 
@@ -152,14 +153,15 @@ module axi_rd #(
 				// Store a burst transfer to a register at the correct index
 				data[burst_count*AXI_RD_BUS_WIDTH +: AXI_RD_BUS_WIDTH] <= r_data;
 				
-				// Not end of burst? (i.e. more data to processs?)
-				//if(!r_last) begin
-				if(burst_count < ar_len) begin
-					if(r_resp >= `RD_RESP_SLVERR) error <= 1;  // Check for error
-				end
-				else begin
+				// Burst transfers completed? (i.e. no more data to read?) Note AXI-3 doesn't allow early burst termination
+				if(r_last || burst_count >= ar_len) begin  // Check also burst_count incase AXI slaves don't implement r_last properly
+					// Stop the read operation
 					status <= (r_resp >= `RD_RESP_SLVERR || error) ? 3 : 2;  // Check for error. Set 3 = error, 2 = ok
 					r_ready <= 0;
+				end
+				else begin
+					// Continue to read the next data
+					if(r_resp >= `RD_RESP_SLVERR) error <= 1;  // Check for error
 				end
 
 				burst_count <= burst_count + 1;

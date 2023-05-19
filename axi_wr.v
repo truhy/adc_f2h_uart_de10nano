@@ -112,10 +112,11 @@ module axi_wr #(
 	`define B_RESP_SLVERR 2'b10
 	`define B_RESP_DECERR 2'b11
 	
+	// Assign AXI master signals to slave signals
 	assign aw_id = id;                      // Write transaction ID tag
 	assign aw_addr = addr;                  // Starting write address
-	assign aw_len = burst_len;              // Number of transfer beats = ar_len + 1 (aka burst length)
-	assign aw_size = burst_size;            // Per transfer size = 2^burst_size (in bytes)
+	assign aw_len = burst_len;              // Number of transfers: aw_len = number_of_transfers - 1
+	assign aw_size = burst_size;            // Transfer size: transfer_size = 2^aw_size (in bytes)
 	assign aw_burst = `WR_BURST_TYPE_INCR;  // Auto incrementing burst type
 	assign aw_prot = 0;
 	assign w_id = id;
@@ -163,14 +164,17 @@ module axi_wr #(
 			// ================================================================================
 
 			if(w_ready && w_valid) begin
-				// When last data is transferred, stop the write operation, else write next data
-				if(w_last && b_ready) begin  // Alternative code: if(burst_count > aw_len) begin
+				// Burst transfers completed? (i.e. no more data to write?) Note AXI-3 doesn't allow early burst termination
+				if(w_last && b_ready) begin
+					// Stop the write operation
 					w_last <= 0;
 					w_valid <= 0;
 				end
 				else begin
-					// Write burst is at the last write?
+					// Continue to write the next data
+					// The next transfer is the last one?
 					if(burst_count == aw_len) begin
+						// We need to set these flags to indicate the last burst transfer
 						w_last <= 1;
 						b_ready <= 1;
 					end
