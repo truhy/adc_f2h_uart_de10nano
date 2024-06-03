@@ -29,7 +29,7 @@
 	Version		: 20221217
 	
 	Description:
-		A Verilog module to setup and read-out samples of the ADC LTC2308 IC, connected to the FPGA fabric on the DE-10 Nano
+		A Verilog module to setup and read-out samples from the ADC LTC2308 IC, connected to the FPGA fabric on the DE-10 Nano
 		board.
 		
 		I do know that Quartus Prime Platform Designer already provides a free ADC IP for the Terasic DE series dev boards,
@@ -91,7 +91,7 @@
 			12-bit ADC sample (valid when ready == 1).
 	
 	Limitations:
-		-	Only continuous mode is implemented, i.e. 12-bit samples is readout repeatedly, perhaps in the
+		-	Only continuous mode is implemented, i.e. 12-bit sample is readout repeatedly, perhaps in the
 			next version can add in a one-shot mode.
 		-	On the DE10-Nano the LT2308 ADC COM pin (pin 6) is wired to ground so we can only use the unipolar mode,
 			i.e. 0 to 4.096V (Vref) range. Bipolar mode is (+-0.5 * Vref), e.g. -2.048V to 2.048V and cannot be used,
