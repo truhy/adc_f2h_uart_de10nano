@@ -172,7 +172,7 @@ module adc_ltc2308
 		
 	// Read sample data bits from ADC SPI SDO on the rising clock edge (SPI protocol)..
 	reg [3:0] data_index;
-	always @ (posedge clock) begin
+	always @ (negedge clock) begin
 		if(sck_enable) begin
 			data[data_index] <= SDO;
 			data_index <= data_index - 1;
