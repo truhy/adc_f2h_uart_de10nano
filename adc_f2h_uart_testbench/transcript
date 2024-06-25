@@ -3,7 +3,7 @@
 # 2 compiles, 0 failed with no errors.
 vsim work.tb_adc_ltc2308
 # vsim work.tb_adc_ltc2308 
-# Start time: 15:39:41 on Jun 25,2024
+# Start time: 16:33:46 on Jun 25,2024
 # Loading work.tb_adc_ltc2308
 # Loading work.adc_ltc2308
 add wave -position insertpoint sim:/tb_adc_ltc2308/*
@@ -13,23 +13,104 @@ run
 # Compile of tb_adc_ltc2308.v was successful.
 # 2 compiles, 0 failed with no errors.
 vsim work.tb_adc_ltc2308
-# End time: 15:42:14 on Jun 25,2024, Elapsed time: 0:02:33
+# End time: 16:36:45 on Jun 25,2024, Elapsed time: 0:02:59
 # Errors: 0, Warnings: 3
 # vsim work.tb_adc_ltc2308 
-# Start time: 15:42:14 on Jun 25,2024
+# Start time: 16:36:45 on Jun 25,2024
 # Loading work.tb_adc_ltc2308
 # Loading work.adc_ltc2308
 add wave -position insertpoint sim:/tb_adc_ltc2308/*
 run
-# 0 0
+# 1 0
 # Compile of adc_ltc2308.v was successful.
 # Compile of tb_adc_ltc2308.v was successful.
 # 2 compiles, 0 failed with no errors.
 vsim work.tb_adc_ltc2308
-# End time: 15:42:54 on Jun 25,2024, Elapsed time: 0:00:40
+# End time: 16:39:36 on Jun 25,2024, Elapsed time: 0:02:51
 # Errors: 0, Warnings: 2
 # vsim work.tb_adc_ltc2308 
-# Start time: 15:42:54 on Jun 25,2024
+# Start time: 16:39:36 on Jun 25,2024
+# Loading work.tb_adc_ltc2308
+# Loading work.adc_ltc2308
+add wave -position insertpoint sim:/tb_adc_ltc2308/*
+run
+# 1 0
+# Compile of adc_ltc2308.v was successful.
+# Compile of tb_adc_ltc2308.v was successful.
+# 2 compiles, 0 failed with no errors.
+vsim work.tb_adc_ltc2308
+# End time: 16:41:10 on Jun 25,2024, Elapsed time: 0:01:34
+# Errors: 0, Warnings: 2
+# vsim work.tb_adc_ltc2308 
+# Start time: 16:41:10 on Jun 25,2024
+# Loading work.tb_adc_ltc2308
+# Loading work.adc_ltc2308
+add wave -position insertpoint sim:/tb_adc_ltc2308/*
+run
+# 1 0
+# Compile of adc_ltc2308.v was successful.
+# Compile of tb_adc_ltc2308.v was successful.
+# 2 compiles, 0 failed with no errors.
+vsim work.tb_adc_ltc2308
+# End time: 16:42:53 on Jun 25,2024, Elapsed time: 0:01:43
+# Errors: 0, Warnings: 2
+# vsim work.tb_adc_ltc2308 
+# Start time: 16:42:53 on Jun 25,2024
+# Loading work.tb_adc_ltc2308
+# Loading work.adc_ltc2308
+add wave -position insertpoint sim:/tb_adc_ltc2308/*
+run
+# 1 0
+# Compile of adc_ltc2308.v was successful.
+# Compile of tb_adc_ltc2308.v was successful.
+# 2 compiles, 0 failed with no errors.
+vsim work.tb_adc_ltc2308
+# End time: 16:44:55 on Jun 25,2024, Elapsed time: 0:02:02
+# Errors: 0, Warnings: 2
+# vsim work.tb_adc_ltc2308 
+# Start time: 16:44:55 on Jun 25,2024
+# Loading work.tb_adc_ltc2308
+# Loading work.adc_ltc2308
+add wave -position insertpoint sim:/tb_adc_ltc2308/*
+run
+# 1 0
+# Compile of adc_ltc2308.v was successful.
+# Compile of tb_adc_ltc2308.v was successful.
+# 2 compiles, 0 failed with no errors.
+vsim work.tb_adc_ltc2308
+# End time: 16:49:37 on Jun 25,2024, Elapsed time: 0:04:42
+# Errors: 0, Warnings: 2
+# vsim work.tb_adc_ltc2308 
+# Start time: 16:49:37 on Jun 25,2024
+# Loading work.tb_adc_ltc2308
+# Loading work.adc_ltc2308
+add wave -position insertpoint sim:/tb_adc_ltc2308/*
+run
+# 1 0
+# Compile of adc_ltc2308.v failed with 1 errors.
+# Compile of tb_adc_ltc2308.v was successful.
+# 2 compiles, 1 failed with 1 error.
+vsim work.tb_adc_ltc2308
+# End time: 16:52:46 on Jun 25,2024, Elapsed time: 0:03:09
+# Errors: 0, Warnings: 2
+# vsim work.tb_adc_ltc2308 
+# Start time: 16:52:46 on Jun 25,2024
+# Loading work.tb_adc_ltc2308
+# Loading work.adc_ltc2308
+add wave -position insertpoint sim:/tb_adc_ltc2308/*
+run
+# 1 0
+# Compile of adc_ltc2308.v failed with 1 errors.
+# Compile of tb_adc_ltc2308.v was successful.
+# 2 compiles, 1 failed with 1 error.
+# Compile of adc_ltc2308.v was successful.
+# Compile of tb_adc_ltc2308.v was successful.
+# 2 compiles, 0 failed with no errors.
+vsim work.tb_adc_ltc2308
+# End time: 16:56:01 on Jun 25,2024, Elapsed time: 0:03:15
+# Errors: 0, Warnings: 3
+# vsim work.tb_adc_ltc2308 
+# Start time: 16:56:01 on Jun 25,2024
 # Loading work.tb_adc_ltc2308
 # Loading work.adc_ltc2308
 add wave -position insertpoint sim:/tb_adc_ltc2308/*
@@ -39,14 +120,109 @@ run
 # Compile of tb_adc_ltc2308.v was successful.
 # 2 compiles, 0 failed with no errors.
 vsim work.tb_adc_ltc2308
-# End time: 15:45:25 on Jun 25,2024, Elapsed time: 0:02:31
+# End time: 16:57:08 on Jun 25,2024, Elapsed time: 0:01:07
 # Errors: 0, Warnings: 2
 # vsim work.tb_adc_ltc2308 
-# Start time: 15:45:25 on Jun 25,2024
+# Start time: 16:57:08 on Jun 25,2024
 # Loading work.tb_adc_ltc2308
 # Loading work.adc_ltc2308
 add wave -position insertpoint sim:/tb_adc_ltc2308/*
 run
 # 1 1
-# End time: 15:47:25 on Jun 25,2024, Elapsed time: 0:02:00
+restart
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# 1 1
+# Compile of adc_ltc2308.v was successful.
+# Compile of tb_adc_ltc2308.v was successful.
+# 2 compiles, 0 failed with no errors.
+vsim work.tb_adc_ltc2308
+# End time: 16:59:43 on Jun 25,2024, Elapsed time: 0:02:35
 # Errors: 0, Warnings: 2
+# vsim work.tb_adc_ltc2308 
+# Start time: 16:59:43 on Jun 25,2024
+# Loading work.tb_adc_ltc2308
+# Loading work.adc_ltc2308
+add wave -position insertpoint sim:/tb_adc_ltc2308/*
+run
+# 1 1
+# Compile of adc_ltc2308.v was successful.
+# Compile of tb_adc_ltc2308.v was successful.
+# 2 compiles, 0 failed with no errors.
+vsim work.tb_adc_ltc2308
+# End time: 17:09:53 on Jun 25,2024, Elapsed time: 0:10:10
+# Errors: 0, Warnings: 2
+# vsim work.tb_adc_ltc2308 
+# Start time: 17:09:53 on Jun 25,2024
+# Loading work.tb_adc_ltc2308
+# Loading work.adc_ltc2308
+add wave -position insertpoint sim:/tb_adc_ltc2308/*
+run
+# 1 1
+# Compile of adc_ltc2308.v was successful.
+# Compile of tb_adc_ltc2308.v was successful.
+# 2 compiles, 0 failed with no errors.
+vsim work.tb_adc_ltc2308
+# End time: 17:13:25 on Jun 25,2024, Elapsed time: 0:03:32
+# Errors: 0, Warnings: 2
+# vsim work.tb_adc_ltc2308 
+# Start time: 17:13:25 on Jun 25,2024
+# Loading work.tb_adc_ltc2308
+# Loading work.adc_ltc2308
+add wave -position insertpoint sim:/tb_adc_ltc2308/*
+run
+# Compile of adc_ltc2308.v was successful.
+# Compile of tb_adc_ltc2308.v was successful.
+# 2 compiles, 0 failed with no errors.
+vsim work.tb_adc_ltc2308
+# End time: 17:14:02 on Jun 25,2024, Elapsed time: 0:00:37
+# Errors: 0, Warnings: 2
+# vsim work.tb_adc_ltc2308 
+# Start time: 17:14:02 on Jun 25,2024
+# Loading work.tb_adc_ltc2308
+# Loading work.adc_ltc2308
+add wave -position insertpoint sim:/tb_adc_ltc2308/*
+run
+# Compile of adc_ltc2308.v was successful.
+# Compile of tb_adc_ltc2308.v was successful.
+# 2 compiles, 0 failed with no errors.
+vsim work.tb_adc_ltc2308
+# End time: 17:14:58 on Jun 25,2024, Elapsed time: 0:00:56
+# Errors: 0, Warnings: 2
+# vsim work.tb_adc_ltc2308 
+# Start time: 17:14:58 on Jun 25,2024
+# Loading work.tb_adc_ltc2308
+# Loading work.adc_ltc2308
+add wave -position insertpoint sim:/tb_adc_ltc2308/*
+run
+# 1 1
+# Compile of adc_ltc2308.v was successful.
+# Compile of tb_adc_ltc2308.v was successful.
+# 2 compiles, 0 failed with no errors.
+vsim work.tb_adc_ltc2308
+# End time: 17:17:46 on Jun 25,2024, Elapsed time: 0:02:48
+# Errors: 0, Warnings: 2
+# vsim work.tb_adc_ltc2308 
+# Start time: 17:17:46 on Jun 25,2024
+# Loading work.tb_adc_ltc2308
+# Loading work.adc_ltc2308
+add wave -position insertpoint sim:/tb_adc_ltc2308/*
+run
+# 1 1
+# Compile of adc_ltc2308.v was successful.
+# Compile of tb_adc_ltc2308.v was successful.
+# 2 compiles, 0 failed with no errors.
+vsim work.tb_adc_ltc2308
+# End time: 17:19:15 on Jun 25,2024, Elapsed time: 0:01:29
+# Errors: 0, Warnings: 2
+# vsim work.tb_adc_ltc2308 
+# Start time: 17:19:15 on Jun 25,2024
+# Loading work.tb_adc_ltc2308
+# Loading work.adc_ltc2308
+add wave -position insertpoint sim:/tb_adc_ltc2308/*
+run
+# 1 1
+# End time: 17:23:22 on Jun 25,2024, Elapsed time: 0:04:07
+# Errors: 0, Warnings: 1

@@ -62,7 +62,9 @@
 	
 	User ports:
 		start
-			The acquisition process starts when start is set to 1.
+			The acquisition process starts when start is set to 1
+			Once initiated, a new conversion cannot be restarted or stopped until the
+			current conversion is complete
 		sleep
 			Enable/disables sleep mode:
 				0 = Disable sleep
@@ -172,9 +174,11 @@ module adc_ltc2308
 	always @ (negedge clock or negedge reset_n) begin
 		if(!reset_n) begin
 			conv_span_counter <= -1;  // The reset is asynchronous to the clock so we should not use it for conv_span_counter start.  A -1 dummy value as place holder
+		end else if(!start && (conv_span_counter == (TCYC - 1) || conv_span_counter < 0)) begin
+			conv_span_counter <= -1;  // Stop counting only when not in the process of a conversion.  Datasheet quote: Once initiated, a new conversion cannot be restarted until the current conversion is complete
 		end else if(conv_span_counter == (TCYC - 1)) begin
 			conv_span_counter <= 0;
-		end else if(start) begin
+		end else begin
 			conv_span_counter <= conv_span_counter + 1;
 		end
 	end

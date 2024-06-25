@@ -56,8 +56,32 @@ module tb_adc_ltc2308;
 		
 		// Toggle port to simulate SPI output sample value of 0x801
 		#1350 SDO <= 1'b1;
+		#25   SDO <= 1'b0;
+		#25   SDO <= 1'b0;
+		#25   SDO <= 1'b0;
+		#25   SDO <= 1'b0;
+		#25   SDO <= 1'b0;
+		#25   SDO <= 1'b0;
+		#25   SDO <= 1'b0;
+		#25   SDO <= 1'b0;
+		#25   SDO <= 1'b0;
+		#25   SDO <= 1'b0;
+		#25   SDO <= 1'b1;
 		#25 SDO <= 1'b0;
-		#250 SDO <= 1'b1;
+		
+		// Toggle port to simulate SPI output sample value of 0x123
+		#1700 SDO <= 1'b0;
+		#25   SDO <= 1'b0;
+		#25   SDO <= 1'b0;
+		#25   SDO <= 1'b1;
+		#25   SDO <= 1'b0;
+		#25   SDO <= 1'b0;
+		#25   SDO <= 1'b1;
+		#25   SDO <= 1'b0;
+		#25   SDO <= 1'b0;
+		#25   SDO <= 1'b0;
+		#25   SDO <= 1'b1;
+		#25   SDO <= 1'b1;
 		#25 SDO <= 1'b0;
 
 		$display("%0d %0d", clk, SCK);  // Display values in monitor console
