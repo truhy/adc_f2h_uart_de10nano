@@ -528,7 +528,6 @@ module top(
 		.clock(pll0_clock1),
 		.reset_n(master_reset_n),
 		.start(1'b1),
-		.sleep(1'b0),
 		.channel(0),
 		.ready(adc_ready),
 		.data(adc_data),

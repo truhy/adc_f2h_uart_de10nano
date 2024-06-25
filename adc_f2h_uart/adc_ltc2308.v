@@ -43,7 +43,7 @@
 			   that was created in Platform Designer as a custom IP
 			3. Uses an ADC to FIFO IP which streams (writes) to the memory mapped
 			   registers, so data samples is not readily accessible on the FPGA side
-			4. Doesn't expose the sleep and channel options
+			4. Doesn't expose channel options
 		
 		In contrast my module is more basic and easier to understand for the
 		beginner.  It simply outputs the data samples with an output register, and
@@ -117,7 +117,6 @@ module adc_ltc2308
 	
 	// Ports for the user..
 	input start,
-	input sleep,
 	input [3:0] channel,
 	output ready,
 	output reg [11:0] data,

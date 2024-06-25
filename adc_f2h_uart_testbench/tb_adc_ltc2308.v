@@ -6,7 +6,6 @@ module tb_adc_ltc2308;
 	reg clk;
 	reg reset_n;
 	reg start;
-	reg sleep;
 	reg [3:0] channel;
 	wire ready;
 	wire [11:0] data;
@@ -20,7 +19,6 @@ module tb_adc_ltc2308;
 		.clock(clk),
 		.reset_n(reset_n),
 		.start(start),
-		.sleep(sleep),
 		.channel(channel),
 		.ready(ready),
 		.data(data),
@@ -47,7 +45,6 @@ module tb_adc_ltc2308;
 		channel <= 1'b0;
 		SDO <= 1'b0;
 		start <= 1'b0;
-		sleep <= 1'b0;
 		
 		// After 1 period, set some values to test the reset and start
 		#25
