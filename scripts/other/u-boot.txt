@@ -1,3 +1,0 @@
-fatload mmc 0:1 ${loadaddr} soc_system.rbf
-fpga load 0 ${loadaddr} ${filesize}
-bridge enable

@@ -10,14 +10,27 @@ In summary, it does the following all within in the FPGA fabric:
 
 Note, there is an ADC demo on the Terasic DE10-Nano CD zip file, but it uses the NIOS II FPGA softcore processor (instead of the hardware ARM) and also a custom Platform Designer ADC IP.  My version is more plain and perhaps more useful for a beginner.
 
-## Running instructions
+## Running from USB Blaster II JTAG cable with a script
+
+Requires OpenOCD and Quartus lite or Quartus programmer to be installed and in search paths.
+Search paths are set in the scripts folder.
+
+1. Eject SD card if there is one in the slot
+2. Connect USB Blaster II cable
+3. Connect a USB cable between the UART-USB connector on the DE10-Nano and your computer
+4. Start a serial terminal program such as PuTTY and set it to serial mode, 115200 baud, 8 data bits, 1 stop bit, no parity, no control flow
+5. On Windows run the script rundemo-win.bat, or on linux run rundemo-linux.sh
+6. Wait for U-Boot to boot up and quartus to program the FPGA.  You should see a bunch of U-Boot messages in the serial terminal program
+7. The 12-bit sample reads are displayed in hex format
+
+## Running from SD card image
 
 1. Write the sdcard_de10nano.img to a micro SD card.  Use any of these:
    - Win32 Disk Imager (https://sourceforge.net/projects/win32diskimager/)
    - Rufus (https://rufus.ie/en/)
    - balenaEtcher (https://www.balena.io/etcher/)
 2. Connect a USB cable between the UART-USB connector on the DE10-Nano and your computer
-3. Start a serial console program such as PuTTY and set it to serial mode, 115200 baud, 8 data bits, 1 stop bit, no parity, no control flow
+3. Start a serial terminal program such as PuTTY and set it to serial mode, 115200 baud, 8 data bits, 1 stop bit, no parity, no control flow
 4. Insert the micro SD card into the DE10-Nano and turn on the 5V power supply
 5. Wait for U-Boot to boot up.  You should see a bunch of U-Boot messages and then stop with a console prompt
 6. The 12-bit sample reads are displayed in hex format
@@ -44,4 +57,4 @@ A Quartus Prime Lite Verilog HDL project:
 - Ubuntu 22.04.1 LTS 64bit
 - [Quartus Prime 22.1 Lite Edition for Linux](https://www.intel.co.uk/content/www/uk/en/software/programmable/quartus-prime/download.html)
 - [U-Boot source v2022.10](https://github.com/u-boot/u-boot/tree/v2022.10)
-- [GNU Arm Embedded Toolchain 10.3-2021.07 for Linux x86 64](https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-a/downloads)
+- [xPack GNU Arm Embedded Toolchain 13.2.1-1.1](https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-a/downloads)

@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=modelsim
-Comment=run modelsim
-TryExec=/home/truong/intelFPGA/20.1/modelsim_ase/bin/vsim
-Exec=/home/truong/intelFPGA/20.1/modelsim_ase/bin/vsim
-Terminal=false
-Type=Application
-
