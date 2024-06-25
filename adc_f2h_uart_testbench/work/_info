@@ -47,23 +47,23 @@ n@_opt
 OL;O;2021.2;73
 R1
 vadc_ltc2308
-Z3 !s110 1719332350
+Z3 !s110 1719339820
 !i10b 1
-!s100 Y<=Q@P68RHmhIkiRn`bX40
+!s100 7ThlAEmHo4VHC>UHMdDFP1
 Z4 !s11b Dg1SIo80bB@j0V0VzS_@n1
-I@aFGB[c2SPZ0E@aYjTDoA3
+Iib;z;D6H:aONTMSNXIPa:2
 Z5 VDg1SIo80bB@j0V0VzS_@n1
 Z6 dD:/Documents/GitHub/adc_f2h_uart_de10nano/adc_f2h_uart_testbench
-w1719331675
+w1719338912
 8D:/Documents/GitHub/adc_f2h_uart_de10nano/adc_f2h_uart_testbench/adc_ltc2308.v
 FD:/Documents/GitHub/adc_f2h_uart_de10nano/adc_f2h_uart_testbench/adc_ltc2308.v
-!i122 141
-L0 113 133
+!i122 143
+L0 109 133
 Z7 OV;L;2020.1;71
 r1
 !s85 0
 31
-Z8 !s108 1719332350.000000
+Z8 !s108 1719339820.000000
 !s107 D:/Documents/GitHub/adc_f2h_uart_de10nano/adc_f2h_uart_testbench/adc_ltc2308.v|
 !s90 -reportprogress|300|-work|work|-stats=none|D:/Documents/GitHub/adc_f2h_uart_de10nano/adc_f2h_uart_testbench/adc_ltc2308.v|
 !i113 1
@@ -72,16 +72,16 @@ R2
 vtb_adc_ltc2308
 R3
 !i10b 1
-!s100 LS1G;o8]:P_9^>cGhUBAY0
+!s100 3UJzaBl;C]2n4OUDPlkC_2
 R4
-ILdNYkaeIU>=0@RB2G1e<>1
+IzZZMhkYTBjRL0z@o5<>fL3
 R5
 R6
-w1719332344
+w1719338698
 8D:/Documents/GitHub/adc_f2h_uart_de10nano/adc_f2h_uart_testbench/tb_adc_ltc2308.v
 FD:/Documents/GitHub/adc_f2h_uart_de10nano/adc_f2h_uart_testbench/tb_adc_ltc2308.v
-!i122 142
-L0 5 86
+!i122 144
+L0 5 83
 R7
 r1
 !s85 0
