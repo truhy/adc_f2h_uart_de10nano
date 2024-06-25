@@ -65,10 +65,6 @@
 			The acquisition process starts when start is set to 1
 			Once initiated, a new conversion cannot be restarted or stopped until the
 			current conversion is complete
-		sleep
-			Enable/disables sleep mode:
-				0 = Disable sleep
-				1 = Enable sleep
 		channel
 			Selects the channel mode to choose which ADC samples will be transferred
 			over SPI:
@@ -167,6 +163,7 @@ module adc_ltc2308
 	
 	// Constant config parameter
 	localparam [0:0] UNI = 1'b1;  // 0 = Bipolar, 1 = Unipolar (This is always 1 because DE10-Nano circuit only supports unipolar, i.e. COM pin is wired to ground)
+	localparam [0:0] SLEEP = 1'b0;
 
 	// A counter for each conversion and readout cycle
 	reg [6:0] conv_span_counter;  // Conversion and readout span counter
@@ -208,24 +205,24 @@ module adc_ltc2308
 		if(!sck_enable) begin
 			case(channel)
 				// Single-ended input config
-				0 : cfg_cmd <= { 4'h8, UNI, sleep };  // Selected channels & polarity: +0 with -COM
-				1 : cfg_cmd <= { 4'hC, UNI, sleep };  // Selected channels & polarity: +1 with -COM
-				2 : cfg_cmd <= { 4'h9, UNI, sleep };  // Selected channels & polarity: +2 with -COM
-				3 : cfg_cmd <= { 4'hD, UNI, sleep };  // Selected channels & polarity: +3 with -COM
-				4 : cfg_cmd <= { 4'hA, UNI, sleep };  // Selected channels & polarity: +4 with -COM
-				5 : cfg_cmd <= { 4'hE, UNI, sleep };  // Selected channels & polarity: +5 with -COM
-				6 : cfg_cmd <= { 4'hB, UNI, sleep };  // Selected channels & polarity: +6 with -COM
-				7 : cfg_cmd <= { 4'hF, UNI, sleep };  // Selected channels & polarity: +7 with -COM
+				0 : cfg_cmd <= { 4'h8, UNI, SLEEP };  // Selected channels & polarity: +0 with -COM
+				1 : cfg_cmd <= { 4'hC, UNI, SLEEP };  // Selected channels & polarity: +1 with -COM
+				2 : cfg_cmd <= { 4'h9, UNI, SLEEP };  // Selected channels & polarity: +2 with -COM
+				3 : cfg_cmd <= { 4'hD, UNI, SLEEP };  // Selected channels & polarity: +3 with -COM
+				4 : cfg_cmd <= { 4'hA, UNI, SLEEP };  // Selected channels & polarity: +4 with -COM
+				5 : cfg_cmd <= { 4'hE, UNI, SLEEP };  // Selected channels & polarity: +5 with -COM
+				6 : cfg_cmd <= { 4'hB, UNI, SLEEP };  // Selected channels & polarity: +6 with -COM
+				7 : cfg_cmd <= { 4'hF, UNI, SLEEP };  // Selected channels & polarity: +7 with -COM
 				
 				// Differential input config
-				8  : cfg_cmd <= { 4'h0, UNI, sleep };  // Selected channels & polarity: +0 with -1
-				9  : cfg_cmd <= { 4'h1, UNI, sleep };  // Selected channels & polarity: +2 with -3
-				10 : cfg_cmd <= { 4'h2, UNI, sleep };  // Selected channels & polarity: +4 with -5
-				11 : cfg_cmd <= { 4'h3, UNI, sleep };  // Selected channels & polarity: +6 with -7
-				12 : cfg_cmd <= { 4'h4, UNI, sleep };  // Selected channels & polarity: -0 with +1
-				13 : cfg_cmd <= { 4'h5, UNI, sleep };  // Selected channels & polarity: -2 with +3
-				14 : cfg_cmd <= { 4'h6, UNI, sleep };  // Selected channels & polarity: -4 with +5
-				15 : cfg_cmd <= { 4'h7, UNI, sleep };  // Selected channels & polarity: -6 with +7
+				8  : cfg_cmd <= { 4'h0, UNI, SLEEP };  // Selected channels & polarity: +0 with -1
+				9  : cfg_cmd <= { 4'h1, UNI, SLEEP };  // Selected channels & polarity: +2 with -3
+				10 : cfg_cmd <= { 4'h2, UNI, SLEEP };  // Selected channels & polarity: +4 with -5
+				11 : cfg_cmd <= { 4'h3, UNI, SLEEP };  // Selected channels & polarity: +6 with -7
+				12 : cfg_cmd <= { 4'h4, UNI, SLEEP };  // Selected channels & polarity: -0 with +1
+				13 : cfg_cmd <= { 4'h5, UNI, SLEEP };  // Selected channels & polarity: -2 with +3
+				14 : cfg_cmd <= { 4'h6, UNI, SLEEP };  // Selected channels & polarity: -4 with +5
+				15 : cfg_cmd <= { 4'h7, UNI, SLEEP };  // Selected channels & polarity: -6 with +7
 			endcase
 		end
 	end
