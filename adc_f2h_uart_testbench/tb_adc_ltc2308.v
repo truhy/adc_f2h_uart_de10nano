@@ -52,34 +52,38 @@ module tb_adc_ltc2308;
 		start <= 1'b1;     // Set start ADC capture
 		
 		// Toggle port to simulate SPI output sample value of 0x801
-		#1350 SDO <= 1'b1;
-		#25   SDO <= 1'b0;
-		#25   SDO <= 1'b0;
-		#25   SDO <= 1'b0;
-		#25   SDO <= 1'b0;
-		#25   SDO <= 1'b0;
-		#25   SDO <= 1'b0;
-		#25   SDO <= 1'b0;
-		#25   SDO <= 1'b0;
-		#25   SDO <= 1'b0;
-		#25   SDO <= 1'b0;
-		#25   SDO <= 1'b1;
-		#25 SDO <= 1'b0;
+		#1362.5 SDO <= 1'b1;
+		#25     SDO <= 1'b0;
+		#25     SDO <= 1'b0;
+		#25     SDO <= 1'b0;
+		#25     SDO <= 1'b0;
+		#25     SDO <= 1'b0;
+		#25     SDO <= 1'b0;
+		#25     SDO <= 1'b0;
+		#25     SDO <= 1'b0;
+		#25     SDO <= 1'b0;
+		#25     SDO <= 1'b0;
+		#25     SDO <= 1'b1;
 		
-		// Toggle port to simulate SPI output sample value of 0x123
-		#1700 SDO <= 1'b0;
+		// No data
+		#25     SDO <= 1'b0;
+		
+		// Toggle port to simulate SPI output sample value of 0x911
+		#1700 SDO <= 1'b1;
 		#25   SDO <= 1'b0;
 		#25   SDO <= 1'b0;
 		#25   SDO <= 1'b1;
 		#25   SDO <= 1'b0;
 		#25   SDO <= 1'b0;
+		#25   SDO <= 1'b0;
 		#25   SDO <= 1'b1;
 		#25   SDO <= 1'b0;
 		#25   SDO <= 1'b0;
 		#25   SDO <= 1'b0;
 		#25   SDO <= 1'b1;
-		#25   SDO <= 1'b1;
-		#25 SDO <= 1'b0;
+		
+		// No data
+		#25     SDO <= 1'b0;
 
 		$display("%0d %0d", clk, SCK);  // Display values in monitor console
 		#4100 $finish;  // Stop

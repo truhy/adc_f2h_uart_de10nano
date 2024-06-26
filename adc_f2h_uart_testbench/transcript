@@ -3,12 +3,228 @@
 # 2 compiles, 0 failed with no errors.
 vsim work.tb_adc_ltc2308
 # vsim work.tb_adc_ltc2308 
-# Start time: 19:23:45 on Jun 25,2024
+# Start time: 21:44:10 on Jun 26,2024
 # Loading work.tb_adc_ltc2308
 # Loading work.adc_ltc2308
 add wave -position insertpoint sim:/tb_adc_ltc2308/*
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Truong  Hostname: TRUDESKTOP  ProcessID: 15832
+#           Attempting to use alternate WLF file "./wlft1ihmdi".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlft1ihmdi
 run
 # 1 1
-# End time: 19:26:53 on Jun 25,2024, Elapsed time: 0:03:08
+# Compile of adc_ltc2308.v was successful.
+# Compile of tb_adc_ltc2308.v was successful.
+# 2 compiles, 0 failed with no errors.
+# Compile of adc_ltc2308.v was successful.
+# Compile of tb_adc_ltc2308.v was successful.
+# 2 compiles, 0 failed with no errors.
+vsim work.tb_adc_ltc2308
+# End time: 21:47:09 on Jun 26,2024, Elapsed time: 0:02:59
+# Errors: 0, Warnings: 6
+# vsim work.tb_adc_ltc2308 
+# Start time: 21:47:09 on Jun 26,2024
+# Loading work.tb_adc_ltc2308
+# Loading work.adc_ltc2308
+add wave -position insertpoint sim:/tb_adc_ltc2308/*
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Truong  Hostname: TRUDESKTOP  ProcessID: 15832
+#           Attempting to use alternate WLF file "./wlft11faya".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlft11faya
+run
+# Compile of adc_ltc2308.v was successful.
+# Compile of tb_adc_ltc2308.v was successful.
+# 2 compiles, 0 failed with no errors.
+vsim work.tb_adc_ltc2308
+# End time: 21:48:36 on Jun 26,2024, Elapsed time: 0:01:27
+# Errors: 0, Warnings: 4
+# vsim work.tb_adc_ltc2308 
+# Start time: 21:48:36 on Jun 26,2024
+# Loading work.tb_adc_ltc2308
+# Loading work.adc_ltc2308
+run
+# 1 1
+add wave -position insertpoint sim:/tb_adc_ltc2308/*
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Truong  Hostname: TRUDESKTOP  ProcessID: 15832
+#           Attempting to use alternate WLF file "./wlft87xevk".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlft87xevk
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+run
+# 1 1
+# Compile of adc_ltc2308.v was successful.
+# Compile of tb_adc_ltc2308.v was successful.
+# 2 compiles, 0 failed with no errors.
+vsim work.tb_adc_ltc2308
+# End time: 21:49:23 on Jun 26,2024, Elapsed time: 0:00:47
 # Errors: 0, Warnings: 2
-# Closing project D:/Documents/GitHub/adc_f2h_uart_de10nano/adc_f2h_uart_testbench/adc_f2h_uart_tb.mpf
+# vsim work.tb_adc_ltc2308 
+# Start time: 21:49:23 on Jun 26,2024
+# Loading work.tb_adc_ltc2308
+# Loading work.adc_ltc2308
+add wave -position insertpoint sim:/tb_adc_ltc2308/*
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Truong  Hostname: TRUDESKTOP  ProcessID: 15832
+#           Attempting to use alternate WLF file "./wlfti2gqvn".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlfti2gqvn
+run
+# 0 0
+# Compile of adc_ltc2308.v was successful.
+# Compile of tb_adc_ltc2308.v was successful.
+# 2 compiles, 0 failed with no errors.
+vsim work.tb_adc_ltc2308
+# End time: 21:51:05 on Jun 26,2024, Elapsed time: 0:01:42
+# Errors: 0, Warnings: 4
+# vsim work.tb_adc_ltc2308 
+# Start time: 21:51:05 on Jun 26,2024
+# Loading work.tb_adc_ltc2308
+# Loading work.adc_ltc2308
+add wave -position insertpoint sim:/tb_adc_ltc2308/*
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Truong  Hostname: TRUDESKTOP  ProcessID: 15832
+#           Attempting to use alternate WLF file "./wlftt53h3v".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlftt53h3v
+run
+# 0 0
+vsim work.adc_ltc2308
+# End time: 21:53:38 on Jun 26,2024, Elapsed time: 0:02:33
+# Errors: 0, Warnings: 3
+# vsim work.adc_ltc2308 
+# Start time: 21:53:38 on Jun 26,2024
+# Loading work.adc_ltc2308
+add wave -position insertpoint sim:/adc_ltc2308/*
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Truong  Hostname: TRUDESKTOP  ProcessID: 15832
+#           Attempting to use alternate WLF file "./wlft9xg9wh".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlft9xg9wh
+run
+vsim work.tb_adc_ltc2308
+# End time: 21:54:01 on Jun 26,2024, Elapsed time: 0:00:23
+# Errors: 0, Warnings: 3
+# vsim work.tb_adc_ltc2308 
+# Start time: 21:54:01 on Jun 26,2024
+# Loading work.tb_adc_ltc2308
+# Loading work.adc_ltc2308
+add wave -position insertpoint sim:/tb_adc_ltc2308/adc0/*
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Truong  Hostname: TRUDESKTOP  ProcessID: 15832
+#           Attempting to use alternate WLF file "./wlftvss585".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlftvss585
+run
+# 0 0
+# Compile of adc_ltc2308.v was successful.
+# Compile of tb_adc_ltc2308.v was successful.
+# 2 compiles, 0 failed with no errors.
+vsim work.tb_adc_ltc2308
+# End time: 21:57:45 on Jun 26,2024, Elapsed time: 0:03:44
+# Errors: 0, Warnings: 4
+# vsim work.tb_adc_ltc2308 
+# Start time: 21:57:45 on Jun 26,2024
+# Loading work.tb_adc_ltc2308
+# Loading work.adc_ltc2308
+add wave -position insertpoint sim:/tb_adc_ltc2308/adc0/*
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Truong  Hostname: TRUDESKTOP  ProcessID: 15832
+#           Attempting to use alternate WLF file "./wlftzhw48t".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlftzhw48t
+run
+# 0 0
+# Compile of adc_ltc2308.v was successful.
+# Compile of tb_adc_ltc2308.v was successful.
+# 2 compiles, 0 failed with no errors.
+vsim work.tb_adc_ltc2308
+# End time: 22:06:02 on Jun 26,2024, Elapsed time: 0:08:17
+# Errors: 0, Warnings: 4
+# vsim work.tb_adc_ltc2308 
+# Start time: 22:06:02 on Jun 26,2024
+# Loading work.tb_adc_ltc2308
+# Loading work.adc_ltc2308
+add wave -position insertpoint sim:/tb_adc_ltc2308/adc0/*
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Truong  Hostname: TRUDESKTOP  ProcessID: 15832
+#           Attempting to use alternate WLF file "./wlfty1wkc9".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlfty1wkc9
+run
+# 1 0
+# Compile of adc_ltc2308.v was successful.
+# Compile of tb_adc_ltc2308.v was successful.
+# 2 compiles, 0 failed with no errors.
+vsim work.tb_adc_ltc2308
+# End time: 22:06:49 on Jun 26,2024, Elapsed time: 0:00:47
+# Errors: 0, Warnings: 4
+# vsim work.tb_adc_ltc2308 
+# Start time: 22:06:49 on Jun 26,2024
+# Loading work.tb_adc_ltc2308
+# Loading work.adc_ltc2308
+add wave -position insertpoint sim:/tb_adc_ltc2308/adc0/*
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Truong  Hostname: TRUDESKTOP  ProcessID: 15832
+#           Attempting to use alternate WLF file "./wlft6rcsw6".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlft6rcsw6
+run
+# 0 0
+# Compile of adc_ltc2308.v was successful.
+# Compile of tb_adc_ltc2308.v was successful.
+# 2 compiles, 0 failed with no errors.
+vsim work.tb_adc_ltc2308
+# End time: 22:10:50 on Jun 26,2024, Elapsed time: 0:04:01
+# Errors: 0, Warnings: 4
+# vsim work.tb_adc_ltc2308 
+# Start time: 22:10:50 on Jun 26,2024
+# Loading work.tb_adc_ltc2308
+# Loading work.adc_ltc2308
+add wave -position insertpoint sim:/tb_adc_ltc2308/adc0/*
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Truong  Hostname: TRUDESKTOP  ProcessID: 15832
+#           Attempting to use alternate WLF file "./wlftn67by1".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlftn67by1
+run
+# 0 0
+# Compile of adc_ltc2308.v was successful.
+# Compile of tb_adc_ltc2308.v was successful.
+# 2 compiles, 0 failed with no errors.
+vsim work.tb_adc_ltc2308
+# End time: 22:13:23 on Jun 26,2024, Elapsed time: 0:02:33
+# Errors: 0, Warnings: 4
+# vsim work.tb_adc_ltc2308 
+# Start time: 22:13:23 on Jun 26,2024
+# Loading work.tb_adc_ltc2308
+# Loading work.adc_ltc2308
+add wave -position insertpoint sim:/tb_adc_ltc2308/adc0/*
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Truong  Hostname: TRUDESKTOP  ProcessID: 15832
+#           Attempting to use alternate WLF file "./wlft8sixd5".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlft8sixd5
+run
+# 0 0
+vsim work.tb_adc_ltc2308
+# End time: 22:16:51 on Jun 26,2024, Elapsed time: 0:03:28
+# Errors: 0, Warnings: 3
+# vsim work.tb_adc_ltc2308 
+# Start time: 22:16:51 on Jun 26,2024
+# Loading work.tb_adc_ltc2308
+# Loading work.adc_ltc2308
+add wave -position insertpoint sim:/tb_adc_ltc2308/adc0/*
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Truong  Hostname: TRUDESKTOP  ProcessID: 15832
+#           Attempting to use alternate WLF file "./wlftqjimcj".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlftqjimcj
+run
+# 0 0
+# End time: 22:20:16 on Jun 26,2024, Elapsed time: 0:03:25
+# Errors: 0, Warnings: 3
+# Closing project D:/Documents/Programming/FPGA/de10nano-verilog/adc_f2h_uart_20240609/adc_f2h_uart_testbench/adc_f2h_uart_tb.mpf
