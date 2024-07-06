@@ -25,7 +25,7 @@
     <config name='spi_m_clk_div' value='0' />
     <config name='can0_clk_div' value='4' />
     <config name='can1_clk_div' value='4' />
-    <config name='gpio_db_clk_div' value='16777215' />
+    <config name='gpio_db_clk_div' value='6249' />
     <config name='main_pll_vco_hz' value='1600000000' />
     <config name='periph_pll_vco_hz' value='1000000000' />
     <config name='eosc1_clk_hz' value='25000000' />
@@ -52,7 +52,7 @@
     <config name='spi_m_clk_hz' value='200000000' />
     <config name='can0_clk_hz' value='12500000' />
     <config name='can1_clk_hz' value='12500000' />
-    <config name='gpio_db_clk_hz' value='11' />
+    <config name='gpio_db_clk_hz' value='32000' />
     <config name='l4_mp_clk_hz' value='100000000' />
     <config name='l4_sp_clk_hz' value='100000000' />
     <config name='sdram_pll_c5' value='5' />
@@ -148,6 +148,16 @@
     <pin_mux name='GENERALIO8' choice='I2C0_SCL' value='1' />
     <pin_mux name='GENERALIO3' choice='I2C1_SDA' value='1' />
     <pin_mux name='GENERALIO4' choice='I2C1_SCL' value='1' />
+    <pin_mux name='EMACIO9' choice='GPIO/LoanIO' value='0' />
+    <pin_mux name='GPLMUX9' choice='GPIO' value='1' />
+    <pin_mux name='MIXED1IO21' choice='GPIO/LoanIO' value='0' />
+    <pin_mux name='GPLMUX35' choice='GPIO' value='1' />
+    <pin_mux name='GENERALIO5' choice='GPIO/LoanIO' value='0' />
+    <pin_mux name='GPLMUX53' choice='GPIO' value='1' />
+    <pin_mux name='GENERALIO6' choice='GPIO/LoanIO' value='0' />
+    <pin_mux name='GPLMUX54' choice='GPIO' value='1' />
+    <pin_mux name='GENERALIO13' choice='GPIO/LoanIO' value='0' />
+    <pin_mux name='GPLMUX61' choice='GPIO' value='1' />
     <pin_mux name='GPLMUX0' choice='GPIO' value='1' />
     <pin_mux name='GPLMUX1' choice='GPIO' value='1' />
     <pin_mux name='GPLMUX2' choice='GPIO' value='1' />
@@ -157,7 +167,6 @@
     <pin_mux name='GPLMUX6' choice='GPIO' value='1' />
     <pin_mux name='GPLMUX7' choice='GPIO' value='1' />
     <pin_mux name='GPLMUX8' choice='GPIO' value='1' />
-    <pin_mux name='GPLMUX9' choice='GPIO' value='1' />
     <pin_mux name='GPLMUX10' choice='GPIO' value='1' />
     <pin_mux name='GPLMUX11' choice='GPIO' value='1' />
     <pin_mux name='GPLMUX12' choice='GPIO' value='1' />
@@ -183,7 +192,6 @@
     <pin_mux name='GPLMUX32' choice='GPIO' value='1' />
     <pin_mux name='GPLMUX33' choice='GPIO' value='1' />
     <pin_mux name='GPLMUX34' choice='GPIO' value='1' />
-    <pin_mux name='GPLMUX35' choice='GPIO' value='1' />
     <pin_mux name='GPLMUX36' choice='GPIO' value='1' />
     <pin_mux name='GPLMUX37' choice='GPIO' value='1' />
     <pin_mux name='GPLMUX38' choice='GPIO' value='1' />
@@ -201,15 +209,12 @@
     <pin_mux name='GPLMUX50' choice='GPIO' value='1' />
     <pin_mux name='GPLMUX51' choice='GPIO' value='1' />
     <pin_mux name='GPLMUX52' choice='GPIO' value='1' />
-    <pin_mux name='GPLMUX53' choice='GPIO' value='1' />
-    <pin_mux name='GPLMUX54' choice='GPIO' value='1' />
     <pin_mux name='GPLMUX55' choice='GPIO' value='1' />
     <pin_mux name='GPLMUX56' choice='GPIO' value='1' />
     <pin_mux name='GPLMUX57' choice='GPIO' value='1' />
     <pin_mux name='GPLMUX58' choice='GPIO' value='1' />
     <pin_mux name='GPLMUX59' choice='GPIO' value='1' />
     <pin_mux name='GPLMUX60' choice='GPIO' value='1' />
-    <pin_mux name='GPLMUX61' choice='GPIO' value='1' />
     <pin_mux name='GPLMUX62' choice='GPIO' value='1' />
     <pin_mux name='GPLMUX63' choice='GPIO' value='1' />
     <pin_mux name='GPLMUX64' choice='GPIO' value='1' />

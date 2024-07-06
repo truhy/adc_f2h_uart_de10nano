@@ -47,48 +47,48 @@ n@_opt
 OL;O;2021.2;73
 R1
 vadc_ltc2308
-Z3 !s110 1719436398
+Z3 !s110 1720219102
 !i10b 1
-!s100 7ThlAEmHo4VHC>UHMdDFP1
+!s100 fPDmC>O8?^9dzKSO[H9I^2
 Z4 !s11b Dg1SIo80bB@j0V0VzS_@n1
-In`OJkOUgbi@6=O=fnV:Jz3
+I;l^n1b=E=H?b?hEIY?h@V1
 Z5 VDg1SIo80bB@j0V0VzS_@n1
-Z6 dD:/Documents/Programming/FPGA/de10nano-verilog/adc_f2h_uart_20240609/adc_f2h_uart_testbench
-w1719338912
-8D:/Documents/Programming/FPGA/de10nano-verilog/adc_f2h_uart_20240609/adc_f2h_uart_testbench/adc_ltc2308.v
-FD:/Documents/Programming/FPGA/de10nano-verilog/adc_f2h_uart_20240609/adc_f2h_uart_testbench/adc_ltc2308.v
-!i122 165
-L0 109 133
+Z6 dD:/Documents/Programming/FPGA/de10nano-verilog/adc_f2h_uart_20240703/adc_f2h_uart_testbench
+w1720218779
+8D:/Documents/Programming/FPGA/de10nano-verilog/adc_f2h_uart_20240703/adc_f2h_uart_testbench/adc_ltc2308.v
+FD:/Documents/Programming/FPGA/de10nano-verilog/adc_f2h_uart_20240703/adc_f2h_uart_testbench/adc_ltc2308.v
+!i122 141
+L0 122 203
 Z7 OV;L;2020.1;71
 r1
 !s85 0
 31
-Z8 !s108 1719436398.000000
-!s107 D:/Documents/Programming/FPGA/de10nano-verilog/adc_f2h_uart_20240609/adc_f2h_uart_testbench/adc_ltc2308.v|
-!s90 -reportprogress|300|-work|work|-stats=none|D:/Documents/Programming/FPGA/de10nano-verilog/adc_f2h_uart_20240609/adc_f2h_uart_testbench/adc_ltc2308.v|
+Z8 !s108 1720219102.000000
+!s107 D:/Documents/Programming/FPGA/de10nano-verilog/adc_f2h_uart_20240703/adc_f2h_uart_testbench/adc_ltc2308.v|
+!s90 -reportprogress|300|-work|work|-stats=none|D:/Documents/Programming/FPGA/de10nano-verilog/adc_f2h_uart_20240703/adc_f2h_uart_testbench/adc_ltc2308.v|
 !i113 1
 Z9 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
 R2
 vtb_adc_ltc2308
 R3
 !i10b 1
-!s100 ah`mZ;_mQ9bK`0;iNHDQD3
+!s100 47oI]Q9DWY^C=P^CEbE2L1
 R4
-I@gojXWCHR<YW3m02o7jMa1
+IPJ0[YGLKGB8>Dg8=lgifL2
 R5
 R6
-w1719436395
-8D:/Documents/Programming/FPGA/de10nano-verilog/adc_f2h_uart_20240609/adc_f2h_uart_testbench/tb_adc_ltc2308.v
-FD:/Documents/Programming/FPGA/de10nano-verilog/adc_f2h_uart_20240609/adc_f2h_uart_testbench/tb_adc_ltc2308.v
-!i122 166
-L0 5 87
+w1720219082
+8D:/Documents/Programming/FPGA/de10nano-verilog/adc_f2h_uart_20240703/adc_f2h_uart_testbench/tb_adc_ltc2308.v
+FD:/Documents/Programming/FPGA/de10nano-verilog/adc_f2h_uart_20240703/adc_f2h_uart_testbench/tb_adc_ltc2308.v
+!i122 142
+L0 5 113
 R7
 r1
 !s85 0
 31
 R8
-!s107 D:/Documents/Programming/FPGA/de10nano-verilog/adc_f2h_uart_20240609/adc_f2h_uart_testbench/tb_adc_ltc2308.v|
-!s90 -reportprogress|300|-work|work|-stats=none|D:/Documents/Programming/FPGA/de10nano-verilog/adc_f2h_uart_20240609/adc_f2h_uart_testbench/tb_adc_ltc2308.v|
+!s107 D:/Documents/Programming/FPGA/de10nano-verilog/adc_f2h_uart_20240703/adc_f2h_uart_testbench/tb_adc_ltc2308.v|
+!s90 -reportprogress|300|-work|work|-stats=none|D:/Documents/Programming/FPGA/de10nano-verilog/adc_f2h_uart_20240703/adc_f2h_uart_testbench/tb_adc_ltc2308.v|
 !i113 1
 R9
 R2

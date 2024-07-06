@@ -4,7 +4,7 @@ editor if you plan to continue editing the block that represents it in
 the Block Editor! File corruption is VERY likely to occur.
 */
 /*
-Copyright (C) 2022  Intel Corporation. All rights reserved.
+Copyright (C) 2023  Intel Corporation. All rights reserved.
 Your use of Intel Corporation's design tools, logic functions 
 and other software and tools, and any partner logic 
 functions, and any output files from any of the foregoing 
@@ -21,9 +21,9 @@ https://fpgasoftware.intel.com/eula.
 */
 (header "symbol" (version "1.1"))
 (symbol
-	(rect 0 0 624 1512)
+	(rect 0 0 624 1592)
 	(text "soc_system" (rect 277 -1 327 11)(font "Arial" (font_size 10)))
-	(text "inst" (rect 8 1496 20 1508)(font "Arial" ))
+	(text "inst" (rect 8 1576 20 1588)(font "Arial" ))
 	(port
 		(pt 0 72)
 		(input)
@@ -312,11 +312,11 @@ https://fpgasoftware.intel.com/eula.
 		(line (pt 624 352)(pt 416 352)(line_width 1))
 	)
 	(port
-		(pt 0 1480)
+		(pt 0 1560)
 		(input)
 		(text "reset_reset_n" (rect 0 0 56 12)(font "Arial" (font_size 8)))
-		(text "reset_reset_n" (rect 4 1469 82 1480)(font "Arial" (font_size 8)))
-		(line (pt 0 1480)(pt 208 1480)(line_width 1))
+		(text "reset_reset_n" (rect 4 1549 82 1560)(font "Arial" (font_size 8)))
+		(line (pt 0 1560)(pt 208 1560)(line_width 1))
 	)
 	(port
 		(pt 0 296)
@@ -725,6 +725,41 @@ https://fpgasoftware.intel.com/eula.
 		(line (pt 0 1440)(pt 208 1440)(line_width 1))
 	)
 	(port
+		(pt 0 1456)
+		(bidir)
+		(text "hps_io_hps_io_gpio_inst_GPIO09" (rect 0 0 135 12)(font "Arial" (font_size 8)))
+		(text "hps_io_hps_io_gpio_inst_GPIO09" (rect 4 1445 184 1456)(font "Arial" (font_size 8)))
+		(line (pt 0 1456)(pt 208 1456)(line_width 1))
+	)
+	(port
+		(pt 0 1472)
+		(bidir)
+		(text "hps_io_hps_io_gpio_inst_GPIO35" (rect 0 0 135 12)(font "Arial" (font_size 8)))
+		(text "hps_io_hps_io_gpio_inst_GPIO35" (rect 4 1461 184 1472)(font "Arial" (font_size 8)))
+		(line (pt 0 1472)(pt 208 1472)(line_width 1))
+	)
+	(port
+		(pt 0 1488)
+		(bidir)
+		(text "hps_io_hps_io_gpio_inst_GPIO53" (rect 0 0 135 12)(font "Arial" (font_size 8)))
+		(text "hps_io_hps_io_gpio_inst_GPIO53" (rect 4 1477 184 1488)(font "Arial" (font_size 8)))
+		(line (pt 0 1488)(pt 208 1488)(line_width 1))
+	)
+	(port
+		(pt 0 1504)
+		(bidir)
+		(text "hps_io_hps_io_gpio_inst_GPIO54" (rect 0 0 136 12)(font "Arial" (font_size 8)))
+		(text "hps_io_hps_io_gpio_inst_GPIO54" (rect 4 1493 184 1504)(font "Arial" (font_size 8)))
+		(line (pt 0 1504)(pt 208 1504)(line_width 1))
+	)
+	(port
+		(pt 0 1520)
+		(bidir)
+		(text "hps_io_hps_io_gpio_inst_GPIO61" (rect 0 0 134 12)(font "Arial" (font_size 8)))
+		(text "hps_io_hps_io_gpio_inst_GPIO61" (rect 4 1509 184 1520)(font "Arial" (font_size 8)))
+		(line (pt 0 1520)(pt 208 1520)(line_width 1))
+	)
+	(port
 		(pt 624 272)
 		(bidir)
 		(text "memory_mem_dq[31..0]" (rect 0 0 101 12)(font "Arial" (font_size 8)))
@@ -834,6 +869,11 @@ https://fpgasoftware.intel.com/eula.
 		(text "hps_io_i2c0_inst_SCL" (rect 213 1403 546 2816)(font "Arial" (color 0 0 0)))
 		(text "hps_io_i2c1_inst_SDA" (rect 213 1419 546 2848)(font "Arial" (color 0 0 0)))
 		(text "hps_io_i2c1_inst_SCL" (rect 213 1435 546 2880)(font "Arial" (color 0 0 0)))
+		(text "hps_io_gpio_inst_GPIO09" (rect 213 1451 564 2912)(font "Arial" (color 0 0 0)))
+		(text "hps_io_gpio_inst_GPIO35" (rect 213 1467 564 2944)(font "Arial" (color 0 0 0)))
+		(text "hps_io_gpio_inst_GPIO53" (rect 213 1483 564 2976)(font "Arial" (color 0 0 0)))
+		(text "hps_io_gpio_inst_GPIO54" (rect 213 1499 564 3008)(font "Arial" (color 0 0 0)))
+		(text "hps_io_gpio_inst_GPIO61" (rect 213 1515 564 3040)(font "Arial" (color 0 0 0)))
 		(text "memory" (rect 417 83 870 179)(font "Arial" (color 128 0 0)(font_size 9)))
 		(text "mem_a" (rect 381 107 792 224)(font "Arial" (color 0 0 0)))
 		(text "mem_ba" (rect 376 123 788 256)(font "Arial" (color 0 0 0)))
@@ -857,13 +897,13 @@ https://fpgasoftware.intel.com/eula.
 		(text "clk" (rect 401 427 820 864)(font "Arial" (color 0 0 0)))
 		(text "pll_0_outclk1" (rect 417 443 912 899)(font "Arial" (color 128 0 0)(font_size 9)))
 		(text "clk" (rect 401 467 820 944)(font "Arial" (color 0 0 0)))
-		(text "reset" (rect 179 1451 388 2915)(font "Arial" (color 128 0 0)(font_size 9)))
-		(text "reset_n" (rect 213 1475 468 2960)(font "Arial" (color 0 0 0)))
-		(text " soc_system " (rect 568 1496 1208 3002)(font "Arial" ))
+		(text "reset" (rect 179 1531 388 3075)(font "Arial" (color 128 0 0)(font_size 9)))
+		(text "reset_n" (rect 213 1555 468 3120)(font "Arial" (color 0 0 0)))
+		(text " soc_system " (rect 568 1576 1208 3162)(font "Arial" ))
 		(line (pt 208 32)(pt 416 32)(line_width 1))
-		(line (pt 416 32)(pt 416 1496)(line_width 1))
-		(line (pt 208 1496)(pt 416 1496)(line_width 1))
-		(line (pt 208 32)(pt 208 1496)(line_width 1))
+		(line (pt 416 32)(pt 416 1576)(line_width 1))
+		(line (pt 208 1576)(pt 416 1576)(line_width 1))
+		(line (pt 208 32)(pt 208 1576)(line_width 1))
 		(line (pt 209 52)(pt 209 76)(line_width 1))
 		(line (pt 210 52)(pt 210 76)(line_width 1))
 		(line (pt 209 92)(pt 209 116)(line_width 1))
@@ -872,8 +912,8 @@ https://fpgasoftware.intel.com/eula.
 		(line (pt 210 132)(pt 210 748)(line_width 1))
 		(line (pt 415 52)(pt 415 76)(line_width 1))
 		(line (pt 414 52)(pt 414 76)(line_width 1))
-		(line (pt 209 764)(pt 209 1444)(line_width 1))
-		(line (pt 210 764)(pt 210 1444)(line_width 1))
+		(line (pt 209 764)(pt 209 1524)(line_width 1))
+		(line (pt 210 764)(pt 210 1524)(line_width 1))
 		(line (pt 415 92)(pt 415 356)(line_width 1))
 		(line (pt 414 92)(pt 414 356)(line_width 1))
 		(line (pt 415 372)(pt 415 396)(line_width 1))
@@ -882,11 +922,11 @@ https://fpgasoftware.intel.com/eula.
 		(line (pt 414 412)(pt 414 436)(line_width 1))
 		(line (pt 415 452)(pt 415 476)(line_width 1))
 		(line (pt 414 452)(pt 414 476)(line_width 1))
-		(line (pt 209 1460)(pt 209 1484)(line_width 1))
-		(line (pt 210 1460)(pt 210 1484)(line_width 1))
+		(line (pt 209 1540)(pt 209 1564)(line_width 1))
+		(line (pt 210 1540)(pt 210 1564)(line_width 1))
 		(line (pt 0 0)(pt 624 0)(line_width 1))
-		(line (pt 624 0)(pt 624 1512)(line_width 1))
-		(line (pt 0 1512)(pt 624 1512)(line_width 1))
-		(line (pt 0 0)(pt 0 1512)(line_width 1))
+		(line (pt 624 0)(pt 624 1592)(line_width 1))
+		(line (pt 0 1592)(pt 624 1592)(line_width 1))
+		(line (pt 0 0)(pt 0 1592)(line_width 1))
 	)
 )

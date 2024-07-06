@@ -21,7 +21,7 @@
 	
 	Developer: Truong Hy
 	HDL      : Verilog
-	Version  : 20221222
+	Version  : 20230921
 	
 	Description:
 		Helper module providing a simpler interface to write to an AXI-3 slave (ARM AMBA interconnect interface).
@@ -54,10 +54,16 @@
 		status = 0 = ready, 1 = wait, 2 = completed ok, 3 = error
 	
 	AXI spec notes:
-		aw_len = number of bursts (aka blocks) to transfer.  Formula: actual_length = aw_len + 1
-		aw_size = size of a burst (aka block) transfer.  Formula: size_bytes = 2^aw_size
+		awlen = number of bursts (aka blocks) to transfer.  Formula: actual_length = awlen + 1
+		awsize = size of a burst (aka block) transfer.  Formula: size_bytes = 2^awsize
 		The parameter AXI_WR_MAX_BURST_LEN is the maximum burst length allowed (number of burst
 		transfers), set to a value within the range 1 to 16 (AXI-3).
+		
+	References:
+		AXI specifications:
+			https://www.arm.com/architecture/system-architectures/amba/amba-specifications
+		Version B is AXI-3:
+			https://developer.arm.com/documentation/ihi0022/b
 */
 module axi_wr #(
 	parameter AXI_WR_ID_WIDTH = 8,
@@ -74,130 +80,134 @@ module axi_wr #(
 	input [AXI_WR_MAX_BURST_LEN*AXI_WR_BUS_WIDTH-1:0] data,
 	input [3:0] burst_len,
 	input [2:0] burst_size,
+	input [1:0] burst_type,
+	input [1:0] lock,
+	input [3:0] cache,
+	input [2:0] prot,
+	input [4:0] user,
 	input [AXI_WR_BUS_WIDTH/8-1:0] strb,
 	output reg [1:0] status,  // 0 = ready, 1 = wait, 2 = completed ok, 3 = error
 	
 	// Connection to the AXI interface slave..
 	// Address write channel registers
-	output [AXI_WR_ID_WIDTH-1:0] aw_id,
-	output [AXI_WR_ADDR_WIDTH-1:0] aw_addr,
-	output [3:0] aw_len,
-	output [2:0] aw_size,
-	output [1:0] aw_burst,
-	output [2:0] aw_prot,
-	output reg aw_valid,
-	input aw_ready,
+	output [AXI_WR_ID_WIDTH-1:0] awid,
+	output [AXI_WR_ADDR_WIDTH-1:0] awaddr,
+	output [3:0] awlen,
+	output [2:0] awsize,
+	output [1:0] awburst,
+	output [1:0] awlock,
+	output [3:0] awcache,
+	output [2:0] awprot,
+	output [4:0] awuser,
+	output reg awvalid,
+	input awready,
 	// Write data channel registers
-	output [AXI_WR_ID_WIDTH-1:0] w_id,
-	output [AXI_WR_BUS_WIDTH-1:0] w_data,
-	output [AXI_WR_BUS_WIDTH/8-1:0] w_strb,
-	output reg w_last,
-	output reg w_valid,
-	input w_ready,
+	output [AXI_WR_ID_WIDTH-1:0] wid,
+	output [AXI_WR_BUS_WIDTH-1:0] wdata,
+	output [AXI_WR_BUS_WIDTH/8-1:0] wstrb,
+	output reg wlast,
+	output reg wvalid,
+	input wready,
 	// Response channel registers
-	input [AXI_WR_ID_WIDTH-1:0] b_id,
-	input [1:0] b_resp,
-	input b_valid,
-	output reg b_ready
+	input [AXI_WR_ID_WIDTH-1:0] bid,
+	input [1:0] bresp,
+	input bvalid,
+	output reg bready
 );
+	`include "axi_def.vh"
+
 	reg [3:0] burst_count;
 	
-	`define WR_BURST_TYPE_FIXED 2'b00
-	`define WR_BURST_TYPE_INCR  2'b01
-	`define WR_BURST_TYPE_WRAP  2'b10
-	`define WR_BURST_TYPE_RES   2'b11
-	
-	`define B_RESP_OKAY   2'b00
-	`define B_RESP_EXOKAY 2'b01
-	`define B_RESP_SLVERR 2'b10
-	`define B_RESP_DECERR 2'b11
-	
 	// Assign AXI master signals to slave signals
-	assign aw_id = id;                      // Write transaction ID tag
-	assign aw_addr = addr;                  // Starting write address
-	assign aw_len = burst_len;              // Number of transfers: aw_len = number_of_transfers - 1
-	assign aw_size = burst_size;            // Transfer size: transfer_size = 2^aw_size (in bytes)
-	assign aw_burst = `WR_BURST_TYPE_INCR;  // Auto incrementing burst type
-	assign aw_prot = 0;
-	assign w_id = id;
-	assign w_strb = strb;
-	assign w_data = data[(burst_count-1)*AXI_WR_BUS_WIDTH +: AXI_WR_BUS_WIDTH];
+	assign awid = id;                         // Write transaction ID tag
+	assign awaddr = addr;                     // Starting write address
+	assign awlen = burst_len;                 // Number of bursts transfers. Formula: burst_len = number_of_transfers - 1
+	assign awsize = burst_size;               // Burst transfer size. Formula: transfer_size = 2^burst_size (in bytes)
+	assign awburst = burst_type;
+	assign awlock = lock;
+	assign awcache = cache;
+	assign awprot = prot;
+	assign awuser = user;
+	assign wid = id;
+	assign wstrb = strb;
+	assign wdata = data[burst_count*AXI_WR_BUS_WIDTH +: AXI_WR_BUS_WIDTH];
 	
 	always @ (posedge clock or negedge reset_n) begin
 		if(!reset_n) begin
-			aw_valid <= 0;
-			w_valid <= 0;
-			b_ready <= 0;
-			w_last <= 0;
+			awvalid <= 0;
+			wvalid <= 0;
+			bready <= 0;
+			wlast <= 0;
 			status <= 0;
 		end
 		else begin
 
-			// ==================================================================================================================
-			// Address write transaction: When enabled, setup the write details and set address write valid so AXI will read them
-			// ==================================================================================================================
+			// ================================
+			// Address write transaction: start
+			// ================================
 
 			if(enable && !status) begin
 				burst_count <= 0;
 				status <= 1;
-				aw_valid <= 1;  // Set ar_valid high so the receiver transfers the read details
+				awvalid <= 1;  // Master asserts awvalid to indicate the address value is valid and can be transferred
 			end
 
-			// ==================================================================================================================================
-			// Address write transaction: Wait for AXI to signal it got the write details, then set write valid to start a write data transaction
-			// ==================================================================================================================================
+			// ===========================================
+			// Address write transaction: wait for ready
+			// Write transaction: start
+			// ===========================================
 
-			if(aw_ready && aw_valid) begin
-				aw_valid <= 0;
+			if(awvalid && awready) begin  // Wait for the slave to assert awready, which indicates it is ready to receive the address value
+				awvalid <= 0;
 				
 				// Write burst is at the last write?
-				if(burst_count == aw_len) begin
-					w_last <= 1;
-					b_ready <= 1;
+				if(burst_count == awlen) begin  // Terminate on last burst count
+					wlast <= 1;
+					bready <= 1;
 				end
-				burst_count <= burst_count + 1;
-				w_valid <= 1;
+				wvalid <= 1;  // Master asserts wvalid to indicate the data value is valid and can be transferred
 			end
 
-			// ================================================================================
-			// Write transaction: Wait for AXI to signal write ready, then we assign write data
-			// ================================================================================
+			// =================================
+			// Write transaction: wait for ready
+			// =================================
 
-			if(w_ready && w_valid) begin
-				// Burst transfers completed? (i.e. no more data to write?) Note AXI-3 doesn't allow early burst termination
-				if(w_last && b_ready) begin
+			if(wvalid && wready) begin  // Wait for the slave to assert wready, which indicates it is ready to receive the data value
+				// Burst transfers completed? (i.e. no more data to write?)
+				if(wlast && bready) begin
 					// Stop the write operation
-					w_last <= 0;
-					w_valid <= 0;
+					wlast <= 0;
+					wvalid <= 0;
 				end
 				else begin
 					// Continue to write the next data
 					// The next transfer is the last one?
-					if(burst_count == aw_len) begin
+					if((burst_count + 1) == awlen) begin  // Terminate on last burst count
 						// We need to set these flags to indicate the last burst transfer
-						w_last <= 1;
-						b_ready <= 1;
+						wlast <= 1;
+						bready <= 1;
 					end
 					burst_count <= burst_count + 1;
 				end
 			end
 			
-			// ===============================================================================================
-			// Write response transaction: Wait for AXI to signal response valid, then read and store response
-			// ===============================================================================================
+			// ==========================================
+			// Write response transaction: Wait for valid
+			// Note: b stands for buffered
+			// ==========================================
 
-			// No need to check b_id, leave that to an arbiter to handle
-			//if(b_id == id && b_ready && b_valid) begin
-			if(b_ready && b_valid) begin
-				status <= (b_resp >= `B_RESP_SLVERR) ? 3 : 2;  // Check for error. Set 3 = error, 2 = ok
-				b_ready <= 0;
+			// No need to check bid, leave that to an arbiter to handle
+			//if(bid == id && bready && bvalid) begin
+			if(bready && bvalid) begin  // Wait for the slave to assert bvalid, which indicates response value is valid and can be transferred
+				status <= (bresp >= `AXI_BRESP_SLVERR) ? 3 : 2;  // Check for error. Set 3 = error, 2 = ok
+				bready <= 0;
 			end
 				
 			// ==================
 			// When done, restart
 			// ==================
-		
-			if(status >= 2 && !enable) begin
+
+			if(status >= 2) begin
 				status <= 0;
 			end
 		end

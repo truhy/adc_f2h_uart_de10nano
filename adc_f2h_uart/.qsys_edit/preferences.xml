@@ -3,12 +3,11 @@
  <debug showDebugMenu="0" />
  <systemtable filter="All Interfaces">
   <columns>
-   <connections preferredWidth="143" />
-   <irq preferredWidth="34" />
+   <connections preferredWidth="111" />
+   <irq preferredWidth="47" />
    <inputclock preferredWidth="143" />
   </columns>
  </systemtable>
- <library
-   expandedCategories="Library/Basic Functions,Library/Basic Functions/Bridges and Adaptors/Clock,Library,Project,Library/Basic Functions/Bridges and Adaptors" />
- <window width="1368" height="856" x="72" y="27" />
+ <library expandedCategories="Project,Library" />
+ <window width="1874" height="1096" x="-8" y="-8" />
 </preferences>

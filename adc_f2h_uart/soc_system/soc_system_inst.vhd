@@ -83,6 +83,11 @@
 			hps_io_hps_io_i2c0_inst_SCL     : inout std_logic                     := 'X';             -- hps_io_i2c0_inst_SCL
 			hps_io_hps_io_i2c1_inst_SDA     : inout std_logic                     := 'X';             -- hps_io_i2c1_inst_SDA
 			hps_io_hps_io_i2c1_inst_SCL     : inout std_logic                     := 'X';             -- hps_io_i2c1_inst_SCL
+			hps_io_hps_io_gpio_inst_GPIO09  : inout std_logic                     := 'X';             -- hps_io_gpio_inst_GPIO09
+			hps_io_hps_io_gpio_inst_GPIO35  : inout std_logic                     := 'X';             -- hps_io_gpio_inst_GPIO35
+			hps_io_hps_io_gpio_inst_GPIO53  : inout std_logic                     := 'X';             -- hps_io_gpio_inst_GPIO53
+			hps_io_hps_io_gpio_inst_GPIO54  : inout std_logic                     := 'X';             -- hps_io_gpio_inst_GPIO54
+			hps_io_hps_io_gpio_inst_GPIO61  : inout std_logic                     := 'X';             -- hps_io_gpio_inst_GPIO61
 			memory_mem_a                    : out   std_logic_vector(14 downto 0);                    -- mem_a
 			memory_mem_ba                   : out   std_logic_vector(2 downto 0);                     -- mem_ba
 			memory_mem_ck                   : out   std_logic;                                        -- mem_ck
@@ -101,8 +106,8 @@
 			memory_oct_rzqin                : in    std_logic                     := 'X';             -- oct_rzqin
 			pll_0_locked_export             : out   std_logic;                                        -- export
 			pll_0_outclk0_clk               : out   std_logic;                                        -- clk
-			reset_reset_n                   : in    std_logic                     := 'X';             -- reset_n
-			pll_0_outclk1_clk               : out   std_logic                                         -- clk
+			pll_0_outclk1_clk               : out   std_logic;                                        -- clk
+			reset_reset_n                   : in    std_logic                     := 'X'              -- reset_n
 		);
 	end component soc_system;
 
@@ -191,6 +196,11 @@
 			hps_io_hps_io_i2c0_inst_SCL     => CONNECTED_TO_hps_io_hps_io_i2c0_inst_SCL,     --                    .hps_io_i2c0_inst_SCL
 			hps_io_hps_io_i2c1_inst_SDA     => CONNECTED_TO_hps_io_hps_io_i2c1_inst_SDA,     --                    .hps_io_i2c1_inst_SDA
 			hps_io_hps_io_i2c1_inst_SCL     => CONNECTED_TO_hps_io_hps_io_i2c1_inst_SCL,     --                    .hps_io_i2c1_inst_SCL
+			hps_io_hps_io_gpio_inst_GPIO09  => CONNECTED_TO_hps_io_hps_io_gpio_inst_GPIO09,  --                    .hps_io_gpio_inst_GPIO09
+			hps_io_hps_io_gpio_inst_GPIO35  => CONNECTED_TO_hps_io_hps_io_gpio_inst_GPIO35,  --                    .hps_io_gpio_inst_GPIO35
+			hps_io_hps_io_gpio_inst_GPIO53  => CONNECTED_TO_hps_io_hps_io_gpio_inst_GPIO53,  --                    .hps_io_gpio_inst_GPIO53
+			hps_io_hps_io_gpio_inst_GPIO54  => CONNECTED_TO_hps_io_hps_io_gpio_inst_GPIO54,  --                    .hps_io_gpio_inst_GPIO54
+			hps_io_hps_io_gpio_inst_GPIO61  => CONNECTED_TO_hps_io_hps_io_gpio_inst_GPIO61,  --                    .hps_io_gpio_inst_GPIO61
 			memory_mem_a                    => CONNECTED_TO_memory_mem_a,                    --              memory.mem_a
 			memory_mem_ba                   => CONNECTED_TO_memory_mem_ba,                   --                    .mem_ba
 			memory_mem_ck                   => CONNECTED_TO_memory_mem_ck,                   --                    .mem_ck
@@ -209,7 +219,7 @@
 			memory_oct_rzqin                => CONNECTED_TO_memory_oct_rzqin,                --                    .oct_rzqin
 			pll_0_locked_export             => CONNECTED_TO_pll_0_locked_export,             --        pll_0_locked.export
 			pll_0_outclk0_clk               => CONNECTED_TO_pll_0_outclk0_clk,               --       pll_0_outclk0.clk
-			reset_reset_n                   => CONNECTED_TO_reset_reset_n,                   --               reset.reset_n
-			pll_0_outclk1_clk               => CONNECTED_TO_pll_0_outclk1_clk                --       pll_0_outclk1.clk
+			pll_0_outclk1_clk               => CONNECTED_TO_pll_0_outclk1_clk,               --       pll_0_outclk1.clk
+			reset_reset_n                   => CONNECTED_TO_reset_reset_n                    --               reset.reset_n
 		);
 

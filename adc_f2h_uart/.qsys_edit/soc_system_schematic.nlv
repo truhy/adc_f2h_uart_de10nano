@@ -54,9 +54,10 @@ preplace inst soc_system.hps_0.f2s_periph_ref_clk -pg 1
 preplace inst soc_system.hps_0.fpga_interfaces -pg 1
 preplace inst soc_system.pll_0 -pg 1 -lvl 6 -y 310
 preplace inst soc_system.hps_0.axi_sdram -pg 1
-preplace netloc EXPORT<net_container>soc_system</net_container>(SLAVE)soc_system.memory,(SLAVE)hps_0.memory) 1 0 3 NJ 190 NJ 190 NJ
+preplace netloc EXPORT<net_container>soc_system</net_container>(MASTER)soc_system.pll_0_outclk1,(MASTER)pll_0.outclk1) 1 6 1 NJ
 preplace netloc EXPORT<net_container>soc_system</net_container>(SLAVE)hps_0.f2h_axi_clock,(SLAVE)soc_system.hps_0_f2h_axi_clock) 1 0 3 NJ 130 NJ 130 NJ
 preplace netloc POINT_TO_POINT<net_container>soc_system</net_container>(MASTER)clk_0.clk,(SLAVE)pll_0.refclk) 1 5 1 1340
+preplace netloc EXPORT<net_container>soc_system</net_container>(SLAVE)hps_0.memory,(SLAVE)soc_system.memory) 1 0 3 NJ 190 NJ 190 NJ
 preplace netloc EXPORT<net_container>soc_system</net_container>(SLAVE)soc_system.clk,(SLAVE)clk_0.clk_in) 1 0 5 NJ 40 NJ 40 NJ 40 NJ 40 NJ
 preplace netloc POINT_TO_POINT<net_container>soc_system</net_container>(MASTER)clk_0.clk_reset,(SLAVE)pll_0.reset) 1 5 1 1320
 preplace netloc EXPORT<net_container>soc_system</net_container>(MASTER)pll_0.outclk0,(MASTER)soc_system.pll_0_outclk0) 1 6 1 NJ

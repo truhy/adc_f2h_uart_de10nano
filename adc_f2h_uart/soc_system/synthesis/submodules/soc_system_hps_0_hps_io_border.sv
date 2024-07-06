@@ -1,4 +1,4 @@
-// (C) 2001-2022 Intel Corporation. All rights reserved.
+// (C) 2001-2023 Intel Corporation. All rights reserved.
 // Your use of Intel Corporation's design tools, logic functions and other 
 // software and tools, and its AMPP partner logic functions, and any output 
 // files from any of the foregoing (including device programming or simulation 
@@ -72,6 +72,11 @@ module soc_system_hps_0_hps_io_border(
  ,inout wire [1 - 1 : 0 ] hps_io_i2c0_inst_SCL
  ,inout wire [1 - 1 : 0 ] hps_io_i2c1_inst_SDA
  ,inout wire [1 - 1 : 0 ] hps_io_i2c1_inst_SCL
+ ,inout wire [1 - 1 : 0 ] hps_io_gpio_inst_GPIO09
+ ,inout wire [1 - 1 : 0 ] hps_io_gpio_inst_GPIO35
+ ,inout wire [1 - 1 : 0 ] hps_io_gpio_inst_GPIO53
+ ,inout wire [1 - 1 : 0 ] hps_io_gpio_inst_GPIO54
+ ,inout wire [1 - 1 : 0 ] hps_io_gpio_inst_GPIO61
 );
 
 assign hps_io_emac1_inst_MDIO = intermediate[1] ? intermediate[0] : 'z;
@@ -93,8 +98,15 @@ assign hps_io_i2c0_inst_SDA = intermediate[30] ? '0 : 'z;
 assign hps_io_i2c0_inst_SCL = intermediate[31] ? '0 : 'z;
 assign hps_io_i2c1_inst_SDA = intermediate[32] ? '0 : 'z;
 assign hps_io_i2c1_inst_SCL = intermediate[33] ? '0 : 'z;
+assign hps_io_gpio_inst_GPIO09 = intermediate[35] ? intermediate[34] : 'z;
+assign hps_io_gpio_inst_GPIO35 = intermediate[37] ? intermediate[36] : 'z;
+assign hps_io_gpio_inst_GPIO53 = intermediate[39] ? intermediate[38] : 'z;
+assign hps_io_gpio_inst_GPIO54 = intermediate[41] ? intermediate[40] : 'z;
+assign hps_io_gpio_inst_GPIO61 = intermediate[43] ? intermediate[42] : 'z;
 
-wire [34 - 1 : 0] intermediate;
+wire [44 - 1 : 0] intermediate;
+
+wire [105 - 1 : 0] floating;
 
 cyclonev_hps_peripheral_emac emac1_inst(
  .EMAC_GMII_MDO_I({
@@ -273,6 +285,55 @@ cyclonev_hps_peripheral_i2c i2c1_inst(
   })
 ,.I2C_CLK_OE({
     intermediate[33:33] // 0:0
+  })
+);
+
+
+cyclonev_hps_peripheral_gpio gpio_inst(
+ .GPIO1_PORTA_I({
+    hps_io_gpio_inst_GPIO54[0:0] // 25:25
+   ,hps_io_gpio_inst_GPIO53[0:0] // 24:24
+   ,floating[16:0] // 23:7
+   ,hps_io_gpio_inst_GPIO35[0:0] // 6:6
+   ,floating[22:17] // 5:0
+  })
+,.GPIO1_PORTA_OE({
+    intermediate[41:41] // 25:25
+   ,intermediate[39:39] // 24:24
+   ,floating[39:23] // 23:7
+   ,intermediate[37:37] // 6:6
+   ,floating[45:40] // 5:0
+  })
+,.GPIO2_PORTA_O({
+    intermediate[42:42] // 3:3
+   ,floating[48:46] // 2:0
+  })
+,.GPIO0_PORTA_O({
+    intermediate[34:34] // 9:9
+   ,floating[57:49] // 8:0
+  })
+,.GPIO2_PORTA_I({
+    hps_io_gpio_inst_GPIO61[0:0] // 3:3
+   ,floating[60:58] // 2:0
+  })
+,.GPIO2_PORTA_OE({
+    intermediate[43:43] // 3:3
+   ,floating[63:61] // 2:0
+  })
+,.GPIO0_PORTA_I({
+    hps_io_gpio_inst_GPIO09[0:0] // 9:9
+   ,floating[72:64] // 8:0
+  })
+,.GPIO0_PORTA_OE({
+    intermediate[35:35] // 9:9
+   ,floating[81:73] // 8:0
+  })
+,.GPIO1_PORTA_O({
+    intermediate[40:40] // 25:25
+   ,intermediate[38:38] // 24:24
+   ,floating[98:82] // 23:7
+   ,intermediate[36:36] // 6:6
+   ,floating[104:99] // 5:0
   })
 );
 

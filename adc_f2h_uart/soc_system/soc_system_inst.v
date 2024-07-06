@@ -82,6 +82,11 @@
 		.hps_io_hps_io_i2c0_inst_SCL     (<connected-to-hps_io_hps_io_i2c0_inst_SCL>),     //                    .hps_io_i2c0_inst_SCL
 		.hps_io_hps_io_i2c1_inst_SDA     (<connected-to-hps_io_hps_io_i2c1_inst_SDA>),     //                    .hps_io_i2c1_inst_SDA
 		.hps_io_hps_io_i2c1_inst_SCL     (<connected-to-hps_io_hps_io_i2c1_inst_SCL>),     //                    .hps_io_i2c1_inst_SCL
+		.hps_io_hps_io_gpio_inst_GPIO09  (<connected-to-hps_io_hps_io_gpio_inst_GPIO09>),  //                    .hps_io_gpio_inst_GPIO09
+		.hps_io_hps_io_gpio_inst_GPIO35  (<connected-to-hps_io_hps_io_gpio_inst_GPIO35>),  //                    .hps_io_gpio_inst_GPIO35
+		.hps_io_hps_io_gpio_inst_GPIO53  (<connected-to-hps_io_hps_io_gpio_inst_GPIO53>),  //                    .hps_io_gpio_inst_GPIO53
+		.hps_io_hps_io_gpio_inst_GPIO54  (<connected-to-hps_io_hps_io_gpio_inst_GPIO54>),  //                    .hps_io_gpio_inst_GPIO54
+		.hps_io_hps_io_gpio_inst_GPIO61  (<connected-to-hps_io_hps_io_gpio_inst_GPIO61>),  //                    .hps_io_gpio_inst_GPIO61
 		.memory_mem_a                    (<connected-to-memory_mem_a>),                    //              memory.mem_a
 		.memory_mem_ba                   (<connected-to-memory_mem_ba>),                   //                    .mem_ba
 		.memory_mem_ck                   (<connected-to-memory_mem_ck>),                   //                    .mem_ck
@@ -100,7 +105,7 @@
 		.memory_oct_rzqin                (<connected-to-memory_oct_rzqin>),                //                    .oct_rzqin
 		.pll_0_locked_export             (<connected-to-pll_0_locked_export>),             //        pll_0_locked.export
 		.pll_0_outclk0_clk               (<connected-to-pll_0_outclk0_clk>),               //       pll_0_outclk0.clk
-		.reset_reset_n                   (<connected-to-reset_reset_n>),                   //               reset.reset_n
-		.pll_0_outclk1_clk               (<connected-to-pll_0_outclk1_clk>)                //       pll_0_outclk1.clk
+		.pll_0_outclk1_clk               (<connected-to-pll_0_outclk1_clk>),               //       pll_0_outclk1.clk
+		.reset_reset_n                   (<connected-to-reset_reset_n>)                    //               reset.reset_n
 	);
 

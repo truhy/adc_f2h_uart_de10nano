@@ -21,7 +21,7 @@
 	
 	Developer: Truong Hy
 	HDL      : Verilog
-	Version  : 20221222
+	Version  : 20230921
 	
 	Description:
 		Helper module providing a simpler interface to read from an AXI-3 slave (ARM AMBA interconnect interface).
@@ -52,10 +52,16 @@
 		status = 0 = ready, 1 = wait, 2 = completed ok, 3 = error
 	
 	AXI spec notes:
-		aw_len = number of bursts (aka blocks) to transfer.  Formula: actual_length = aw_len + 1
-		aw_size = size of a burst (aka block) transfer.  Formula: size_bytes = 2^aw_size
-		The parameter AXI_WR_MAX_BURST_LEN is the maximum burst length allowed (number of burst
+		arlen = number of bursts (aka blocks) to transfer.  Formula: actual_length = arlen + 1
+		arsize = size of a burst (aka block) transfer.  Formula: size_bytes = 2^arsize
+		The parameter AXI_RD_MAX_BURST_LEN is the maximum burst length allowed (number of burst
 		transfers), set to a value within the range 1 to 16 (AXI-3).
+		
+	References:
+		AXI specifications:
+			https://www.arm.com/architecture/system-architectures/amba/amba-specifications
+		Version B is AXI-3:
+			https://developer.arm.com/documentation/ihi0022/b
 */
 module axi_rd #(
 	parameter AXI_RD_ID_WIDTH = 8,
@@ -72,96 +78,102 @@ module axi_rd #(
 	output reg [AXI_RD_MAX_BURST_LEN*AXI_RD_BUS_WIDTH-1:0] data,
 	input [3:0] burst_len,
 	input [2:0] burst_size,
+	input [1:0] burst_type,
+	input [1:0] lock,
+	input [3:0] cache,
+	input [2:0] prot,
+	input [4:0] user,
 	output reg [1:0] status,  // 0 = ready, 1 = wait, 2 = completed ok, 3 = error
 	
 	// Connection to the AXI interface slave..
 	// Address read channel registers
-	output [AXI_RD_ID_WIDTH-1:0] ar_id,
-	output [AXI_RD_ADDR_WIDTH-1:0] ar_addr,
-	output [3:0] ar_len,
-	output [2:0] ar_size,
-	output [1:0] ar_burst,
-	output [2:0] ar_prot,
-	output reg ar_valid,
-	input ar_ready,
+	output [AXI_RD_ID_WIDTH-1:0] arid,
+	output [AXI_RD_ADDR_WIDTH-1:0] araddr,
+	output [3:0] arlen,
+	output [2:0] arsize,
+	output [1:0] arburst,
+	output [1:0] arlock,
+	output [3:0] arcache,
+	output [2:0] arprot,
+	output [4:0] aruser,
+	output reg arvalid,
+	input arready,
 	// Read data channel registers
-	input [AXI_RD_ID_WIDTH-1:0] r_id,
-	input [AXI_RD_BUS_WIDTH-1:0] r_data,
-	input r_last,
-	input [1:0] r_resp,
-	input r_valid,
-	output reg r_ready
+	input [AXI_RD_ID_WIDTH-1:0] rid,
+	input [AXI_RD_BUS_WIDTH-1:0] rdata,
+	input rlast,
+	input [1:0] rresp,
+	input rvalid,
+	output reg rready
 );
+	`include "axi_def.vh"
+
 	reg [3:0] burst_count;
 	reg error;
 
-	`define RD_BURST_TYPE_FIXED 2'b00
-	`define RD_BURST_TYPE_INCR  2'b01
-	`define RD_BURST_TYPE_WRAP  2'b10
-	`define RD_BURST_TYPE_RES   2'b11
-	
-	`define RD_RESP_OKAY   2'b00
-	`define RD_RESP_EXOKAY 2'b01
-	`define RD_RESP_SLVERR 2'b10
-	`define RD_RESP_DECERR 2'b11
-
 	// Assign AXI master signals to slave signals
-	assign ar_id = id;                      // Read transaction ID tag
-	assign ar_addr = addr;                  // Starting read address
-	assign ar_len = burst_len;              // Number of transfers: ar_len = number_of_transfers - 1
-	assign ar_size = burst_size;            // Transfer size: transfer_size = 2^ar_size (in bytes)
-	assign ar_burst = `RD_BURST_TYPE_INCR;  // Auto incrementing burst type
-	assign ar_prot = 0;
+	assign arid = id;                         // Read transaction ID tag
+	assign araddr = addr;                     // Starting read address
+	assign arlen = burst_len;                 // Number of burst transfers. Formula: burst_len = number_of_transfers - 1
+	assign arsize = burst_size;               // Burst transfer size. Formula: transfer_size = 2^burst_size (in bytes)
+	assign arburst = burst_type;
+	assign arlock = lock;
+	assign arcache = cache;
+	assign arprot = prot;
+	assign aruser = user;
 
 	always @ (posedge clock or negedge reset_n) begin
 		if(!reset_n) begin
 			//data <= 'b0;  // { (AXI_RD_MAX_BURST_LEN*AXI_RD_BUS_WIDTH){1'b0} };
-			ar_valid <= 0;
-			r_ready <= 0;
+			arvalid <= 0;
+			rready <= 0;
 			status <= 0;
 		end
 		else begin
 
-			// ===============================================================================================================
-			// Address read transaction: When enabled, setup the read details and set address read valid so AXI will read them
-			// ===============================================================================================================
+			// ===============================
+			// Address read transaction: start
+			// ===============================
 
 			if(enable && !status) begin
 				//data <= 'b0;  // { (AXI_RD_MAX_BURST_LEN*AXI_RD_BUS_WIDTH){1'b0} };
 				burst_count <= 0;
 				error <= 0;
 				status <= 1;
-				ar_valid <= 1;  // Set ar_valid high so the receiver transfers the read details
+				arvalid <= 1;  // Master asserts arvalid to indicate the address value is valid and can be transferred
 			end
 
-			// ==============================================================================================================================
-			// Address read transaction: Wait for AXI to signal it got the read details, then set read ready to start a read data transaction
-			// ==============================================================================================================================
+			// ========================================
+			// Address read transaction: wait for ready
+			// Read transaction: start
+			// ========================================
 
-			if(ar_ready && ar_valid) begin
-				ar_valid <= 0;
-				r_ready <= 1;
+			if(arvalid && arready) begin  // Wait for the slave to assert arready, which indicates it is ready to receive the address value
+				arvalid <= 0;
+				rready <= 1;  // Master asserts rready to indicate it is ready (waiting) to receive the data value
 			end
 
-			// ====================================================================================
-			// Read transaction: Wait for AXI to signal data ready, then we read and store the data
-			// ====================================================================================
+			// ===============================
+			// Read transaction: transfer data
+			// ===============================
 		
-			// No need to check r_id, leave that to an arbiter to handle
-			//if(r_id == id && r_ready && r_valid) begin
-			if(r_ready && r_valid) begin
+			// No need to check rid, leave that to an arbiter to handle
+			//if(rid == id && rready && rvalid) begin
+			if(rready && rvalid) begin  // Wait for the slave to assert rvalid, which indicates data is valid and can be transferred
 				// Store a burst transfer to a register at the correct index
-				data[burst_count*AXI_RD_BUS_WIDTH +: AXI_RD_BUS_WIDTH] <= r_data;
+				data[burst_count*AXI_RD_BUS_WIDTH +: AXI_RD_BUS_WIDTH] <= rdata;
 				
-				// Burst transfers completed? (i.e. no more data to read?) Note AXI-3 doesn't allow early burst termination
-				if(r_last || burst_count >= ar_len) begin  // Check also burst_count incase AXI slaves don't implement r_last properly
+				// Burst transfers completed? (i.e. no more data to read?)
+				// Note, AXI-3 doesn't allow early burst termination, so rlast is not allowed to terminate the burst sequence early
+				//if(rlast || burst_count >= arlen) begin  // Terminate on rlast or last burst count
+				if(burst_count >= arlen) begin  // Terminate on last burst count instead of relying on rlast
 					// Stop the read operation
-					status <= (r_resp >= `RD_RESP_SLVERR || error) ? 3 : 2;  // Check for error. Set 3 = error, 2 = ok
-					r_ready <= 0;
+					status <= (rresp >= `AXI_RRESP_SLVERR || error) ? 3 : 2;  // Check for error. Set 3 = error, 2 = ok
+					rready <= 0;
 				end
 				else begin
 					// Continue to read the next data
-					if(r_resp >= `RD_RESP_SLVERR) error <= 1;  // Check for error
+					if(rresp >= `AXI_RRESP_SLVERR) error <= 1;  // Check for error
 				end
 
 				burst_count <= burst_count + 1;
@@ -170,8 +182,8 @@ module axi_rd #(
 			// ==================
 			// When done, restart
 			// ==================
-		
-			if(status >= 2 && !enable) begin
+
+			if(status >= 2) begin
 				status <= 0;
 			end
 		end

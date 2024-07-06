@@ -26,7 +26,7 @@
 # Notes:
 #
 # 1) The default values for assignments are stored in the file:
-#		uart_usb_assignment_defaults.qdf
+#		[project_name]_assignment_defaults.qdf
 #    If this file doesn't exist, see file:
 #		assignment_defaults.qdf
 #
@@ -178,6 +178,10 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to KEY[1]
 #============================================================
 # SW
 #============================================================
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SW[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SW[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SW[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SW[3]
 
 #============================================================
 # HDMI
@@ -281,6 +285,7 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HPS_USB_DATA[7]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HPS_USB_DIR
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HPS_USB_NXT
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HPS_USB_STP
+
 set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to HPS_DDR3_ADDR[0] -tag __hps_sdram_p0
 set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to HPS_DDR3_ADDR[1] -tag __hps_sdram_p0
 set_instance_assignment -name IO_STANDARD "SSTL-15 CLASS I" -to HPS_DDR3_ADDR[2] -tag __hps_sdram_p0
@@ -554,14 +559,6 @@ set_instance_assignment -name GLOBAL_SIGNAL OFF -to u0|ddr3|hps|hps_io|border|hp
 set_instance_assignment -name ENABLE_BENEFICIAL_SKEW_OPTIMIZATION_FOR_NON_GLOBAL_CLOCKS ON -to u0|ddr3|hps|hps_io|border|hps_sdram_inst -tag __hps_sdram_p0
 set_instance_assignment -name PLL_COMPENSATION_MODE DIRECT -to u0|ddr3|hps|hps_io|border|hps_sdram_inst|pll0|fbout -tag __hps_sdram_p0
 
-#============================================================
-# SW
-#============================================================
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SW[0]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SW[1]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SW[2]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SW[3]
-
 set_location_assignment PIN_U9 -to ADC_CONVST
 set_location_assignment PIN_V10 -to ADC_SCK
 set_location_assignment PIN_AC4 -to ADC_SDI
@@ -710,11 +707,12 @@ set_location_assignment PIN_W20 -to SW[3]
 
 
 
-
 set_global_assignment -name VERILOG_FILE uart_dev.v
 set_global_assignment -name VERILOG_FILE top.v
 set_global_assignment -name QIP_FILE soc_system/synthesis/soc_system.qip
 set_global_assignment -name VERILOG_FILE axi_wr.v
 set_global_assignment -name VERILOG_FILE axi_rd.v
 set_global_assignment -name VERILOG_FILE adc_ltc2308.v
+set_global_assignment -name VERILOG_INCLUDE_FILE axi_def.vh
+
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

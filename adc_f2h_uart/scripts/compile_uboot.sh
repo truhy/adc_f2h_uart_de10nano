@@ -16,5 +16,5 @@ cd ../../$SOFTWARE_ROOT/$BOOTLOADER_ROOT/$UBOOT_SRC_ROOT
 export PATH=$GCC_ARM_ROOT/bin:$PATH
 make clean
 make $UBOOT_DEFCONFIG
-make -j 48
+make -j 8
 
