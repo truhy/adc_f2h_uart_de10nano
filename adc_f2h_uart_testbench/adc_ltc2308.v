@@ -112,8 +112,12 @@
 		directly onto the input, then the readings would differ when comparing
 		readings from different sampling frequencies.
 		
-		On the DE10-Nano board, because there is no shielding between the ADC input
-		pins you may see some cross talk.
+		Also, because there is no shielding between the ADC input pins you may see
+		some cross talk.
+		
+		The ADC actually delays the sample output with respect to the configuration
+		command, i.e. the current sample read is set by the previous configuration
+		command, and the current configuration will effect the next sample read.
 		
 	Limitations:
 		- On the DE10-Nano the LT2308 ADC COM pin (pin 6) is wired to ground so we
@@ -180,14 +184,14 @@ module adc_ltc2308 #(
 	// Units in ticks of the input clock
 	
 	// For SCK begin:
-	//	USE_TACQ:
-	//		The specified TACQ is used and TCONV is calculated for the longest duration.
-	//    This supports all sampling rates upto 500kHz
-	//	Not using USE_TACQ:
-	//		The specified TCONV is used and TACQ is calculated for the longest duration.
-	//		Because we are using 25ns as our span calculation unit (40MHz clock),
-	//    the maximum 500kHz sampling with the worse case TCONV of 1.6us is not possible,
-	//    for 500kHz you would need to use the typical 1.3us
+	// USE_TACQ:
+	//     The specified TACQ is used and TCONV is calculated for the longest duration.
+	//     This supports all sampling rates upto 500kHz
+	// Not using USE_TACQ:
+	//		 The specified TCONV is used and TACQ is calculated for the longest duration.
+	//		 Because we are using 25ns as our span calculation unit (40MHz clock),
+	//     the maximum 500kHz sampling with the worse case TCONV of 1.6us is not possible,
+	//     for 500kHz you would need to use the typical 1.3us, or use maximised TACQ above
 `ifdef USE_TACQ
 	wire [31:0] sck_begin = curr_tcyc - ADC_RES - (ADC_RES - TACQ) - 3;  // Maximises TACQ (acquisition time)
 `else
@@ -220,9 +224,9 @@ module adc_ltc2308 #(
 		end
 	end
 
-	// ==================
-	// Span section logic
-	// ==================
+	// =============================
+	// Span section continuous logic
+	// =============================
 
 	wire sck_enable = (conv_span_counter >= sck_begin && conv_span_counter < sck_end) ? 1'b1 : 1'b0;
 	assign ready = (conv_span_counter == sck_end) ? 1'b1 : 1'b0;
@@ -235,9 +239,9 @@ module adc_ltc2308 #(
 	
 	// Thanks to javadtaghia for finding this out, it seems there is a mistake in
 	// the timing diagrams Figure 8 and 9 in LTC2308 datasheet.  Data bits are
-	// actually updated on the rising edge and so we need to read on the falling
-	// edge instead.  Also, the first MSB is not available until after the first
-	// rising edge!
+	// actually updated on the rising edge and so we read on the falling edge
+	// instead.  Also, the first MSB is not available until after the first rising
+	// edge!
 	
 	reg [3:0] data_index;
 	always @ (negedge clock or negedge reset_n) begin
@@ -318,7 +322,7 @@ module adc_ltc2308 #(
 	// Write configuration command for the next sample
 	// ===============================================
 	
-	// Outputs to the SDI pin on the falling clock edge, because the ADC will read
+	// Output to the SDI pin on the falling clock edge, because the ADC will read
 	// them on the rising edge (see Figure 8 and 9 in LTC2308 datasheet)
 	
 	reg [2:0] cfg_index;

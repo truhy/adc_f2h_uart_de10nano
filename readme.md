@@ -2,13 +2,13 @@
 
 ## Overview
 
-A FPGA design (in Verilog) for the DE10-Nano that reads 12-bit samples from the on-board ADC and sends them to UART0 (the mini USB socket for the UART-USB).
+A FPGA design (in Verilog) for the DE10-Nano to reads 12-bit samples from the on-board ADC and sends them to UART0 (the mini USB socket wired to the UART-USB).
 
-In summary, it does the following all within in the FPGA fabric:
+In summary, it does the following all within the FPGA fabric:
 1. Repeatedly reads ADC sample from channels 0 to 7 from the ADC LTC2308 chip (over SPI serial communication) at 2Hz (slow enough for viewing from a UART terminal)
 2. A loop sends a read (when ready) to the existing HPS UART0 (UART-USB) which is wired to the HPS side
 
-Note, there is an ADC demo on the Terasic DE10-Nano CD zip file, but it uses the NIOS II FPGA softcore processor (instead of the hardware ARM) and also a custom Platform Designer ADC IP.  My version is more plain and perhaps more useful for a beginner.
+Note, the Terasic DE10-Nano CD (zip file) already has an ADC demo, but it uses the NIOS II FPGA softcore processor (instead of the hardware ARM) and also a custom Platform Designer ADC IP.  My version is more plain and perhaps more useful for a beginner.
 
 ## Running from USB Blaster II JTAG cable with a script
 
@@ -18,7 +18,7 @@ Search paths are set in the scripts folder.
 1. Eject SD card if there is one in the slot
 2. Connect USB Blaster II cable
 3. Connect a USB cable between the UART-USB connector on the DE10-Nano and your computer
-4. Start a serial terminal program such as PuTTY and set it to serial mode, 115200 baud, 8 data bits, 1 stop bit, no parity, no control flow
+4. Start a serial terminal program such as PuTTY and set it to use the correct serial port, with settings 115200 baud, 8 data bits, 1 stop bit, no parity, no control flow
 5. On Windows run the script rundemo-win.bat, or on linux run rundemo-linux.sh
 6. Wait for U-Boot to boot up and quartus to program the FPGA.  You should see a bunch of U-Boot messages in the serial terminal program
 7. The 12-bit sample reads are displayed in hex format
@@ -30,7 +30,7 @@ Search paths are set in the scripts folder.
    - Rufus (https://rufus.ie/en/)
    - balenaEtcher (https://www.balena.io/etcher/)
 2. Connect a USB cable between the UART-USB connector on the DE10-Nano and your computer
-3. Start a serial terminal program such as PuTTY and set it to serial mode, 115200 baud, 8 data bits, 1 stop bit, no parity, no control flow
+3. Start a serial terminal program such as PuTTY and set it to use the correct serial port, with settings 115200 baud, 8 data bits, 1 stop bit, no parity, no control flow
 4. Insert the micro SD card into the DE10-Nano and turn on the 5V power supply
 5. Wait for U-Boot to boot up.  You should see a bunch of U-Boot messages and then stop with a console prompt
 6. The 12-bit sample reads are displayed in hex format
