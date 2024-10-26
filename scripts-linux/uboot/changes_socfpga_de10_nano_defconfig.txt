@@ -1,0 +1,23 @@
+Changes made to socfpga_de10_nano_defconfig:
+
+These enables to run the bootcommand, which then runs a script
+CONFIG_USE_BOOTCOMMAND=y
+CONFIG_BOOTCOMMAND="env set fatscript 'if fatload mmc 0:1 ${scriptaddr} u-boot.scr;then source ${scriptaddr};fi';run fatscript"
+
+These enables the saveenv command to save to a file on the FAT partition:
+CONFIG_ENV_IS_IN_FAT=y
+CONFIG_ENV_IS_IN_MMC=y
+CONFIG_ENV_FAT_INTERFACE="mmc"
+CONFIG_ENV_FAT_DEVICE_AND_PART="0:1"
+CONFIG_SYS_MMC_ENV_DEV=0
+CONFIG_SYS_MMC_ENV_PART=1
+
+These are other useful settings (not used here):
+
+Turns off cache only in U-Boot, has no effect in U-Boot SPL
+CONFIG_SYS_ICACHE_OFF=y
+CONFIG_SYS_DCACHE_OFF=y
+
+Embed the U-Boot SPL devicetree .dtb to the end of the elf.  Note, U-Boot has it's own separate devicetree
+This enables to load only a single elf file (u-boot-spl), without needing to load a separate .dtb file when debugging in OpenOCD or GDB
+CONFIG_OF_EMBED=y
