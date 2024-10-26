@@ -41,16 +41,16 @@ Note, I've configured U-Boot to boot only to the console prompt.
 
 A Quartus Prime Lite Verilog HDL project:
 
-| File                             | Description                                         |
-| -------------------------------- | --------------------------------------------------- |
-| sdcard_image/sdcard_de10nano.img | A prebuilt SD card image                            |
-| adc_f2h_uart.qpf                 | Quartus Prime Lite project file                     |
-| adc_f2h_uart.qsf                 | Quartus Prime Lite settings file                    |
-| top.v                            | Top level Verilog file                              |
-| adc_ltc2308.v                    | ADC LTC2308 module                                  |
-| uart_dev.v                       | HPS UART module                                     |
-| rd_axi.v                         | Basic read axi helper module                        |
-| wr_axi.v                         | Basic write axi helper module                       |
+| File                               | Description                                         |
+| ---------------------------------- | --------------------------------------------------- |
+| Release/sd-out/adc_f2h_uart.sd.img | A prebuilt SD card image                            |
+| adc_f2h_uart.qpf                   | Quartus Prime Lite project file                     |
+| adc_f2h_uart.qsf                   | Quartus Prime Lite settings file                    |
+| top.v                              | Top level Verilog file                              |
+| adc_ltc2308.v                      | ADC LTC2308 module                                  |
+| uart_dev.v                         | HPS UART module                                     |
+| rd_axi.v                           | Basic read axi helper module                        |
+| wr_axi.v                           | Basic write axi helper module                       |
 
 ## The SD card image is built using the following software versions
 
