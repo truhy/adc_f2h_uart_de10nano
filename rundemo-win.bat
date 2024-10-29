@@ -1,4 +1,4 @@
-@IF NOT DEFINED SCRIPT_PATH CALL scripts\env-win.bat
+@IF NOT DEFINED SCRIPT_PATH CALL scripts-env\env-win.bat
 
 @CD %SCRIPT_PATH%
 
@@ -7,7 +7,7 @@ openocd -f interface/altera-usb-blaster2.cfg -f target/altera_fpgasoc_de.cfg -c 
 
 :: Program .sof to the FPGA
 :: Parameters: -c 1 = selects J-TAG cable number 1, @2 is referring to device index on the J-TAG chain (1 = HPS SoC CPU, 2 = Cyclone V FPGA)
-quartus_pgm -m jtag -c 1 -o "p;adc_f2h_uart\output_files\adc_f2h_uart.sof@2"
+quartus_pgm -m jtag -c 1 -o "p;%FPGA_SRC_PATH%\output_files\%FPGA_PROGRAM_NAME%.sof@2"
 @IF %errorlevel% NEQ 0 GOTO :err_handler
 
 @GOTO :end_of_script
