@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -z "${SCRIPT_PATH+x}" ]; then
+if [ -z "${APP_HOME_PATH+x}" ]; then
 	source ../../scripts-env/env-linux.sh
 fi
 

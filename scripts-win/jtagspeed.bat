@@ -1,6 +1,6 @@
-@IF NOT DEFINED BM_HOME_PATH CALL ..\scripts-env\env-win.bat
+@IF NOT DEFINED APP_HOME_PATH CALL ..\scripts-env\env-win.bat
 
-@CD "%BM_HOME_PATH%"
+@CD "%APP_HOME_PATH%"
 
 jtagconfig --setparam 1 JtagClock 24M
 

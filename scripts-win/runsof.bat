@@ -1,6 +1,6 @@
-@IF NOT DEFINED SCRIPT_PATH CALL scripts-env\env-win.bat
+@IF NOT DEFINED APP_HOME_PATH CALL scripts-env\env-win.bat
 
-@CD %SCRIPT_PATH%
+@CD %APP_HOME_PATH%
 
 openocd -f interface/altera-usb-blaster2.cfg -f target/altera_fpgasoc_de.cfg -c "init; halt; c5_reset; halt; c5_spl bsp/u-boot-spl-nocache-f2h; shutdown"
 @IF %errorlevel% NEQ 0 GOTO :err_handler

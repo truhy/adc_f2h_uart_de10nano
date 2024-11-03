@@ -8,12 +8,12 @@ function cleanup {
 }
 trap cleanup EXIT
 
-if [ -z "${SCRIPT_PATH+x}" ]; then
+if [ -z "${APP_HOME_PATH+x}" ]; then
 	#chmod +x scripts/env-linux.sh
 	source scripts/env-linux.sh
 fi
 
-cd $SCRIPT_PATH
+cd $APP_HOME_PATH
 
 openocd -f interface/altera-usb-blaster2.cfg -f target/altera_fpgasoc_de.cfg -c "init; halt; c5_reset; halt; c5_spl bsp/u-boot-spl-nocache-f2h; shutdown"
 

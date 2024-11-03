@@ -1,6 +1,6 @@
-@IF NOT DEFINED SCRIPT_PATH CALL ..\scripts-env\env-win.bat
+@IF NOT DEFINED APP_HOME_PATH CALL ..\scripts-env\env-win.bat
 
-@CD "%SCRIPT_PATH%"
+@CD "%APP_HOME_PATH%"
 
 :: Convert .sof to .rbf
 quartus_cpf -c -o bitstream_compression=on "%FPGA_SRC_PATH%\output_files\%FPGA_PROGRAM_NAME%.sof" scripts-linux\sdcard\Debug\c5_fpga.rbf

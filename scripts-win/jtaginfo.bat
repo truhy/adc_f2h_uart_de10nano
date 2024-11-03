@@ -1,6 +1,6 @@
-@IF NOT DEFINED BM_HOME_PATH CALL ..\scripts-env\env-win.bat
+@IF NOT DEFINED APP_HOME_PATH CALL ..\scripts-env\env-win.bat
 
-@CD "%BM_HOME_PATH%"
+@CD "%APP_HOME_PATH%"
 
 jtagconfig --getparam 1 JtagClock
 @IF %errorlevel% NEQ 0 GOTO :err_handler
