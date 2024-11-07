@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # This is free script released into the public domain.
-# Script v20231220 created by Truong Hy.
-# Builds a bootable SD card image for the Intel Cyclone V SoC.
+# Script v20241107 created by Truong Hy.
+# Builds a bootable SD card image for the Intel Cyclone V SoC FPGA.
 # Note, the SD image generation depends on linux tools so other OS e.g. Windows is not supported.
 # Main dependencies: mkfs, dd, sfdisk, losetup, mount, umount
 
@@ -24,11 +24,11 @@ if [ -z "${SDP4FMT+x}" ]; then echo "variable SDP4FMT not set"; exit 1; fi
 
 set -e
 function cleanup {
-	if mountpoint -q "${SDP1MPATH}"; then sudo umount -d ${SDP1MPATH}; fi
-	if mountpoint -q "${SDP2MPATH}"; then sudo umount -d ${SDP2MPATH}; fi
-	if mountpoint -q "${SDP3MPATH}"; then sudo umount -d ${SDP3MPATH}; fi
-	if mountpoint -q "${SDP4MPATH}"; then sudo umount -d ${SDP4MPATH}; fi
-	if [ -n "${LOOPDEV+x}" ]; then sudo losetup -d ${LOOPDEV} 1> /dev/null 2>&1; fi
+	if mountpoint -q "${SDP1MPATH}"; then sudo umount -d "${SDP1MPATH}"; fi
+	if mountpoint -q "${SDP2MPATH}"; then sudo umount -d "${SDP2MPATH}"; fi
+	if mountpoint -q "${SDP3MPATH}"; then sudo umount -d "${SDP3MPATH}"; fi
+	if mountpoint -q "${SDP4MPATH}"; then sudo umount -d "${SDP4MPATH}"; fi
+	if [ -n "${LOOPDEV+x}" ]; then sudo losetup -d "${LOOPDEV}" 1> /dev/null 2>&1; fi
 }
 trap cleanup EXIT
 
@@ -60,9 +60,9 @@ fmt_mnt() {
 		echo "${partid} (raw): No formatting"
 	else
 		echo "${partid} (${sd_fmt}): Formatting"
-		sudo mkfs.${sd_fmt} ${loopdev}p1
-		mkdir -p ${dstpath}
-		sudo mount -t ${sd_fmt} ${loopdev}p1 ${dstpath}
+		sudo mkfs.${sd_fmt} "${loopdev}p1"
+		mkdir -p "${dstpath}"
+		sudo mount -t ${sd_fmt} "${loopdev}p1" "${dstpath}"
 	fi
 }
 
@@ -77,12 +77,12 @@ copy_files() {
 	for file in "${srcpath}"/*; do
 		if [ "${sd_fmt}" = "raw" ]; then
 			echo "${partid} DD: $(basename ${file})"
-			sudo dd if=${file} of=${loopdev} bs=1 seek=${sd_offset} status=none
+			sudo dd if="${file}" of="${loopdev}" bs=1 seek=${sd_offset} status=none
 			file_size=$(stat -L -c %s ${file})
 			sd_offset=$(echo $((${sd_offset}+${file_size})))
 		else
 			echo "${partid} CP: $(basename ${file})"
-			sudo cp -f ${file} ${dstpath}
+			sudo cp -f "${file}" "${dstpath}"
 		fi
 	done
 }
@@ -173,13 +173,13 @@ else
 fi
 
 # Create empty SD image file
-mkdir -p ${SDBUILDPATH}
+mkdir -p "${SDBUILDPATH}"
 echo "Creating file: $(basename ${SDTMP}) (empty SD)"
-dd if=/dev/zero of=${SDTMP} bs=${SDSZU} count=${SDSZC} status=none
+dd if="/dev/zero" of="${SDTMP}" bs=${SDSZU} count=${SDSZC} status=none
 
 # Create sfdisk partition info txt
 echo "Creating file: $(basename ${SDPARTINFO}) (partition info)"
-rm -rf ${SDPARTINFO}
+rm -rf "${SDPARTINFO}"
 SDPXOB=$(echo $((2048*512)))
 SDP1SS=$(echo $((${SDP1SB}/512)))
 SDP1OB=${SDPXOB}
@@ -208,47 +208,47 @@ fi
 echo "" >> ${SDPARTINFO}
 
 # Create SD image partition table
-LOOPDEV=$(sudo losetup -f --show ${SDTMP})
+LOOPDEV=$(sudo losetup -f --show "${SDTMP}")
 echo "Creating partition tables"
-#sudo sfdisk ${LOOPDEV} -q <${SDPARTINFO}
-sudo sfdisk ${LOOPDEV} -q --no-reread --no-tell-kernel < ${SDPARTINFO}
+#sudo sfdisk "${LOOPDEV}" -q <${SDPARTINFO}
+sudo sfdisk "${LOOPDEV}" -q --no-reread --no-tell-kernel < ${SDPARTINFO}
 
 # Refresh loop device by detaching and reattaching with partition scan
-sudo losetup -d ${LOOPDEV}
-LOOPDEV=$(sudo losetup -f --show -P ${SDTMP})
+sudo losetup -d "${LOOPDEV}"
+LOOPDEV=$(sudo losetup -f --show -P "${SDTMP}")
 
 # Copy files
 if [ "${SDP1SB}" -ne 0 ]; then
-	fmt_mnt "P1" ${LOOPDEV} ${SDP1FMT} ${SDP1MPATH}
-	copy_files "P1" ${LOOPDEV} ${SDP1OB} ${SDP1FMT} ${SDP1PATH} ${SDP1MPATH}
+	fmt_mnt "P1" "${LOOPDEV}" ${SDP1FMT} "${SDP1MPATH}"
+	copy_files "P1" "${LOOPDEV}" ${SDP1OB} ${SDP1FMT} "${SDP1PATH}" "${SDP1MPATH}"
 	sync;
 	unmount_part ${SDP1MPATH}
 fi
 
 # Copy files
 if [ "${SDP2SB}" -ne 0 ]; then
-	fmt_mnt "P2" ${LOOPDEV} ${SDP2FMT} ${SDP2MPATH}
-	copy_files "P2" ${LOOPDEV} ${SDP2OB} ${SDP2FMT} ${SDP2PATH} ${SDP2MPATH}
+	fmt_mnt "P2" "${LOOPDEV}" ${SDP2FMT} "${SDP2MPATH}"
+	copy_files "P2" "${LOOPDEV}" ${SDP2OB} ${SDP2FMT} "${SDP2PATH}" "${SDP2MPATH}"
 	sync;
-	unmount_part ${SDP2MPATH}
+	unmount_part "${SDP2MPATH}"
 fi
 
 # Copy files
 if [ "${SDP3SB}" -ne 0 ]; then
-	fmt_mnt "P3" ${LOOPDEV} ${SDP3FMT} ${SDP3MPATH}
-	copy_files "P3" ${LOOPDEV} ${SDP3OB} ${SDP3FMT} ${SDP3PATH} ${SDP3MPATH}
+	fmt_mnt "P3" "${LOOPDEV}" ${SDP3FMT} "${SDP3MPATH}"
+	copy_files "P3" "${LOOPDEV}" ${SDP3OB} ${SDP3FMT} "${SDP3PATH}" "${SDP3MPATH}"
 	sync;
-	unmount_part ${SDP3MPATH}
+	unmount_part "${SDP3MPATH}"
 fi
 
 # Copy files
 if [ "${SDP4SB}" -ne 0 ]; then
-	fmt_mnt "P4" ${LOOPDEV} ${SDP4FMT} ${SDP4MPATH}
-	copy_files "P4" ${LOOPDEV} ${SDP4OB} ${SDP4FMT} ${SDP4PATH} ${SDP4MPATH}
+	fmt_mnt "P4" "${LOOPDEV}" ${SDP4FMT} "${SDP4MPATH}"
+	copy_files "P4" "${LOOPDEV}" ${SDP4OB} ${SDP4FMT} "${SDP4PATH}" "${SDP4MPATH}"
 	sync;
-	unmount_part ${SDP4MPATH}
+	unmount_part "${SDP4MPATH}"
 fi
 
 # Rename to final SD image name
-mv ${SDTMP} ${SDIMG}
+mv "${SDTMP}" "${SDIMG}"
 echo "SD image created: ${SDIMG}"

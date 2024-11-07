@@ -1,12 +1,7 @@
 # This is free script released into the public domain.
-# GNU make file v20231226 created by Truong Hy.
+# GNU make file v20241107 created by Truong Hy.
 #
 # Prepares environment to support building an SD card image.
-
-# These variables are assumed to be set already
-ifndef APP_HOME_PATH
-$(error APP_HOME_PATH environment variable is not set)
-endif
 
 # Represents an empty white space - we need it for extracting the elf entry address from readelf output
 SPACE := $() $()
@@ -14,8 +9,6 @@ SPACE := $() $()
 # =================================================
 # Read file and export some SD enviroment variables
 # =================================================
-
-export SDENVFILE := $(APP_HOME_PATH)/scripts-env/env-sd.sh
 
 # Read environment file
 SDENV := $(strip $(file <$(SDENVFILE)))
@@ -134,5 +127,5 @@ UBOOT_SCRTXT_ARGS_STR := $(UBOOT_SCRTXT_ARGS_STR) $(SDUBBMARG3)
 endif
 ifneq (,$(UBOOT_SCRTXT_ARGS_STR))
 UBOOT_SCRTXT_ARGS_STR := $(strip $(UBOOT_SCRTXT_ARGS_STR))
-export UBOOT_SCRTXT_ARGS_STR)
+export UBOOT_SCRTXT_ARGS_STR
 endif

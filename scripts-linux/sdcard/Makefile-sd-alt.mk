@@ -1,5 +1,5 @@
 # This is free script released into the public domain.
-# GNU make file v20231220 created by Truong Hy.
+# GNU make file v20241107 created by Truong Hy.
 #
 # Prepares and executes Altera's Python 3 script to build an SD card image.
 #
@@ -188,17 +188,17 @@ all: release
 clean2:
 #	rm -f $(DBG_SDIMG)
 #	rm -f $(REL_SDIMG)
-	@if [ -d "$(DBG_SDOUTSUBPATH)" ]; then echo rm -rf $(DBG_SDOUTSUBPATH); rm -rf $(DBG_SDOUTSUBPATH); fi
-	@if [ -d "$(REL_SDOUTSUBPATH)" ]; then echo rm -rf $(REL_SDOUTSUBPATH); rm -rf $(REL_SDOUTSUBPATH); fi
+	@if [ -d "$(DBG_SDOUTSUBPATH)" ]; then echo rm -rf "$(DBG_SDOUTSUBPATH)"; rm -rf "$(DBG_SDOUTSUBPATH)"; fi
+	@if [ -d "$(REL_SDOUTSUBPATH)" ]; then echo rm -rf "$(REL_SDOUTSUBPATH)"; rm -rf "$(REL_SDOUTSUBPATH)"; fi
 
 # Clean sublevel 1 folder
 clean1: clean2
-	@if [ -d "$(DBG_SDOUTPATH)" ] && [ -z "$$(ls -A $(DBG_SDOUTPATH))" ]; then echo rm -df $(DBG_SDOUTPATH); rm -df $(DBG_SDOUTPATH); fi
-	@if [ -d "$(REL_SDOUTPATH)" ] && [ -z "$$(ls -A $(REL_SDOUTPATH))" ]; then echo rm -df $(REL_SDOUTPATH); rm -df $(REL_SDOUTPATH); fi
+	@if [ -d "$(DBG_SDOUTPATH)" ] && [ -z "$$(ls -A $(DBG_SDOUTPATH))" ]; then echo rm -df "$(DBG_SDOUTPATH)"; rm -df "$(DBG_SDOUTPATH)"; fi
+	@if [ -d "$(REL_SDOUTPATH)" ] && [ -z "$$(ls -A $(REL_SDOUTPATH))" ]; then echo rm -df "$(REL_SDOUTPATH)"; rm -df "$(REL_SDOUTPATH)"; fi
 
 # Clean root folder
 clean: clean1
-	@if [ -d "$(SD_OUT_PATH)" ] && [ -z "$$(ls -A $(SD_OUT_PATH))" ]; then echo rm -df $(SD_OUT_PATH); rm -df $(SD_OUT_PATH); fi
+	@if [ -d "$(SD_OUT_PATH)" ] && [ -z "$$(ls -A $(SD_OUT_PATH))" ]; then echo rm -df "$(SD_OUT_PATH)"; rm -df "$(SD_OUT_PATH)"; fi
 
 # ================================
 # Release SD card image file rules

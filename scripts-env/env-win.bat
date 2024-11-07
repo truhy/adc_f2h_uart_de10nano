@@ -12,11 +12,15 @@ IF "%QUARTUS_ROOTDIR%"=="" SET QUARTUS_ROOTDIR=C:\intelFPGA\22.1std\qprogrammer
 
 :: Application settings
 SET APP_HOME_PATH=%SCRIPT_PATH%
-SET APP_OUT_PATH=%SCRIPT_PATH%
+SET APP_OUT_PATH=.
 
 :: FPGA settings
 SET FPGA_SRC_PATH=source
 SET FPGA_PROGRAM_NAME=adc_f2h_uart
+
+:: Other stuff
+CALL :NORMALIZEPATH %APP_OUT_PATH%
+SET APP_OUT_FULL_PATH=%RETVAL%
 
 :: Search path settings
 SET path=%path%;%SCRIPT_PATH%\scripts-env;%SCRIPT_PATH%\scripts-win
@@ -30,3 +34,9 @@ IF "%MAKE_PATH%" NEQ ""       ECHO Make     : %MAKE_PATH%
 IF "%TOOLCHAIN_PATH%" NEQ ""  ECHO Toolchain: %TOOLCHAIN_PATH%
 IF "%OPENOCD_PATH%" NEQ ""    ECHO OpenOCD  : %OPENOCD_PATH%
 IF "%QUARTUS_ROOTDIR%" NEQ "" ECHO Quartus  : %QUARTUS_ROOTDIR%
+
+EXIT /B
+
+:NORMALIZEPATH
+  SET RETVAL=%~f1
+  EXIT /B

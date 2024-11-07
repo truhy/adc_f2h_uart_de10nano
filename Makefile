@@ -50,6 +50,10 @@ ifndef APP_OUT_PATH
 $(error APP_OUT_PATH environment variable is not set)
 endif
 
+ifndef APP_OUT_FULL_PATH
+$(error APP_OUT_FULL_PATH environment variable is not set)
+endif
+
 ifndef SD_PROGRAM_NAME
 $(error SD_PROGRAM_NAME environment variable is not set)
 endif
@@ -70,12 +74,16 @@ endif
 # Convert back-slashes
 ifeq ($(OS),Windows_NT)
 APP_OUT_PATH := $(subst \,/,$(APP_OUT_PATH))
+APP_OUT_FULL_PATH := $(subst \,/,$(APP_OUT_FULL_PATH))
 UBOOT_OUT_PATH := $(subst \,/,$(UBOOT_OUT_PATH))
 SD_OUT_PATH := $(subst \,/,$(SD_OUT_PATH))
 endif
 
 # Export some SD card image environment variables
+ifeq ($(sd),1)
+SDENVFILE := scripts-env/env-sd.sh
 include scripts-linux/sdcard/Makefile-sd-env.mk
+endif
 
 # ===============
 # Common settings
@@ -89,7 +97,10 @@ SD_IN_PATH := scripts-linux/sdcard
 # ============
 
 DBG_PATH1 := $(APP_OUT_PATH)/Debug
+DBG_FULL_PATH1 := $(APP_OUT_FULL_PATH)/Debug
+
 REL_PATH1 := $(APP_OUT_PATH)/Release
+REL_FULL_PATH1 := $(APP_OUT_FULL_PATH)/Release
 
 # =======================
 # U-Boot settings (Debug)
@@ -141,7 +152,7 @@ REL_UBOOT_SCRTXT_L5_STR := bridge enable
 
 DBG_SD_OUT_PATH := $(SD_OUT_PATH)/Debug
 DBG_SD_OUT_SUB_PATH := $(DBG_SD_OUT_PATH)/sd-out
-DBG_SD_CP_PATH := $(DBG_PATH1)/sd-out
+DBG_SD_CP_PATH := $(DBG_FULL_PATH1)/sd-out
 DBG_SD_IMG := $(DBG_SD_OUT_SUB_PATH)/$(SD_PROGRAM_NAME).sd.img
 DBG_SDCP_IMG := $(DBG_SD_CP_PATH)/$(SD_PROGRAM_NAME).sd.img
 # Intermediate files to copy into the SD image
@@ -180,7 +191,7 @@ endif
 
 REL_SD_OUT_PATH := $(SD_OUT_PATH)/Release
 REL_SD_OUT_SUB_PATH := $(REL_SD_OUT_PATH)/sd-out
-REL_SD_CP_PATH := $(REL_PATH1)/sd-out
+REL_SD_CP_PATH := $(REL_FULL_PATH1)/sd-out
 REL_SD_IMG := $(REL_SD_OUT_SUB_PATH)/$(SD_PROGRAM_NAME).sd.img
 REL_SDCP_IMG := $(REL_SD_CP_PATH)/$(SD_PROGRAM_NAME).sd.img
 # Intermediate files to copy into the SD image
@@ -255,10 +266,10 @@ help:
 clean_ub:
 ifneq ($(OS),Windows_NT)
 	@if [ -d "$(UBOOT_OUT_PATH)" ]; then \
-		if [ -d "$(DBG_UBOOT_SUB_PATH)" ]; then echo rm -rf $(DBG_UBOOT_SUB_PATH); rm -rf $(DBG_UBOOT_SUB_PATH); fi; \
-		if [ -d "$(REL_UBOOT_SUB_PATH)" ]; then echo rm -rf $(REL_UBOOT_SUB_PATH); rm -rf $(REL_UBOOT_SUB_PATH); fi; \
-		if [ -d "$(DBG_UBOOT_SRC_PATH)/Makefile)" ]; then make -C $(DBG_UBOOT_SRC_PATH) --no-print-directory clean; fi; \
-		make -C $(UBOOT_IN_PATH) --no-print-directory -f Makefile-prep-ub.mk clean; \
+		if [ -d "$(DBG_UBOOT_SUB_PATH)" ]; then echo rm -rf "$(DBG_UBOOT_SUB_PATH)"; rm -rf "$(DBG_UBOOT_SUB_PATH)"; fi; \
+		if [ -d "$(REL_UBOOT_SUB_PATH)" ]; then echo rm -rf "$(REL_UBOOT_SUB_PATH)"; rm -rf "$(REL_UBOOT_SUB_PATH)"; fi; \
+		if [ -d "$(DBG_UBOOT_SRC_PATH)/Makefile)" ]; then make -C "$(DBG_UBOOT_SRC_PATH)" --no-print-directory clean; fi; \
+		make -C "$(UBOOT_IN_PATH)" --no-print-directory -f Makefile-prep-ub.mk clean; \
 	fi
 endif
 
@@ -266,20 +277,20 @@ endif
 clean_sd:
 ifneq ($(OS),Windows_NT)
 ifeq ($(alt),1)
-	@if [ -d "$(SD_OUT_PATH)" ]; then make -C $(SD_IN_PATH) --no-print-directory -f Makefile-sd-alt.mk clean; fi
+	@if [ -d "$(SD_OUT_PATH)" ]; then make -C "$(SD_IN_PATH)" --no-print-directory -f Makefile-sd-alt.mk clean; fi
 else
-	@if [ -d "$(SD_OUT_PATH)" ]; then make -C $(SD_IN_PATH) --no-print-directory -f Makefile-sd-tru.mk clean; fi
+	@if [ -d "$(SD_OUT_PATH)" ]; then make -C "$(SD_IN_PATH)" --no-print-directory -f Makefile-sd-tru.mk clean; fi
 endif
 endif
 
 # Clean sublevel 1 folder
 clean_1:
-	@if [ -d "$(DBG_PATH1)" ]; then echo rm -rf $(DBG_PATH1); rm -rf $(DBG_PATH1); fi
-	@if [ -d "$(REL_PATH1)" ]; then echo rm -rf $(REL_PATH1); rm -rf $(REL_PATH1); fi
+	@if [ -d "$(DBG_PATH1)" ]; then echo rm -rf "$(DBG_PATH1)"; rm -rf "$(DBG_PATH1)"; fi
+	@if [ -d "$(REL_PATH1)" ]; then echo rm -rf "$(REL_PATH1)"; rm -rf "$(REL_PATH1)"; fi
 
 # Clean root folder
 clean: clean_ub clean_sd clean_1
-	@if [ -d "$(APP_OUT_PATH)" ] && [ -z "$$(ls -A $(APP_OUT_PATH))" ]; then echo rm -df $(APP_OUT_PATH); rm -df $(APP_OUT_PATH); fi
+	@if [ -d "$(APP_OUT_PATH)" ] && [ -z "$$(ls -A $(APP_OUT_PATH))" ]; then echo rm -df "$(APP_OUT_PATH)"; rm -df "$(APP_OUT_PATH)"; fi
 
 # ===============================================================
 # Clean temporary files rules (does not remove user target files)
@@ -289,14 +300,14 @@ clean: clean_ub clean_sd clean_1
 cleantemp_ub:
 ifneq ($(OS),Windows_NT)
 	@if [ -d "$(UBOOT_OUT_PATH)" ]; then \
-		if [ -f "$(DBG_UBOOT_SCRTXT)" ]; then echo rm -f $(DBG_UBOOT_SCRTXT); rm -f $(DBG_UBOOT_SCRTXT); fi; \
-		if [ -f "$(DBG_UBOOT_SCR)" ]; then echo rm -f $(DBG_UBOOT_SCR); rm -f $(DBG_UBOOT_SCR); fi; \
-		if [ -f "$(REL_UBOOT_SCRTXT)" ]; then echo rm -f $(REL_UBOOT_SCRTXT); rm -f $(REL_UBOOT_SCRTXT); fi; \
-		if [ -f "$(REL_UBOOT_SCR)" ]; then echo rm -f $(REL_UBOOT_SCR); rm -f $(REL_UBOOT_SCR); fi; \
-		if [ -d "$(DBG_UBOOT_SUB_PATH)" ]; then echo rm -rf $(DBG_UBOOT_SUB_PATH); rm -rf $(DBG_UBOOT_SUB_PATH); fi; \
-		if [ -d "$(REL_UBOOT_SUB_PATH)" ]; then echo rm -rf $(REL_UBOOT_SUB_PATH); rm -rf $(REL_UBOOT_SUB_PATH); fi; \
-		if [ -d "$(DBG_UBOOT_SRC_PATH)/Makefile)" ]; then make -C $(DBG_UBOOT_SRC_PATH) --no-print-directory clean; fi; \
-		make -C $(UBOOT_IN_PATH) --no-print-directory -f Makefile-prep-ub.mk clean; \
+		if [ -f "$(DBG_UBOOT_SCRTXT)" ]; then echo rm -f "$(DBG_UBOOT_SCRTXT)"; rm -f "$(DBG_UBOOT_SCRTXT)"; fi; \
+		if [ -f "$(DBG_UBOOT_SCR)" ]; then echo rm -f "$(DBG_UBOOT_SCR)"; rm -f "$(DBG_UBOOT_SCR)"; fi; \
+		if [ -f "$(REL_UBOOT_SCRTXT)" ]; then echo rm -f "$(REL_UBOOT_SCRTXT)"; rm -f "$(REL_UBOOT_SCRTXT)"; fi; \
+		if [ -f "$(REL_UBOOT_SCR)" ]; then echo rm -f "$(REL_UBOOT_SCR)"; rm -f "$(REL_UBOOT_SCR)"; fi; \
+		if [ -d "$(DBG_UBOOT_SUB_PATH)" ]; then echo rm -rf "$(DBG_UBOOT_SUB_PATH)"; rm -rf "$(DBG_UBOOT_SUB_PATH)"; fi; \
+		if [ -d "$(REL_UBOOT_SUB_PATH)" ]; then echo rm -rf "$(REL_UBOOT_SUB_PATH)"; rm -rf "$(REL_UBOOT_SUB_PATH)"; fi; \
+		if [ -d "$(DBG_UBOOT_SRC_PATH)/Makefile)" ]; then make -C "$(DBG_UBOOT_SRC_PATH)" --no-print-directory clean; fi; \
+		make -C "$(UBOOT_IN_PATH)" --no-print-directory -f Makefile-prep-ub.mk clean; \
 	fi
 endif
 
@@ -304,39 +315,39 @@ endif
 cleantemp_sd:
 ifneq ($(OS),Windows_NT)
 	@if [ -d "$(DBG_SD_OUT_SUB_PATH)" ]; then \
-		if [ -d "$(DBG_SD_OUT_SUB_PATH)/p1" ]; then echo rm -rf $(DBG_SD_OUT_SUB_PATH)/p1; rm -rf $(DBG_SD_OUT_SUB_PATH)/p1; fi; \
-		if [ -d "$(DBG_SD_OUT_SUB_PATH)/p2" ]; then echo rm -rf $(DBG_SD_OUT_SUB_PATH)/p2; rm -rf $(DBG_SD_OUT_SUB_PATH)/p2; fi; \
-		if [ -d "$(DBG_SD_OUT_SUB_PATH)/p3" ]; then echo rm -rf $(DBG_SD_OUT_SUB_PATH)/p3; rm -rf $(DBG_SD_OUT_SUB_PATH)/p3; fi; \
-		if [ -d "$(DBG_SD_OUT_SUB_PATH)/p4" ]; then echo rm -rf $(DBG_SD_OUT_SUB_PATH)/p4; rm -rf $(DBG_SD_OUT_SUB_PATH)/p4; fi; \
-		if [ -d "$(DBG_SD_OUT_SUB_PATH)/p1m" ]; then echo rm -rf $(DBG_SD_OUT_SUB_PATH)/p1m; rm -rf $(DBG_SD_OUT_SUB_PATH)/p1m; fi; \
-		if [ -d "$(DBG_SD_OUT_SUB_PATH)/p2m" ]; then echo rm -rf $(DBG_SD_OUT_SUB_PATH)/p2m; rm -rf $(DBG_SD_OUT_SUB_PATH)/p2m; fi; \
-		if [ -d "$(DBG_SD_OUT_SUB_PATH)/p3m" ]; then echo rm -rf $(DBG_SD_OUT_SUB_PATH)/p3m; rm -rf $(DBG_SD_OUT_SUB_PATH)/p3m; fi; \
-		if [ -d "$(DBG_SD_OUT_SUB_PATH)/p4m" ]; then echo rm -rf $(DBG_SD_OUT_SUB_PATH)/p4m; rm -rf $(DBG_SD_OUT_SUB_PATH)/p4m; fi; \
+		if [ -d "$(DBG_SD_OUT_SUB_PATH)/p1" ]; then echo rm -rf "$(DBG_SD_OUT_SUB_PATH)/p1"; rm -rf "$(DBG_SD_OUT_SUB_PATH)/p1"; fi; \
+		if [ -d "$(DBG_SD_OUT_SUB_PATH)/p2" ]; then echo rm -rf "$(DBG_SD_OUT_SUB_PATH)/p2"; rm -rf "$(DBG_SD_OUT_SUB_PATH)/p2"; fi; \
+		if [ -d "$(DBG_SD_OUT_SUB_PATH)/p3" ]; then echo rm -rf "$(DBG_SD_OUT_SUB_PATH)/p3"; rm -rf "$(DBG_SD_OUT_SUB_PATH)/p3"; fi; \
+		if [ -d "$(DBG_SD_OUT_SUB_PATH)/p4" ]; then echo rm -rf "$(DBG_SD_OUT_SUB_PATH)/p4"; rm -rf "$(DBG_SD_OUT_SUB_PATH)/p4"; fi; \
+		if [ -d "$(DBG_SD_OUT_SUB_PATH)/p1m" ]; then echo rm -rf "$(DBG_SD_OUT_SUB_PATH)/p1m"; rm -rf "$(DBG_SD_OUT_SUB_PATH)/p1m"; fi; \
+		if [ -d "$(DBG_SD_OUT_SUB_PATH)/p2m" ]; then echo rm -rf "$(DBG_SD_OUT_SUB_PATH)/p2m"; rm -rf "$(DBG_SD_OUT_SUB_PATH)/p2m"; fi; \
+		if [ -d "$(DBG_SD_OUT_SUB_PATH)/p3m" ]; then echo rm -rf "$(DBG_SD_OUT_SUB_PATH)/p3m"; rm -rf "$(DBG_SD_OUT_SUB_PATH)/p3m"; fi; \
+		if [ -d "$(DBG_SD_OUT_SUB_PATH)/p4m" ]; then echo rm -rf "$(DBG_SD_OUT_SUB_PATH)/p4m"; rm -rf "$(DBG_SD_OUT_SUB_PATH)/p4m"; fi; \
 	fi
 	@if [ -d "$(REL_SD_OUT_SUB_PATH)" ]; then \
-		if [ -d "$(REL_SD_OUT_SUB_PATH)/p1" ]; then echo rm -rf $(REL_SD_OUT_SUB_PATH)/p1; rm -rf $(REL_SD_OUT_SUB_PATH)/p1; fi; \
-		if [ -d "$(REL_SD_OUT_SUB_PATH)/p2" ]; then echo rm -rf $(REL_SD_OUT_SUB_PATH)/p2; rm -rf $(REL_SD_OUT_SUB_PATH)/p2; fi; \
-		if [ -d "$(REL_SD_OUT_SUB_PATH)/p3" ]; then echo rm -rf $(REL_SD_OUT_SUB_PATH)/p3; rm -rf $(REL_SD_OUT_SUB_PATH)/p3; fi; \
-		if [ -d "$(REL_SD_OUT_SUB_PATH)/p4" ]; then echo rm -rf $(REL_SD_OUT_SUB_PATH)/p4; rm -rf $(REL_SD_OUT_SUB_PATH)/p4; fi; \
-		if [ -d "$(REL_SD_OUT_SUB_PATH)/p1m" ]; then echo rm -rf $(REL_SD_OUT_SUB_PATH)/p1m; rm -rf $(REL_SD_OUT_SUB_PATH)/p1m; fi; \
-		if [ -d "$(REL_SD_OUT_SUB_PATH)/p2m" ]; then echo rm -rf $(REL_SD_OUT_SUB_PATH)/p2m; rm -rf $(REL_SD_OUT_SUB_PATH)/p2m; fi; \
-		if [ -d "$(REL_SD_OUT_SUB_PATH)/p3m" ]; then echo rm -rf $(REL_SD_OUT_SUB_PATH)/p3m; rm -rf $(REL_SD_OUT_SUB_PATH)/p3m; fi; \
-		if [ -d "$(REL_SD_OUT_SUB_PATH)/p4m" ]; then echo rm -rf $(REL_SD_OUT_SUB_PATH)/p4m; rm -rf $(REL_SD_OUT_SUB_PATH)/p4m; fi; \
+		if [ -d "$(REL_SD_OUT_SUB_PATH)/p1" ]; then echo rm -rf "$(REL_SD_OUT_SUB_PATH)/p1"; rm -rf "$(REL_SD_OUT_SUB_PATH)/p1"; fi; \
+		if [ -d "$(REL_SD_OUT_SUB_PATH)/p2" ]; then echo rm -rf "$(REL_SD_OUT_SUB_PATH)/p2"; rm -rf "$(REL_SD_OUT_SUB_PATH)/p2"; fi; \
+		if [ -d "$(REL_SD_OUT_SUB_PATH)/p3" ]; then echo rm -rf "$(REL_SD_OUT_SUB_PATH)/p3"; rm -rf "$(REL_SD_OUT_SUB_PATH)/p3"; fi; \
+		if [ -d "$(REL_SD_OUT_SUB_PATH)/p4" ]; then echo rm -rf "$(REL_SD_OUT_SUB_PATH)/p4"; rm -rf "$(REL_SD_OUT_SUB_PATH)/p4"; fi; \
+		if [ -d "$(REL_SD_OUT_SUB_PATH)/p1m" ]; then echo rm -rf "$(REL_SD_OUT_SUB_PATH)/p1m"; rm -rf "$(REL_SD_OUT_SUB_PATH)/p1m"; fi; \
+		if [ -d "$(REL_SD_OUT_SUB_PATH)/p2m" ]; then echo rm -rf "$(REL_SD_OUT_SUB_PATH)/p2m"; rm -rf "$(REL_SD_OUT_SUB_PATH)/p2m"; fi; \
+		if [ -d "$(REL_SD_OUT_SUB_PATH)/p3m" ]; then echo rm -rf "$(REL_SD_OUT_SUB_PATH)/p3m"; rm -rf "$(REL_SD_OUT_SUB_PATH)/p3m"; fi; \
+		if [ -d "$(REL_SD_OUT_SUB_PATH)/p4m" ]; then echo rm -rf "$(REL_SD_OUT_SUB_PATH)/p4m"; rm -rf "$(REL_SD_OUT_SUB_PATH)/p4m"; fi; \
 	fi
 ifeq ($(alt),1)
-	@if [ -d "$(SD_OUT_PATH)" ]; then make -C $(SD_IN_PATH) --no-print-directory -f Makefile-sd-alt.mk clean; fi
+	@if [ -d "$(SD_OUT_PATH)" ]; then make -C "$(SD_IN_PATH)" --no-print-directory -f Makefile-sd-alt.mk clean; fi
 else
-	@if [ -d "$(SD_OUT_PATH)" ]; then make -C $(SD_IN_PATH) --no-print-directory -f Makefile-sd-tru.mk clean; fi
+	@if [ -d "$(SD_OUT_PATH)" ]; then make -C "$(SD_IN_PATH)" --no-print-directory -f Makefile-sd-tru.mk clean; fi
 endif
 endif
 
 # Clean root folder
 cleantemp: cleantemp_ub cleantemp_sd
 	@if [ -d "$(APP_OUT_PATH)" ]; then \
-		if [ -f "$(DBG_UBOOT_SCRTXT)" ]; then echo rm -f $(DBG_UBOOT_SCRTXT); rm -f $(DBG_UBOOT_SCRTXT); fi; \
-		if [ -f "$(DBG_UBOOT_SCR)" ]; then echo rm -f $(DBG_UBOOT_SCR); rm -f $(DBG_UBOOT_SCR); fi; \
-		if [ -f "$(REL_UBOOT_SCRTXT)" ]; then echo rm -f $(REL_UBOOT_SCRTXT); rm -f $(REL_UBOOT_SCRTXT); fi; \
-		if [ -f "$(REL_UBOOT_SCR)" ]; then echo rm -f $(REL_UBOOT_SCR); rm -f $(REL_UBOOT_SCR); fi; \
+		if [ -f "$(DBG_UBOOT_SCRTXT)" ]; then echo rm -f "$(DBG_UBOOT_SCRTXT)"; rm -f "$(DBG_UBOOT_SCRTXT)"; fi; \
+		if [ -f "$(DBG_UBOOT_SCR)" ]; then echo rm -f "$(DBG_UBOOT_SCR)"; rm -f "$(DBG_UBOOT_SCR)"; fi; \
+		if [ -f "$(REL_UBOOT_SCRTXT)" ]; then echo rm -f "$(REL_UBOOT_SCRTXT)"; rm -f "$(REL_UBOOT_SCRTXT)"; fi; \
+		if [ -f "$(REL_UBOOT_SCR)" ]; then echo rm -f "$(REL_UBOOT_SCR)"; rm -f "$(REL_UBOOT_SCR)"; fi; \
 	fi
 
 # ===========
@@ -399,37 +410,37 @@ REL_SCR_PRE := $(REL_SCR_PRE) $(REL_SD_FUND_PRE)
 
 # Create U-Boot text script
 $(DBG_UBOOT_SCRTXT): $(DBG_SCR_PRE)
-	@mkdir -p $(DBG_UBOOT_SUB_PATH)
-	@if [ -f "$(DBG_UBOOT_SCRTXT_HDR)" ]; then cp -f $(DBG_UBOOT_SCRTXT_HDR) $@; else rm -f $@; fi
-	@if [ -n "$(DBG_UBOOT_SCRTXT_L1_STR)" ]; then echo "$(DBG_UBOOT_SCRTXT_L1_STR)" >> $@; fi
-	@if [ -n "$(DBG_UBOOT_SCRTXT_L2_STR)" ]; then echo "$(DBG_UBOOT_SCRTXT_L2_STR)" >> $@; fi
-	@if [ -n "$(DBG_UBOOT_SCRTXT_L3_STR)" ]; then echo "$(DBG_UBOOT_SCRTXT_L3_STR)" >> $@; fi
-	@if [ -n "$(DBG_UBOOT_SCRTXT_L4_STR)" ]; then echo "$(DBG_UBOOT_SCRTXT_L4_STR)" >> $@; fi
-	@if [ -n "$(DBG_UBOOT_SCRTXT_L5_STR)" ]; then echo "$(DBG_UBOOT_SCRTXT_L5_STR)" >> $@; fi
-	@if [ -n "$(DBG_UBOOT_SCRTXT_L6_STR)" ]; then echo "$(DBG_UBOOT_SCRTXT_L6_STR)" >> $@; fi
-	@if [ -n "$(DBG_UBOOT_SCRTXT_L7_STR)" ]; then echo "$(DBG_UBOOT_SCRTXT_L7_STR)" >> $@; fi
-	@if [ -f "$(DBG_UBOOT_SCRTXT_FTR)" ]; then cat $(DBG_UBOOT_SCRTXT_FTR) >> $@; fi
+	@mkdir -p "$(DBG_UBOOT_SUB_PATH)"
+	@if [ -f "$(DBG_UBOOT_SCRTXT_HDR)" ]; then cp -f "$(DBG_UBOOT_SCRTXT_HDR)" "$@"; else rm -f "$@"; fi
+	@if [ -n "$(DBG_UBOOT_SCRTXT_L1_STR)" ]; then echo "$(DBG_UBOOT_SCRTXT_L1_STR)" >> "$@"; fi
+	@if [ -n "$(DBG_UBOOT_SCRTXT_L2_STR)" ]; then echo "$(DBG_UBOOT_SCRTXT_L2_STR)" >> "$@"; fi
+	@if [ -n "$(DBG_UBOOT_SCRTXT_L3_STR)" ]; then echo "$(DBG_UBOOT_SCRTXT_L3_STR)" >> "$@"; fi
+	@if [ -n "$(DBG_UBOOT_SCRTXT_L4_STR)" ]; then echo "$(DBG_UBOOT_SCRTXT_L4_STR)" >> "$@"; fi
+	@if [ -n "$(DBG_UBOOT_SCRTXT_L5_STR)" ]; then echo "$(DBG_UBOOT_SCRTXT_L5_STR)" >> "$@"; fi
+	@if [ -n "$(DBG_UBOOT_SCRTXT_L6_STR)" ]; then echo "$(DBG_UBOOT_SCRTXT_L6_STR)" >> "$@"; fi
+	@if [ -n "$(DBG_UBOOT_SCRTXT_L7_STR)" ]; then echo "$(DBG_UBOOT_SCRTXT_L7_STR)" >> "$@"; fi
+	@if [ -f "$(DBG_UBOOT_SCRTXT_FTR)" ]; then cat "$(DBG_UBOOT_SCRTXT_FTR)" >> "$@"; fi
 
 # Convert U-Boot text script to mkimage format
 $(DBG_UBOOT_SCR): $(DBG_UBOOT_SCRTXT)
-	$(MK) -C none -A arm -T script -d $(DBG_UBOOT_SCRTXT) $@
+	$(MK) -C none -A arm -T script -d "$(DBG_UBOOT_SCRTXT)" "$@"
 
 # Create U-Boot text script
 $(REL_UBOOT_SCRTXT): $(REL_SCR_PRE)
-	@mkdir -p $(REL_UBOOT_SUB_PATH)
-	@if [ -f "$(REL_UBOOT_SCRTXT_HDR)" ]; then cp -f $(REL_UBOOT_SCRTXT_HDR) $@; else rm -f $@; fi
-	@if [ -n "$(REL_UBOOT_SCRTXT_L1_STR)" ]; then echo "$(REL_UBOOT_SCRTXT_L1_STR)" >> $@; fi
-	@if [ -n "$(REL_UBOOT_SCRTXT_L2_STR)" ]; then echo "$(REL_UBOOT_SCRTXT_L2_STR)" >> $@; fi
-	@if [ -n "$(REL_UBOOT_SCRTXT_L3_STR)" ]; then echo "$(REL_UBOOT_SCRTXT_L3_STR)" >> $@; fi
-	@if [ -n "$(REL_UBOOT_SCRTXT_L4_STR)" ]; then echo "$(REL_UBOOT_SCRTXT_L4_STR)" >> $@; fi
-	@if [ -n "$(REL_UBOOT_SCRTXT_L5_STR)" ]; then echo "$(REL_UBOOT_SCRTXT_L5_STR)" >> $@; fi
-	@if [ -n "$(REL_UBOOT_SCRTXT_L6_STR)" ]; then echo "$(REL_UBOOT_SCRTXT_L6_STR)" >> $@; fi
-	@if [ -n "$(REL_UBOOT_SCRTXT_L7_STR)" ]; then echo "$(REL_UBOOT_SCRTXT_L7_STR)" >> $@; fi
-	@if [ -f "$(REL_UBOOT_SCRTXT_FTR)" ]; then cat $(REL_UBOOT_SCRTXT_FTR) >> $@; fi
+	@mkdir -p "$(REL_UBOOT_SUB_PATH)"
+	@if [ -f "$(REL_UBOOT_SCRTXT_HDR)" ]; then cp -f "$(REL_UBOOT_SCRTXT_HDR)" "$@"; else rm -f "$@"; fi
+	@if [ -n "$(REL_UBOOT_SCRTXT_L1_STR)" ]; then echo "$(REL_UBOOT_SCRTXT_L1_STR)" >> "$@"; fi
+	@if [ -n "$(REL_UBOOT_SCRTXT_L2_STR)" ]; then echo "$(REL_UBOOT_SCRTXT_L2_STR)" >> "$@"; fi
+	@if [ -n "$(REL_UBOOT_SCRTXT_L3_STR)" ]; then echo "$(REL_UBOOT_SCRTXT_L3_STR)" >> "$@"; fi
+	@if [ -n "$(REL_UBOOT_SCRTXT_L4_STR)" ]; then echo "$(REL_UBOOT_SCRTXT_L4_STR)" >> "$@"; fi
+	@if [ -n "$(REL_UBOOT_SCRTXT_L5_STR)" ]; then echo "$(REL_UBOOT_SCRTXT_L5_STR)" >> "$@"; fi
+	@if [ -n "$(REL_UBOOT_SCRTXT_L6_STR)" ]; then echo "$(REL_UBOOT_SCRTXT_L6_STR)" >> "$@"; fi
+	@if [ -n "$(REL_UBOOT_SCRTXT_L7_STR)" ]; then echo "$(REL_UBOOT_SCRTXT_L7_STR)" >> "$@"; fi
+	@if [ -f "$(REL_UBOOT_SCRTXT_FTR)" ]; then cat "$(REL_UBOOT_SCRTXT_FTR)" >> "$@"; fi
 
 # Convert U-Boot text script to mkimage format
 $(REL_UBOOT_SCR): $(REL_UBOOT_SCRTXT)
-	$(MK) -C none -A arm -T script -d $(REL_UBOOT_SCRTXT) $@
+	$(MK) -C none -A arm -T script -d "$(REL_UBOOT_SCRTXT)" "$@"
 
 # ===================
 # Update U-Boot rules
@@ -437,21 +448,21 @@ $(REL_UBOOT_SCR): $(REL_UBOOT_SCRTXT)
 
 dbg_update_uboot:
 	@echo "Running make to prepare U-Boot"
-	@make -C $(UBOOT_IN_PATH) --no-print-directory -f Makefile-prep-ub.mk debug
+	@make -C "$(UBOOT_IN_PATH)" --no-print-directory -f Makefile-prep-ub.mk debug
 	@echo ""
 	@echo "Running make from U-Boot source"
-	@make -C $(DBG_UBOOT_SRC_PATH) --no-print-directory $(UBOOT_DEFCONFIG)
-	@make -C $(DBG_UBOOT_SRC_PATH) --no-print-directory -j 8
-	@cp -f -u $(DBG_UBOOT_SRC_PATH)/u-boot-with-spl.sfp $(DBG_UBOOT_IN_PATH)
+	@make -C "$(DBG_UBOOT_SRC_PATH)" --no-print-directory $(UBOOT_DEFCONFIG)
+	@make -C "$(DBG_UBOOT_SRC_PATH)" --no-print-directory -j 8
+	@cp -f -u "$(DBG_UBOOT_SRC_PATH)/u-boot-with-spl.sfp" "$(DBG_UBOOT_IN_PATH)"
 
 rel_update_uboot:
 	@echo "Running make to prepare U-Boot"
-	@make -C $(UBOOT_IN_PATH) --no-print-directory -f Makefile-prep-ub.mk release
+	@make -C "$(UBOOT_IN_PATH)" --no-print-directory -f Makefile-prep-ub.mk release
 	@echo ""
 	@echo "Running make from U-Boot source"
-	@make -C $(REL_UBOOT_SRC_PATH) --no-print-directory $(UBOOT_DEFCONFIG)
-	@make -C $(REL_UBOOT_SRC_PATH) --no-print-directory -j 8
-	@cp -f -u $(REL_UBOOT_SRC_PATH)/u-boot-with-spl.sfp $(REL_UBOOT_IN_PATH)
+	@make -C "$(REL_UBOOT_SRC_PATH)" --no-print-directory $(UBOOT_DEFCONFIG)
+	@make -C "$(REL_UBOOT_SRC_PATH)" --no-print-directory -j 8
+	@cp -f -u "$(REL_UBOOT_SRC_PATH)/u-boot-with-spl.sfp" "$(REL_UBOOT_IN_PATH)"
 
 # =====================================================
 # Build a list of prerequisites for SD card image rules
@@ -481,57 +492,57 @@ endif
 # ================================
 
 $(DBG_SD_SFP): $(DBG_UBOOT_SFP)
-	@mkdir -p $(@D)
-	@cp -f $(DBG_UBOOT_SFP) $@
+	@mkdir -p "$(@D)"
+	@cp -f "$(DBG_UBOOT_SFP)" "$@"
 
 $(DBG_SD_SCR): $(DBG_UBOOT_SCR)
-	@mkdir -p $(@D)
-	@cp -f $(DBG_UBOOT_SCR) $@
+	@mkdir -p "$(@D)"
+	@cp -f "$(DBG_UBOOT_SCR)" "$@"
 
 $(DBG_SD_FPGA): $(DBG_SD_FPGA_SRC)
-	@mkdir -p $(@D)
-	@cp -f $(DBG_SD_FPGA_SRC) $@
+	@mkdir -p "$(@D)"
+	@cp -f "$(DBG_SD_FPGA_SRC)" "$@"
 
 $(DBG_SD_UIMG): $(DBG_UIMG1)
-	@mkdir -p $(@D)
-	@cp -f $(DBG_UIMG1) $@
+	@mkdir -p "$(@D)"
+	@cp -f "$(DBG_UIMG1)" "$@"
 
 $(DBG_SD_BIN): $(DBG_BIN1)
-	@mkdir -p $(@D)
-	@cp -f $(DBG_BIN1) $@
+	@mkdir -p "$(@D)"
+	@cp -f "$(DBG_BIN1)" "$@"
 
 # Copy user partition files
 $(DBG_SD_P1UF): $(DBG_SD_P1UF_SRC)
-	@mkdir -p $(@D)
-	@cp -f $(DBG_SD_P1UF_SRC) $@
+	@mkdir -p "$(@D)"
+	@cp -f "$(DBG_SD_P1UF_SRC)" "$@"
 
 # Copy user partition files
 $(DBG_SD_P2UF): $(DBG_SD_P2UF_SRC)
-	@mkdir -p $(@D)
-	@cp -f $(DBG_SD_P2UF_SRC) $@
+	@mkdir -p "$(@D)"
+	@cp -f "$(DBG_SD_P2UF_SRC)" "$@"
 
 # Copy user partition files
 $(DBG_SD_P3UF): $(DBG_SD_P3UF_SRC)
-	@mkdir -p $(@D)
-	@cp -f $(DBG_SD_P3UF_SRC) $@
+	@mkdir -p "$(@D)"
+	@cp -f "$(DBG_SD_P3UF_SRC)" "$@"
 
 # Copy user partition files
 $(DBG_SD_P4UF): $(DBG_SD_P4UF_SRC)
-	@mkdir -p $(@D)
-	@cp -f $(DBG_SD_P4UF_SRC) $@
+	@mkdir -p "$(@D)"
+	@cp -f "$(DBG_SD_P4UF_SRC)" "$@"
 
 # Create SD card image
 $(DBG_SD_IMG): $(DBG_SD_IMG_PRE)
 ifeq ($(alt),1)
-	@make -C $(SD_IN_PATH) --no-print-directory -f Makefile-sd-alt.mk debug
+	@make -C "$(SD_IN_PATH)" --no-print-directory -f Makefile-sd-alt.mk debug
 else
-	@make -C $(SD_IN_PATH) --no-print-directory -f Makefile-sd-tru.mk debug
+	@make -C "$(SD_IN_PATH)" --no-print-directory -f Makefile-sd-tru.mk debug
 endif
 ifneq ($(SD_OUT_PATH),$(APP_OUT_PATH))
 	@if [ -f "$(DBG_SD_IMG)" ]; then \
-		mkdir -p $(DBG_SD_CP_PATH); \
-		cp -f $@ $(DBG_SD_CP_PATH); \
-		echo Copied to: $(DBG_SDCP_IMG); \
+		mkdir -p "$(DBG_SD_CP_PATH)"; \
+		cp -f "$@" "$(DBG_SD_CP_PATH)"; \
+		echo Copied to: "$(DBG_SDCP_IMG)"; \
 	fi
 endif
 
@@ -540,56 +551,56 @@ endif
 # ==================================
 
 $(REL_SD_SFP): $(REL_UBOOT_SFP)
-	@mkdir -p $(@D)
-	@cp -f $(REL_UBOOT_SFP) $@
+	@mkdir -p "$(@D)"
+	@cp -f "$(REL_UBOOT_SFP)" "$@"
 
 $(REL_SD_SCR): $(REL_UBOOT_SCR)
-	@mkdir -p $(@D)
-	@cp -f $(REL_UBOOT_SCR) $@
+	@mkdir -p "$(@D)"
+	@cp -f "$(REL_UBOOT_SCR)" "$@"
 
 $(REL_SD_FPGA): $(REL_SD_FPGA_SRC)
-	@mkdir -p $(@D)
-	cp -f $(REL_SD_FPGA_SRC) $@
+	@mkdir -p "$(@D)"
+	cp -f "$(REL_SD_FPGA_SRC)" "$@"
 
 $(REL_SD_UIMG): $(REL_UIMG1)
-	@mkdir -p $(@D)
-	@cp -f $(REL_UIMG1) $@
+	@mkdir -p "$(@D)"
+	@cp -f "$(REL_UIMG1)" "$@"
 
 $(REL_SD_BIN): $(REL_BIN1)
-	@mkdir -p $(@D)
-	@cp -f $(REL_BIN1) $@
+	@mkdir -p "$(@D)"
+	@cp -f "$(REL_BIN1)" "$@"
 
 # Copy user partition files
 $(REL_SD_P1UF): $(REL_SD_P1UF_SRC)
-	@mkdir -p $(@D)
-	@cp -f $(REL_SD_P1UF_SRC) $@
+	@mkdir -p "$(@D)"
+	@cp -f "$(REL_SD_P1UF_SRC)" "$@"
 
 # Copy user partition files
 $(REL_SD_P2UF): $(REL_SD_P2UF_SRC)
-	@mkdir -p $(@D)
-	@cp -f $(REL_SD_P2UF_SRC) $@
+	@mkdir -p "$(@D)"
+	@cp -f "$(REL_SD_P2UF_SRC)" "$@"
 
 # Copy user partition files
 $(REL_SD_P3UF): $(REL_SD_P3UF_SRC)
-	@mkdir -p $(@D)
-	@cp -f $(REL_SD_P3UF_SRC) $@
+	@mkdir -p "$(@D)"
+	@cp -f "$(REL_SD_P3UF_SRC)" "$@"
 
 # Copy user partition files
 $(REL_SD_P4UF): $(REL_SD_P4UF_SRC)
-	@mkdir -p $(@D)
-	@cp -f $(REL_SD_P4UF_SRC) $@
+	@mkdir -p "$(@D)"
+	@cp -f "$(REL_SD_P4UF_SRC)" "$@"
 
 # Create SD card image
 $(REL_SD_IMG): $(REL_SD_IMG_PRE)
 ifeq ($(alt),1)
-	@make -C $(SD_IN_PATH) --no-print-directory -f Makefile-sd-alt.mk release
+	@make -C "$(SD_IN_PATH)" --no-print-directory -f Makefile-sd-alt.mk release
 else
-	@make -C $(SD_IN_PATH) --no-print-directory -f Makefile-sd-tru.mk release
+	@make -C "$(SD_IN_PATH)" --no-print-directory -f Makefile-sd-tru.mk release
 endif
 ifneq ($(SD_OUT_PATH),$(APP_OUT_PATH))
 	@if [ -f "$(REL_SD_IMG)" ]; then \
-		mkdir -p $(REL_SD_CP_PATH); \
-		cp -f $@ $(REL_SD_CP_PATH); \
-		echo Copied to: $(REL_SDCP_IMG); \
+		mkdir -p "$(REL_SD_CP_PATH)"; \
+		cp -f "$@" "$(REL_SD_CP_PATH)"; \
+		echo Copied to: "$(REL_SDCP_IMG)"; \
 	fi
 endif

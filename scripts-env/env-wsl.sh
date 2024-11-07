@@ -12,7 +12,7 @@ if [ -z "${QUARTUS_ROOTDIR+x}" ]; then QUARTUS_ROOTDIR=~/intelFPGA_lite/22.1std/
 
 # Application settings
 export APP_HOME_PATH=$SCRIPT_PATH
-export APP_OUT_PATH=$SCRIPT_PATH
+export APP_OUT_PATH=.
 
 # FPGA settings
 export FPGA_SRC_PATH=source
@@ -57,7 +57,10 @@ export CROSS_COMPILE=arm-none-eabi-
 
 # SD card image settings
 export SD_OUT_PATH=~/sw-out
-export SD_PROGRAM_NAME=$FPGA_PROGRAM_NAME
+export SD_PROGRAM_NAME=$APP_PROGRAM_NAME1
+
+# Other stuff
+export APP_OUT_FULL_PATH=$(realpath -s "$APP_OUT_PATH")
 
 # Search path settings
 export PATH=$PATH:$SCRIPT_PATH/scripts-env:$SCRIPT_PATH/scripts-linux

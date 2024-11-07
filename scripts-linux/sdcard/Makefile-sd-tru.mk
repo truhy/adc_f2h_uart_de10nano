@@ -1,5 +1,5 @@
 # This is free script released into the public domain.
-# GNU make file v20231220 created by Truong Hy.
+# GNU make file v20241107 created by Truong Hy.
 #
 # Prepares and executes Bash script to build an SD card image.
 #
@@ -15,9 +15,8 @@ $(error SD_PROGRAM_NAME environment variable is not set)
 endif
 
 # Export some SD card image environment variables
-ifndef SDENV
+SDENVFILE := ../../scripts-env/env-sd.sh
 include Makefile-sd-env.mk
-endif
 
 # ========
 # Settings
