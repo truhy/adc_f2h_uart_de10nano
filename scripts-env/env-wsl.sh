@@ -23,8 +23,8 @@ export UBOOT_OUT_PATH=~/sw-out
 export UBOOT_ZIP=~/devtools/u-boot-2024.04.zip
 export UBOOT_PATCH_FOLDER=u-boot-2024.04-patch
 export UBOOT_BSP_GEN_FOLDER=cv_bsp_generator_202301
+export UBOOT_HPS_HANDOFF_FOLDER=../../$FPGA_SRC_PATH/hps_isw_handoff/soc_system_hps_0
 export UBOOT_DEFCONFIG=socfpga_de10_nano_defconfig
-export UBOOT_DTS=socfpga_cyclone5_de10_nano
 # Note: the QTS location depends on the selected xxx_defconfig file and the parameter CONFIG_TARGET_xxx=y,
 # which is processed by arch\arm\mach-socfpga\Kconfig file, for the conditions, see section "config SYS_BOARD" and "config SYS_VENDOR"
 # So for DE10-nano we could use socfpga_de10_nano_defconfig file and inside there is parameter CONFIG_TARGET_SOCFPGA_TERASIC_DE10_NANO=y,

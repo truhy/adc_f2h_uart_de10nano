@@ -1,5 +1,5 @@
 # This is free script released into the public domain.
-# GNU make file v20241107 created by Truong Hy.
+# GNU make file v20241227 created by Truong Hy.
 #
 # Prepares the U-Boot source files for building U-Boot for the Intel Cyclone V SoC FPGA:
 #   - uncompress U-Boot source
@@ -23,6 +23,9 @@ $(error UBOOT_PATCH_FOLDER environment variable not set)
 endif
 ifndef UBOOT_BSP_GEN_FOLDER
 $(error UBOOT_BSP_GEN_FOLDER environment variable not set)
+endif
+ifndef UBOOT_HPS_HANDOFF_FOLDER
+$(error UBOOT_HPS_HANDOFF_FOLDER environment variable not set)
 endif
 ifndef UBOOT_DEFCONFIG
 $(error UBOOT_DEFCONFIG environment variable not set)
@@ -59,7 +62,7 @@ REL_DST_FILE1 := $(REL_UBOOT_SRC_PATH)/configs/$(UBOOT_DEFCONFIG)
 # ============
 
 ALTERA_BSP_SCRIPT := $(UBOOT_BSP_GEN_FOLDER)/cv_bsp_generator.py
-HANDOFF := hps_isw_handoff/soc_system_hps_0
+HANDOFF := $(UBOOT_HPS_HANDOFF_FOLDER)
 DBG_UBOOT_QTS_PATH := $(DBG_UBOOT_SRC_PATH)/$(UBOOT_QTS_FOLDER)
 REL_UBOOT_QTS_PATH := $(REL_UBOOT_SRC_PATH)/$(UBOOT_QTS_FOLDER)
 
