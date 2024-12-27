@@ -57,7 +57,7 @@ export CROSS_COMPILE=arm-none-eabi-
 
 # SD card image settings
 export SD_OUT_PATH=~/sw-out
-export SD_PROGRAM_NAME=$APP_PROGRAM_NAME1
+export SD_PROGRAM_NAME=$FPGA_PROGRAM_NAME
 
 # Other stuff
 export APP_OUT_FULL_PATH=$(realpath -s "$APP_OUT_PATH")

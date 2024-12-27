@@ -80,10 +80,8 @@ SD_OUT_PATH := $(subst \,/,$(SD_OUT_PATH))
 endif
 
 # Export some SD card image environment variables
-ifeq ($(sd),1)
 SDENVFILE := scripts-env/env-sd.sh
 include scripts-linux/sdcard/Makefile-sd-env.mk
-endif
 
 # ===============
 # Common settings
