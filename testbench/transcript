@@ -1,0 +1,32 @@
+# Compile of adc_ltc2308.v was successful.
+# Compile of tb_adc_ltc2308.v was successful.
+# 2 compiles, 0 failed with no errors.
+vsim work.tb_adc_ltc2308
+# vsim work.tb_adc_ltc2308 
+# Start time: 23:36:11 on Jul 05,2024
+# Loading work.tb_adc_ltc2308
+# Loading work.adc_ltc2308
+# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'adc0'.  Expected 19, found 18.
+#    Time: 0 ps  Iteration: 0  Instance: /tb_adc_ltc2308/adc0 File: D:/Documents/Programming/FPGA/de10nano-verilog/adc_f2h_uart_20240703/adc_f2h_uart_testbench/tb_adc_ltc2308.v Line: 26
+# ** Warning: (vsim-3722) D:/Documents/Programming/FPGA/de10nano-verilog/adc_f2h_uart_20240703/adc_f2h_uart_testbench/tb_adc_ltc2308.v(26): [TFMPC] - Missing connection for port 'curr_ch'.
+add wave -position insertpoint sim:/tb_adc_ltc2308/adc0/*
+run
+# 0 0
+# Compile of adc_ltc2308.v was successful.
+# Compile of tb_adc_ltc2308.v was successful.
+# 2 compiles, 0 failed with no errors.
+# Compile of adc_ltc2308.v was successful.
+# Compile of tb_adc_ltc2308.v was successful.
+# 2 compiles, 0 failed with no errors.
+vsim work.tb_adc_ltc2308
+# End time: 23:38:28 on Jul 05,2024, Elapsed time: 0:02:17
+# Errors: 0, Warnings: 6
+# vsim work.tb_adc_ltc2308 
+# Start time: 23:38:28 on Jul 05,2024
+# Loading work.tb_adc_ltc2308
+# Loading work.adc_ltc2308
+add wave -position insertpoint sim:/tb_adc_ltc2308/adc0/*
+run
+# 0 0
+# End time: 23:39:35 on Jul 05,2024, Elapsed time: 0:01:07
+# Errors: 0, Warnings: 1

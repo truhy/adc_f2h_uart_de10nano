@@ -4,7 +4,6 @@ incremental_db/
 db/
 simulation/
 timing/
-testbench/
 *_sim/
 
 # Don't ignore these..
