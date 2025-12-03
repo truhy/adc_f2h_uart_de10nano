@@ -41,11 +41,10 @@
 			   that was created in Platform Designer as a custom IP
 			3. Uses an ADC to FIFO IP which streams (writes) to the memory mapped
 			   registers, so data samples is not readily accessible on the FPGA side
-			4. Doesn't expose the channel options
+			4. Doesn't expose channel options
 		
 		My module is more basic and easier to understand for the beginner.  It
-		simply outputs the data samples with an output register, and then you can do
-		whatever you want with it.
+		simply outputs the data samples to an output register.
 	
 	Timing
 		The constant timing parameters are calculated for the maximum 40MHz SPI
@@ -62,8 +61,9 @@
 	User ports:
 		tcyc
 			Total cycle time in ticks of the SPI clock.  This sets the sampling
-			frequency
-				This must be a value greater than 0
+			frequency.  For 40MHz SPI clock a value between (inclusive) 1 and 80
+			To keep within the specification accuracy you must respect the maximum
+			sampling frequency of 500kHz.
 			
 		differential
 			Input mode
@@ -77,7 +77,7 @@
 				1 = enable
 				
 		start
-			The acquisition process starts when start is set to 1
+			The acquisition process starts when this is set to 1
 				0 = stop reading samples
 				1 = start reading samples
 			Once initiated, a new conversion cannot be restarted or stopped until the
@@ -88,7 +88,7 @@
 			data output register
 			
 		data
-			12-bit ADC sample (valid after ready == 1)
+			12-bit ADC sample (valid when ready == 1)
 			
 		curr_ch
 			The current ADC sample channel number
@@ -120,10 +120,10 @@
 		command, and the current configuration will effect the next sample read.
 		
 	Limitations:
-		- On the DE10-Nano the LT2308 ADC COM pin (pin 6) is wired to ground so we
-		  can only use the unipolar mode, i.e. 0 to 4.096V (Vref) range. Bipolar
-		  mode is (+-0.5 * Vref), e.g. -2.048V to 2.048V which cannot be used unless
-		  you physically modify the pin.
+		On the DE10-Nano the LT2308 ADC COM pin (pin 6) is wired to ground so we
+		can only use the unipolar mode, i.e. 0 to 4.096V (Vref) range. Bipolar
+		mode is (+-0.5 * Vref), e.g. -2.048V to 2.048V which cannot be used unless
+		you physically modify the pin.
 	
 	References:
 		LTC2308 datasheet
@@ -142,7 +142,7 @@ module adc_ltc2308 #(
 	input clock,  // Input clock to drive the ADC SPI clock (SCK) (40MHz)
 	input reset_n,
 	
-	// Ports for the user..
+	// Module ports for the user..
 	input [31:0] tcyc,
 	input differential,
 	input ch0,
@@ -158,7 +158,7 @@ module adc_ltc2308 #(
 	output reg [11:0] data,
 	output reg [2:0] curr_ch,
 	
-	// Ports for ADC pins..
+	// Module ports for ADC pins..
 	output CONVST,
 	output SCK,
 	output reg SDI,
@@ -187,15 +187,15 @@ module adc_ltc2308 #(
 	// USE_TACQ:
 	//     The specified TACQ is used and TCONV is calculated for the longest duration.
 	//     This supports all sampling rates upto 500kHz
-	// Not using USE_TACQ:
+	// else:
 	//		 The specified TCONV is used and TACQ is calculated for the longest duration.
 	//		 Because we are using 25ns as our span calculation unit (40MHz clock),
 	//     the maximum 500kHz sampling with the worse case TCONV of 1.6us is not possible,
-	//     for 500kHz you would need to use the typical 1.3us, or use maximised TACQ above
+	//     for 500kHz you would need to use the typical 1.3us, or use specified TACQ above
 `ifdef USE_TACQ
-	wire [31:0] sck_begin = curr_tcyc - ADC_RES - (ADC_RES - TACQ) - 3;  // Maximises TACQ (acquisition time)
+	wire [31:0] sck_begin = curr_tcyc - ADC_RES - (ADC_RES - TACQ) - 3;  // Use specified TACQ and maximises TCONV (converstion time)
 `else
-	wire [31:0] sck_begin = CONVST_HI_END + TCONV;  // Maximises TCONV (converstion time)
+	wire [31:0] sck_begin = CONVST_HI_END + TCONV;  // Use specified TCONV and maximises TACQ (acquisition time)
 `endif	
 	wire [31:0] sck_end = sck_begin + ADC_RES;
 	wire [31:0] cfg_begin = sck_begin - 1;
@@ -256,9 +256,9 @@ module adc_ltc2308 #(
 		end
 	end
 
-	// ==============================================
-	// Multiplex enabled channels for the next sample
-	// ==============================================
+	// =====================================================
+	// Multiplexor for enabling channels for the next sample
+	// =====================================================
 	
 	wire [7:0] channels = { ch7, ch6, ch5, ch4, ch3, ch2, ch1, ch0 };
 	reg [2:0] mux_index;
@@ -273,9 +273,9 @@ module adc_ltc2308 #(
 		channels[(mux_index + 7) % 8] ? (mux_index + 7) % 8 :
 		0;
 
-	// ==========================================
-	// Set ADC config command for the next sample
-	// ==========================================
+	// =================================================
+	// Set ADC configuration command for the next sample
+	// =================================================
 	
 	reg [CFG_SIZE-1:0] cfg_cmd;
 	always @ (posedge clock or negedge reset_n) begin
